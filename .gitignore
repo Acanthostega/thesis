@@ -7,3 +7,6 @@
 *.ins
 *.dtx
 *.xml
+*.toc
+rapport.pdf
+memoire.pdf
