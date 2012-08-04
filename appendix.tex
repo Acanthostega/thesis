@@ -303,6 +303,25 @@ galaxies. Results show that a normal distribution is a well fit for those distri
 In the mock catalogue, we have interpolated this parameters and we assign a photometric redshift for a galaxy chosen to be in fibre
 collision.
 
+\fs{Coverage of the SDSS}
+For many computations in this thesis, we need to determine the surface covered on the sky by the data in our selection. The way
+we have selected galaxies allows us to easily determine if a point in the sky is in our area, so we can use a Monte Carlo process
+to compute this area.
+
+First, we generate a number $N$ of points around a point of coordinates $(\alpha_0, \delta_0)$ with a maximal angular separation
+$\theta_{\mathrm{max}}$ which is larger than the maximal angular separation in our sample. The fraction of those points which reside
+in our selection area gives the area of the selection in fraction of the area of points generation. This area is just
+$2\pi\pg1-\cos\theta_{\mathrm{max}}\pd$. \com{It doesn't seem to be a standard definition for the area on the sky...}. I have made
+this calculation for different cone angle $\theta_{\mathrm{max}}$ and for different number of points to see if we have a convergence
+in the value of the area. Results are shown on figure (\ref{fig:sdss_area}).
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\linewidth]{SDSS_area}
+	\caption{\footnotesize{}Determination of the area of the SDSS for our selection with a Monte Carlo process. Results seem
+	to converge on a value of \num{126}°.}
+	\label{fig:sdss_area}
+\end{figure}
+
 \cs{How to generate mock catalogues?}
 \cs{Calcul du barycentre lumineux des groupes\label{sec:annbar}}
 \begin{quotation}
@@ -332,4 +351,3 @@ $P(a,x)$ pour toute valeur de $a$ et de $x$. Il reste seulement à connaître la
 partir d'un développement limité pour tout $a$. Cette fonction est comprise dans le standard Fortran et permet en réalisant
 tout ce qui a été décrit plus haut de calculer $\Gamma(a,x)$ très rapidement et sans passer par un calcul d'intégrale.
 \normalsize
-

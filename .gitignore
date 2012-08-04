@@ -8,5 +8,7 @@
 *.dtx
 *.xml
 *.toc
+*.ini
+*.old
 rapport.pdf
 memoire.pdf
