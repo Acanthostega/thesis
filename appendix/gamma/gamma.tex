@@ -1,0 +1,134 @@
+\cs{Special functions}
+
+\fs{Legendre elliptic integral function}
+
+\fss{Introduction}
+
+The Legendre elliptic integral function appears naturally when evaluationg distances like the luminosity distance in a flat
+Universe. But the most of the time, this function isn't used directly because of the difficulty of implementation, and when it's
+already adapted, this is not for all kinds of value. In following sections, we described how to use the NSWC implementation of
+elliptic integrals.
+
+\fss{Algorithm}
+
+
+\fs{Incomplete gamma function}
+
+\fss{Introduction}
+
+By default, many algorithm used to compute incomplete gamma function doesn't allowed to have negative parameters
+. By definition, the incomplete gamma function $\Gamma\pg{a,x}\pd$ is:
+\begin{eq}
+	\Gamma\pg{a,x}\pd=\int_x^\infty{e^{-t}{t^{a-1}}\dd{t}}
+\end{eq}
+when $a\leq0$, we can't compute this function with usual algorithms.
+Moreover, we need to used an algorithm which doesn't use the "simple" gamma function $\Gamma\pg{a}\pd$:
+\begin{eq}
+	\Gamma\pg{a}\pd=\int_0^\infty{e^{-t}{t^{a-1}}\dd{t}}
+\end{eq}
+Indeed this function have singularities for negative values of $a$ where $a$ is an integer, as we can
+see in figure (\ref{fig:gamma}).
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width=0.5\linewidth]{gamma.pdf}
+	\caption{\footnotesize{}The gamma function.}
+	\label{fig:gamma}
+\end{figure}
+So we need an algorithm which not involves to use the gamma function for negative values. Here is described such algorithm.
+
+\fss{Algorithm}
+
+\fsss{Theory}
+
+The best way to compute the incomplete gamma function for $a$ negative values is to use recurrence relations.
+Let us define:
+\begin{eq}
+	\Gamma\pg{a+1,x}\pd=\int_x^\infty{e^{-t}{t^{a}}\dd{t}}
+\end{eq}
+Defining $u'=e^{-t}$ and $v=t^a$, we can use integration by parts:
+\begin{eq}
+	\Gamma\pg{a+1,x}\pd=\left[-e^{-t}{t^a}\right]_x^\infty + a \int_x^\infty{e^{-t}{t^{a-1}}\dd{t}}
+\end{eq}
+The all integrated part is always zero for all values of $a$ at infinity, and the second member of the right hand side
+of the previous equation lets appear the definition of the incomplete gamma function.
+So the recurrence relation for the incomplete gamma function is:
+\begin{eq}
+	\Gamma\pg{a+1,x}\pd=e^{-x}{x^a} + a \Gamma\pg{a,x}\pd
+\end{eq}
+We can see that computing the incomplete gamma function for $a<=0$ can be done with a recursive function
+using the function at higher values of $a$.
+\begin{eq}
+	\Gamma\pg{a,x}\pd= \cfrac{ \Gamma\pg{a+1,x}\pd - e^{-x}{x^a} }{a}
+\end{eq}
+The previous equation shows that there is still a problem for integer values of $a$ because if $a=-2$
+for example, at a moment in the recursion, we have a value of 0 for $a$ which create problems.
+If we refer to \citet{abramowitz+stegun}, the definition of the elliptical integral is:
+\begin{eq}
+	E_n\pg{z}\pd=\int_1^\infty{e^{-zt}}{t^{-n}}\dd{t}
+\end{eq}
+for integer values of $n$. If we change the variable in the integral to $t'=zt$, we can rewrite the equation
+to have:
+\begin{eq}
+	E_n\pg{z}\pd={z^{n-1}}\Gamma\pg{1-n,z}\pd
+\end{eq}
+so:
+\begin{eq}
+	\Gamma\pg{a,x}\pd={x^a}E_{1-a}\pg{x}\pd
+\end{eq}
+for $a\leq0$ and $a$ integer.
+Now we have a good computation for the incomplete gamma function. But numerically, there is still a problem
+near integer negative values of $a$. If $a$ is very close to an integer value, at a moment in the recursion,
+$a$ is very small. So $1/a$ can be bigger than the overflow value for the machine. To avoid this, we add a
+condition for $a$ when it is near zero.
+
+An other definition of the incomplete gamma function is:
+\begin{eq}
+	\Gamma\pg{a,x}\pd=\Gamma\pg{a}\pd-\gamma\pg{a,x}\pd=\Gamma\pg{a}\pd\pg{1-P\pg{a,x}\pd}\pd
+\end{eq}
+with:
+\begin{eq}
+	\gamma\pg{a,x}\pd=\int_0^x{e^{-t}{t^{a}}\dd{t}}
+\end{eq}
+In \citet{NumericalRecipes} exists a precise computation of the function $P\pg{a,x}\pd$. We can remark that
+this function isn't needed in the recursion if we have already access to a function which compute the
+incomplete gamma function for positive values of $a$.
+
+Following is described the algorithm for computing incomplete gamma function without loss of precision
+and without numericals problems for negative values of $a$.
+
+\fsss{Numerical}
+
+%\begin{listing}[H]
+\begin{minted}[bgcolor=griscode, linenos]{python}
+def gammainc( a, x ):
+
+	""" To compute the incomplete gamma function
+	without loss of precision or without numerical
+	problems. OF is the value of the overflow for
+	the machine and expint( n, x ) the function
+	which computes the integral function for n and x """
+
+	import numpy as np
+
+	if x >= 0. :
+
+		if a <= 1. :
+
+			if a == int( a ) or OF * abs( a ) < 1 :
+
+				return x * int( a ) * \
+					expint( 1 - int( a ), x )
+
+			else :
+
+				return ( gammainc( a + 1, x ) - \
+					np.exp( -x ) * ( x ** a ) ) / a
+
+		else :
+
+			return gamma( a ) ( 1 - P( a, x ) )
+			# or call the function which computes
+			# the incomplete gamma function for
+			# positive values of a
+\end{minted}
+%\end{listing}

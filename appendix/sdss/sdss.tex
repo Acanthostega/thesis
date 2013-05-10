@@ -1,6 +1,9 @@
 \appendix
 
-\cs{Analysing data on the SDSS-DR8}
+\cs{Analysing SDSS-DR8\label{ap:sdss}}
+
+% une mini table des matières
+\minitoc
 
 \fs{Introduction}
 
@@ -311,43 +314,12 @@ to compute this area.
 First, we generate a number $N$ of points around a point of coordinates $(\alpha_0, \delta_0)$ with a maximal angular separation
 $\theta_{\mathrm{max}}$ which is larger than the maximal angular separation in our sample. The fraction of those points which reside
 in our selection area gives the area of the selection in fraction of the area of points generation. This area is just
-$2\pi\pg1-\cos\theta_{\mathrm{max}}\pd$. \com{It doesn't seem to be a standard definition for the area on the sky...}. I have made
-this calculation for different cone angle $\theta_{\mathrm{max}}$ and for different number of points to see if we have a convergence
-in the value of the area. Results are shown on figure (\ref{fig:sdss_area}).
+$2\pi\pg1-\cos\theta_{\mathrm{max}}\pd$. \comments{I think I don't have squared angles in the expression of the solid angle.}. I
+have made this calculation for different cone angle $\theta_{\mathrm{max}}$ and for different number of points to see if we have a
+convergence in the value of the area. Results are shown on figure (\ref{fig:sdss_area}).
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=\linewidth]{SDSS_area}
 	\caption{\footnotesize{}Determination of the area of the SDSS for our selection with a Monte Carlo process. Results seem
-	to converge on a value of \num{126}°.}
-	\label{fig:sdss_area}
-\end{figure}
-
-\cs{How to generate mock catalogues?}
-\cs{Calcul du barycentre lumineux des groupes\label{sec:annbar}}
-\begin{quotation}
-\noindent{\rule{\linewidth}{0.5pt}}
---  " Mieux vaut \emph{tar} que \emph{gz}"\\
-\textit{Inconnu}\\
-\noindent{\rule{\linewidth}{0.5pt}}
-\end{quotation}
-On calcule le barycentre lumineux sur la sphère céleste ce qui n'est pas aussi simple que dans une géométrie cartésienne. On va
-donc adopter la méthode suivante qui est fréquente dans le domaine de la géographie. Comme il est plus simple de calculer un
-barycentre dans un espace cartésien, on va passer les coordonnées sphériques de la sphère céleste en cartésienne pour calculer le
-barycentre. Puis une fois ce barycentre trouvé, on le projette sur la sphère céleste en calculant les coordonnées célestes
-correspondantes.
-\cs{Calcul de la fonction $\Gamma$ incomplète\label{sec:anngam}}
-Le calcul de la fonction $\Gamma$ incomplète se fait d'une autre façon que celle qui vient à l'esprit en voyant la définition de la
-fonction. En s'inspirant de la relation fournie dans (\citet{abramowitz+stegun}), on voit que la fonction $\Gamma$ incomplète peut
-s'écrire comme:
-\begin{eq}
-        \Gamma(a,x)=\int_x^{\infty}e^{-t}{t^{a-1}}\dd{t}=\Gamma(a)\left(1-P(a,x)\right)
-\end{eq}
-avec\begin{eq}
-        P(a+1,x)=P(a,x)-\frac{{x^a}{e^{-x}}}{\Gamma(a+1)}
-\end{eq}
-On voit donc que l'on peut faire le calcul de $P(a,x)$ par récurrence. Pour $a>0$, \citet{NumericalRecipes} fournit une fonction
-permettant de calculer la fonction $P(a,x)$. Donc il est très simple en utilisant cette \emph{graine} de calculer la fonction
-$P(a,x)$ pour toute valeur de $a$ et de $x$. Il reste seulement à connaître la fonction $\Gamma(a)$ qui peut être calculée à
-partir d'un développement limité pour tout $a$. Cette fonction est comprise dans le standard Fortran et permet en réalisant
-tout ce qui a été décrit plus haut de calculer $\Gamma(a,x)$ très rapidement et sans passer par un calcul d'intégrale.
-\normalsize
+	to converge on a value of \num{2.1993} steradians.}
+	\label{fig:sdss_area}\end{figure}
