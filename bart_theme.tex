@@ -1,0 +1,132 @@
+% To define all commands relative to the bart theme for thesis
+%
+% useful commands
+\newcommand{\ifempty}[3]{\ifx#1\empty#2\else#3\fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
+% Define the geometry of the thesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
+\geometry{inner=1.5cm, outer=3.5cm, includefoot=true}
+\geometry{headsep=0cm, headheight=53pt}
+\geometry{footskip=-3cm}
+%
+% Put an image at the start of chapter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First start by defining a command with title of chapter
+% in argument to create the chapter
+\newcommand{\thechapterimage}{}
+\newcommand{\bartchapterimage}[1]{\renewcommand*{\thechapterimage}{#1}}
+\newcommand{\bartchapterheadfont}{\fontfamily{ugq}\fontsize{24pt}{30pt}\selectfont}
+\newcommand{\newchaptercmd}[1]{%
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{scope}
+            \clip(current page.north west) rectangle ($ (current page.north east) + (0cm,-9cm)$);
+            \fill[black!20] (current page.north west) rectangle
+            ($ (current page.north east) + (0cm,-9cm)$);
+            \node[below=-0.35cm] at (current page.north)
+            {\ifempty{\thechapterimage}{}{\includegraphics[height=9cm, width=\paperwidth]{\thechapterimage}}};
+        \end{scope}
+        \begin{scope}
+            \node[right=2cm,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
+            inner xsep=15pt,rounded corners=0.75cm] at ($ (current page.north west) + (0cm,-7cm)$)
+            {\bartchapterheadfont\vphantom{pb}\phantom{#1}\hspace{\paperwidth}\null};
+            \node[right=2cm,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north west) + (0cm,-7cm)$)
+            {\bartchapterheadfont\vphantom{pb}\color{red!60!black}#1};
+            \node[left=15cm,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
+            inner xsep=15pt,rounded corners=0.25cm] at ($ (current page.north east) + (0cm,-1cm)$)
+            {\bartchapterheadfont\vphantom{pb}\phantom{\chapterlabel}\hspace{5.5cm}\null};
+            \node[left=15cm,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north east) + (0cm,-1cm)$)
+            {\bartchapterheadfont\vphantom{pb}\color{red!60!black}{\centering\chaptertitlename~\chapterlabel}};
+        \end{scope}
+    \end{tikzpicture}
+}
+% now specify format
+\titleformat{\chapter}
+    {\gdef\chapterlabel{}}
+    {\gdef\chapterlabel{\thechapter.\ }}
+    {0pt}
+    {\newchaptercmd}
+    {}
+\titlespacing*{\chapter}{0pt}{0pt}{5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To place the page number according to the parity of the page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\lsquare}% square length
+\setlength{\lsquare}{\marginparwidth}% impose square length
+\makeatletter%
+\newcommand{\thethumbnail}{}
+\newcommand{\bartthumb}[1]{\renewcommand*{\thethumbnail}{#1}}
+\newcommand{\pagenumber}{%
+    % The text for the number to appear
+    \newcommand{\inter}{{\fontsize{37}{37}\bf\color{red!60!black}{\thepage}}}%
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{scope}
+        \ifodd\c@page{%
+            \node[] at ($ (current page.north east) + ( -0.5\lsquare, -0.5\lsquare ) $)
+            {\ifempty{\thethumbnail}{}{\includegraphics[height=\lsquare, width=\lsquare]{\thethumbnail}}};
+            \node[] at ($ (current page.north east) + ( -0.5\lsquare, -0.5\lsquare ) $)
+            {\bartchapterheadfont\vphantom{pb}\color{red!60!black}\thepage};
+        }%
+        \else{
+            \node[] at ($ (current page.north west) + ( 0.5\lsquare, -0.5\lsquare ) $)
+            {\ifempty{\thethumbnail}{}{\includegraphics[height=\lsquare, width=\lsquare]{\thethumbnail}}};
+            \node[] at ($ (current page.north west) + ( 0.5\lsquare, -0.5\lsquare ) $)
+            {\bartchapterheadfont\vphantom{pb}\color{red!60!black}\thepage};
+        }\fi
+        \end{scope}
+    \end{tikzpicture}
+}%
+\makeatother%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To set the filigran of the thesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter%
+\newlength{\hh}
+\newlength{\ww}
+\newcommand{\filigran}[2]{%
+    % The text for the number to appear
+    \settoheight{\hh}{{\fontsize{130}{150}\bf\color{#2}#1}}
+    \settowidth{\ww}{{\fontsize{130}{150}\bf\color{#2}#1}}
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{scope}
+        \ifodd\c@page{%
+            \node[opacity=0.25,shift={(-0.5\hh,0.5\ww)},rotate=90] at ($ (current page.south east) $)
+            {{\fontsize{130}{150}\bf\color{#2}#1}};
+        }%
+        \else{
+            \node[opacity=0.25,shift={(0.5\hh,0.5\ww)},rotate=-90] at ($ (current page.south west) $)
+            {{\fontsize{130}{150}\bf\color{#2}#1}};
+        }\fi
+        \end{scope}
+    \end{tikzpicture}
+}%
+% Now apply it on all pages
+\AddToShipoutPicture{%
+    \filigran{THESIS}{vior}%
+}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To define style of header en footer
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fancypagestyle{plain}{
+    \fancyhead{}
+    \fancyfoot{}
+    \renewcommand{\headrulewidth}{0pt}}
+%
+\fancypagestyle{these}{%
+    \fancyhf{}
+    \fancyhead[LE]{\raisebox{1em}{\cchap{\leftmark}}}
+    \fancyhead[RO]{\raisebox{1em}{\cchap{\leftmark}}}
+    \fancyhead[RE]{\raisebox{1em}{\crouge{\rightmark}}}
+    \fancyhead[LO]{\raisebox{1em}{\crouge{\rightmark}}}
+    \fancyhead[CE]{{\raisebox{2em}{\cbleu{\underline{\MakeUppercase{\large{{\titree}}}}}}}\\{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}}
+    \fancyhead[CO]{{\raisebox{2em}{\cbleu{\underline{\MakeUppercase{\large{{\titree}}}}}}}\\{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}}
+    %\fancyfoot[CE]{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}%\\\crouge{{\thepage/\pageref{LastPage}}}}
+    %\fancyfoot[CO]{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}%\\\crouge{{\thepage/\pageref{LastPage}}}}
+    \fancyfoot[LO]{\pagenumber}                         % pied de page gauche(L) page paires (even)
+    \fancyfoot[RE]{\pagenumber}
+}%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set the page style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{these}

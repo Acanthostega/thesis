@@ -4,59 +4,65 @@
 % pour les soucis avec les MAC
 %!TEX encoding = UTF-8 Unicode
 %
-\documentclass[a4paper, 12pt, titlepage, twoside]{these}
-
-\usepackage[english]{minitoc}
-\usepackage{minted}
-
-%\usepackage[avantgarde]{quotchap}
-
+\documentclass[a4paper, 12pt, twoside]{these}
+%
+%\usepackage[english]{minitoc}
+\usepackage{minted}%
+\usepackage{titlesec}
+\usepackage{everypage}
+\usepackage{pagecolor}
+\usepackage{afterpage}
+\usetikzlibrary{calc}
+%
 \graphicspath{%
 {/home/manuel/DIVERS/Graphes/Memoire/}%
 {/home/manuel/DIVERS/Graphes/StageM2/}%
+{./appendix/sdss/images/}%
+{./appendix/gamma/images/}%
+{./chapters/images/}%
+{./chapters/images/thumbs/}%
 }%
-
+%
 \newcommand{\titree}{}%
 \newcommand{\auteur}{Manuel Duarte}%
-
-%pour les choix des styles des codes colorisés avec minted
-\usemintedstyle{perldoc}%
-
-\setcounter{minitocdepth}{1}
-
-\begin{document}
-\dominitoc
+%
 \newcommand{\testtitle}{true}
 \renewcommand{\testtitle}{false}
-\renewcommand{\labelitemi}{\textbullet} % changer les items des listes
+%pour les choix des styles des codes colorisés avec minted
+\usemintedstyle{perldoc}%
+%
+%\setcounter{minitocdepth}{1}%
+%
+\include{bart_theme}
+\begin{document}
+\bartchapterimage{andromede}
+\bartthumb{thumb_andromede}
+\frontmatter%
+\include{titlepage/titlepage}
+%
+%\dominitoc%
 \begin{sloppypar}
-\tableofcontents\thispagestyle{these}
-%\twocolumn
+%
+%\maketitle
+%
+%
+\tableofcontents\thispagestyle{these}%
+%
 \renewcommand{\labelitemi}{\textbullet} % changer les items des listes
-\ps{Galaxy groups in the SDSS}
-\include{chapters/lf}
-%\include{appendix}
-\include{appendix/appendix}
-\include{mock_ap}
-\include{hmf}
-\include{form_ap}
-\include{gamma_ap}
-
-%\noindent{\rule{\linewidth}{1pt}}
-%\nocite{}% permet de référencer les textes non cités
-%\nocite{1999astro.ph..5116H}
-%\nocite{Berstel}
-\bibliographystyle{unsrtnat}
-%\bibliographystyle{unsrt-fr} % permet d'avoir les textes de bibliographie en VF
-%\addtocontents{toc}{\setcounter{tocdepth}{0}}
-\scriptsize{\cbleu{\bibliography{/home/manuel/.texmf/tex/latex/ref.bib}}} % permet d'insérer une bibliographie
-%\rule{\linewidth}{1pt}
-\onecolumn
-\end{sloppypar}
-%\end{sloppypar}
-%\clearpage
-%\hypertarget{annexe}{\fs{Annexe}}
-\end{document}
+%
+\mainmatter%
+\input{chapters/chapters}
+%
+\input{appendix/appendix}
+%
+\bibliographystyle{unsrtnat}%
+\bartchapterimage{library}
+\bartthumb{thumb_library}
+\bibliography{/home/manuel/.texmf/tex/latex/ref.bib} % permet d'insérer une bibliographie
+%
+\end{sloppypar}%
+%
+\end{document}%
 %###########################################################################################
 % FIN DU DOCUMENT
 %###########################################################################################

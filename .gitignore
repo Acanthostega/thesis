@@ -10,5 +10,7 @@
 *.toc
 *.ini
 *.old
+*.pdf
+*.maf
 rapport.pdf
 memoire.pdf
