@@ -11,7 +11,7 @@
 %\usetikzlibrary{calc}
 %\geometry{nomarginpar, noheadfoot, margin=0pt,offset=0pt, a4paper}
 %\pagestyle{empty}
-\parindent=0pt
+%\parindent=0pt
 %\geometry{left=0cm,right=0cm,inner=0cm, outer=0cm, includeall=true}
 %\geometry{headsep=0cm, headheight=0pt}
 %\geometry{footskip=0cm,top=0cm,bottom=0cm,bindingoffset=0cm}
@@ -93,14 +93,52 @@
         \end{scope}
     \end{tikzpicture}
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To place random words into the background
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{
+    distort/.style={
+        rotate=rand*10, 
+        yslant=rand/3, 
+        xslant=rand/3, 
+        xscale=1+rand/4,
+        yscale=1+rand/4,
+        execute at begin node={%
+            \pgfmathrandomitem{\newfont}{fonts}\newfont%
+        }
+    }
+}
+\newcommand{\background}[3]{%
+    \begin{tikzpicture}[overlay,remember picture]
+        \begin{scope}
+            \pgfmathsetseed{#3}
+            \pgfmathdeclarerandomlist{fonts}{{\bf}{\tt}{\rm}{\sf}{\it}{\sl}}
+            \pgfmathdeclarerandomlist{words}{#2}
+            \foreach \a in {1,...,#1}{%
+                \pgfmathrandomitem{\mywd}{words}
+                \pgfmathrandomitem{\newfont}{fonts}
+                \pgfmathsetmacro{\x}{0.5*rand}%
+                \pgfmathsetmacro{\y}{0.5*rand}%
+                \pgfmathsetmacro{\opacity}{0.5*rand+0.5}%
+                \pgfmathrandominteger{\b}{20}{100}
+                \pgfmathrandominteger{\c}{20}{100}
+                \pgfmathrandominteger{\d}{0}{100}
+                \node[color=black!\d, opacity=\opacity,distort] at ($ (current page.center) +
+                    ( \x\paperwidth, \y\paperheight ) $)
+                    {\newfont\fontsize{\b}{\c}\selectfont{\mywd}};
+            }
+        \end{scope}
+    \end{tikzpicture}
+}
 %
 \newgeometry{nomarginpar, noheadfoot, margin=0pt,offset=0pt, layoutoffset=0pt,%
-a4paper, includeall, onecolumn,columnsep=0pt,bindingoffset=0pt}
+includeall, onecolumn,columnsep=0pt,bindingoffset=0pt}
 \begin{titlepage}
 {%
     %\newpagecolor{black!70}\afterpage{\restorepagecolor}
     \thispagestyle{empty}
     \titlebackground{black!70}
+    \background{80}{{galaxy}{groups}{environment}{halo}{dynamic}{mass}}{34}
     \titleimage{andromede2}{black!20}%
     \titleright{THESIS}{1cm}{17cm}{0.25cm}{20pt}{28pt}%
     \titleright{Toward a new level of modeling}{7cm}{7cm}{0.75cm}{24pt}{30pt}%
@@ -108,7 +146,7 @@ a4paper, includeall, onecolumn,columnsep=0pt,bindingoffset=0pt}
     \titleleft{Manuel Duarte}{13cm}{15cm}{0.15cm}{20pt}{28pt}%
     \titleleft{Advisor: Gary MAMON}{15cm}{12.5cm}{0.15cm}{20pt}{28pt}%
     \titleleft{Observatoire de Paris-Meudon}{17cm}{10cm}{0.15cm}{20pt}{28pt}%
-    \footer{9cm}{black!80}%
+    %\footer{9cm}{black!80}%
 }
 \end{titlepage}
 \restoregeometry%

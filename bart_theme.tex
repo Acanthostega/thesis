@@ -118,8 +118,10 @@
     \fancyhead[RO]{\raisebox{1em}{\cchap{\leftmark}}}
     \fancyhead[RE]{\raisebox{1em}{\crouge{\rightmark}}}
     \fancyhead[LO]{\raisebox{1em}{\crouge{\rightmark}}}
-    \fancyhead[CE]{{\raisebox{2em}{\cbleu{\underline{\MakeUppercase{\large{{\titree}}}}}}}\\{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}}
-    \fancyhead[CO]{{\raisebox{2em}{\cbleu{\underline{\MakeUppercase{\large{{\titree}}}}}}}\\{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}}
+    \fancyhead[CE]{\raisebox{2em}{{\noindent{%
+    \crouge{\rule{\textwidth}{0.1cm}}}}}}
+    \fancyhead[CO]{\raisebox{2em}{\noindent{%
+    \crouge{\rule{\textwidth}{0.1cm}}}}}
     %\fancyfoot[CE]{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}%\\\crouge{{\thepage/\pageref{LastPage}}}}
     %\fancyfoot[CO]{\noindent{\crouge{\rule{\textwidth}{0.1cm}}}}%\\\crouge{{\thepage/\pageref{LastPage}}}}
     \fancyfoot[LO]{\pagenumber}                         % pied de page gauche(L) page paires (even)
