@@ -30,11 +30,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define the background
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\titlebackground}[1]{%
+\newcommand{\titlebackground}[2]{%
     \begin{tikzpicture}[overlay, remember picture]
         \begin{scope}
             \node[] at ($ (current page.north east) + ( -0.5\paperwidth, -0.5\paperheight ) $)
             {\color{#1}\rule{\paperwidth}{\paperheight}};
+        \end{scope}
+        \begin{scope}
+            \draw[opacity=0.7,very thick,yellow!35!black,fill=#1]
+            (current page.south west) grid[step=#2]
+            (current page.north east);
         \end{scope}
     \end{tikzpicture}
 }
@@ -112,18 +117,18 @@
     \begin{tikzpicture}[overlay,remember picture]
         \begin{scope}
             \pgfmathsetseed{#3}
-            \pgfmathdeclarerandomlist{fonts}{{\bf}{\tt}{\rm}{\sf}{\it}{\sl}}
             \pgfmathdeclarerandomlist{words}{#2}
+            \pgfmathdeclarerandomlist{fonts}{{\bf}{\tt}{\rm}{\sf}}
             \foreach \a in {1,...,#1}{%
-                \pgfmathrandomitem{\mywd}{words}
-                \pgfmathrandomitem{\newfont}{fonts}
                 \pgfmathsetmacro{\x}{0.5*rand}%
                 \pgfmathsetmacro{\y}{0.5*rand}%
-                \pgfmathsetmacro{\opacity}{0.5*rand+0.5}%
-                \pgfmathrandominteger{\b}{20}{100}
-                \pgfmathrandominteger{\c}{20}{100}
+                \pgfmathsetmacro{\opacity}{0.5+0.5* (0.5*rand+0.5)}%
+                \pgfmathrandomitem{\newfont}{fonts}
+                \pgfmathrandomitem{\mywd}{words}
+                \pgfmathrandominteger{\b}{40}{80}
+                \pgfmathrandominteger{\c}{40}{80}
                 \pgfmathrandominteger{\d}{0}{100}
-                \node[color=black!\d, opacity=\opacity,distort] at ($ (current page.center) +
+                \node[color=red!\d!yellow, opacity=\opacity,distort] at ($ (current page.center) +
                     ( \x\paperwidth, \y\paperheight ) $)
                     {\newfont\fontsize{\b}{\c}\selectfont{\mywd}};
             }
@@ -137,8 +142,18 @@ includeall, onecolumn,columnsep=0pt,bindingoffset=0pt}
 {%
     %\newpagecolor{black!70}\afterpage{\restorepagecolor}
     \thispagestyle{empty}
-    \titlebackground{black!70}
-    \background{80}{{galaxy}{groups}{environment}{halo}{dynamic}{mass}}{34}
+    \titlebackground{black!70}{1cm}
+    \background{50}{%
+        {$H_0$}%
+        {galaxy}%
+        {$M(r)=\int_0^r4\pi{r^2}\rho(r)\mathrm{d}r$}%
+        {$\phi(L)$}%
+        {groups}%
+        {stellar}%
+        {environment}%
+        {halo}%
+        {dynamic}%
+    }{4004}
     \titleimage{andromede2}{black!20}%
     \titleright{THESIS}{1cm}{17cm}{0.25cm}{20pt}{28pt}%
     \titleright{Toward a new level of modeling}{7cm}{7cm}{0.75cm}{24pt}{30pt}%

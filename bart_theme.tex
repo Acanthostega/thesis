@@ -90,12 +90,20 @@
     \begin{tikzpicture}[overlay,remember picture]
         \begin{scope}
         \ifodd\c@page{%
-            \node[opacity=0.25,shift={(-0.5\hh,0.5\ww)},rotate=90] at ($ (current page.south east) $)
-            {{\fontsize{130}{150}\bf\color{#2}#1}};
+            \node[shift={(-0.49\hh,0.51\ww)},rotate=90] at
+            ($ (current page.south east) $)
+            {{\fontsize{130}{150}\bf\color{black!25}#1}};
+            \node[opacity=1,shift={(-0.5\hh,0.5\ww)},rotate=90] at
+            ($ (current page.south east) $)
+            {{\fontsize{130}{150}\bf\color{#2!35!white}#1}};
         }%
         \else{
-            \node[opacity=0.25,shift={(0.5\hh,0.5\ww)},rotate=-90] at ($ (current page.south west) $)
-            {{\fontsize{130}{150}\bf\color{#2}#1}};
+            \node[shift={(0.49\hh,0.49\ww)},rotate=-90] at
+            ($ (current page.south west) $)
+            {{\fontsize{130}{150}\bf\color{black!25}#1}};
+            \node[opacity=1,shift={(0.5\hh,0.5\ww)},rotate=-90] at
+            ($ (current page.south west) $)
+            {{\fontsize{130}{150}\bf\color{#2!35!white}#1}};
         }\fi
         \end{scope}
     \end{tikzpicture}
