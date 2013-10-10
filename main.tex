@@ -7,12 +7,14 @@
 \documentclass[a4paper, 12pt, twoside]{these}
 %
 %\usepackage[english]{minitoc}
-\usepackage{minted}%
-\usepackage{titlesec}
-\usepackage{everypage}
-\usepackage{pagecolor}
-\usepackage{afterpage}
-\usetikzlibrary{calc}
+%\usepackage{minted}%
+%\usepackage{titlesec}
+%\usepackage{titletoc}
+%\usepackage{everypage}
+%\usepackage{pagecolor}
+%\usepackage{afterpage}
+%\usetikzlibrary{calc}
+%\usetikzlibrary{fit,backgrounds}
 %
 \graphicspath{%
 {/home/manuel/DIVERS/Graphes/Memoire/}%
@@ -25,9 +27,12 @@
 %
 \newcommand{\titree}{}%
 \newcommand{\auteur}{Manuel Duarte}%
+\newcommand{\dilog}[1]{%
+\mathrm{Li}_2\left(#1\right)%
+}%
 %
-\newcommand{\testtitle}{true}
-\renewcommand{\testtitle}{false}
+%\newcommand{\testtitle}{true}
+%\renewcommand{\testtitle}{false}
 %pour les choix des styles des codes colorisés avec minted
 \usemintedstyle{perldoc}%
 %
@@ -55,12 +60,13 @@
 %
 \input{appendix/appendix}
 %
+\end{sloppypar}%
+\backmatter%
+\bartchapterimage{library}%
+\bartthumb{thumb_library.jpg}%
 \bibliographystyle{unsrtnat}%
-\bartchapterimage{library}
-\bartthumb{thumb_library}
 \bibliography{/home/manuel/.texmf/tex/latex/ref.bib} % permet d'insérer une bibliographie
 %
-\end{sloppypar}%
 %
 \end{document}%
 %###########################################################################################
