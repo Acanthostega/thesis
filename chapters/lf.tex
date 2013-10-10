@@ -3,6 +3,9 @@
 \cs{Luminosity function}
 \fs{Determine the LF}
 
+\postit{There is very lot of words in this note but I can't stop
+to write, else the world will end !}{5}
+
 When we want to compare the results from our galaxy group finder to other existing algorithms, we have to compare a flux limited
 catalogue with our algorithm. But as said before, our algorithm works on a double complete sample of galaxies. So, we need to develop
 a flux limited version of our algorithm.
@@ -32,6 +35,8 @@ groups of a given halo mass:
 \begin{eq}
     \phi\pg{L}\pd\rightarrow\phi\pg{L|M}\pd%
 \end{eq}
+\postit{There is very lot of words in this note but I can't stop
+to write, else the world will end !}{5}
 
 In galaxy groups, we separate galaxies in two classes: centrals and satellites. Centrals are expected to be the most massives
 galaxies in groups, and consequently, it's probable that the central is the brighter galaxy. A consequence is that if we can't see
@@ -153,7 +158,7 @@ First, we determine what is the best model for the ``total'' CLF, \textit{i.e.} 
 mass. We have tried to adjust a simple Schechter and a double Schechter. Results are shown on figure (\ref{fig:fitguo}).
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\linewidth]{MCMCfitGUO}
+    \includegraphics[width=0.5\linewidth]{MCMCfitGUO}
     \caption{\footnotesize{}Results of the fit on the data in blue with a Schechter distribution in red and a double Schechter
     distribution in green. The double Schechter fit is better because this form allow to constrain the two galaxy populations we
     can see in our sample: a low population with high slope and a brighter population with a more little slope in absolute
@@ -166,10 +171,10 @@ the data than the simple Schechter because we can constrain with this form the t
 Differences with the data at luminous galaxies is due to the fact that the number of galaxies with $M_r<-24$ is very low, in some
 bins there is just one galaxy. But we need a quantitative proof of this fit. We use for that the Kolmogorov-Smirnov test ans the
 P-Value associated.\com{TODO:\@ KS test on the fit in order to get a good idea of the robustness of the fit.}
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{FitDblSchechterGuo}
-    \caption{\footnotesize{}Results of the fit for the double Schechter distribution in different bins of halo mass. In blue the
+    \caption{Results of the fit for the double Schechter distribution in different bins of halo mass. In blue the
     PDF of the data, and in red the fit with parameters obtained from the MCMC algorithm.}
 \label{fig:fitguodblsch}
 \end{figure}
