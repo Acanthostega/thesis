@@ -38,13 +38,13 @@ and therefore we can't have low mass halos in the simulations.
 
 The solution is to take a "little" simulation box and to replicate it and to make some bigger "Tetris" cube until we reach the
 maximal redshift we want. An example of the resulting "mock cube" is shown on figure (\ref{fig:cubemock}).
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.4\linewidth]{mock}
-	\caption{\footnotesize{}The structure of the mock catalog once we have replicated the simulation box chosen to populate dark
-	matter halos.}
-	\label{fig:cubemock}
-\end{figure}
+\begin{wrapfigure}{l}{0.4\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{mock}
+    \caption{\footnotesize{}The structure of the mock catalog once we have replicated the simulation box chosen to populate dark
+    matter halos.}%
+    \label{fig:cubemock}
+\end{wrapfigure}
 
 Now if we take an observer at some position into this big box, we can have different sky coverage for the observer. The simplest is
 to place the observer at a corner which we give a solid angle of $\pi/2$ steradians. At the centre, we have a full sky coverage but
@@ -58,17 +58,18 @@ without redshift evolution.\comments{Maybe add details if I use it later...}
 Many simulations give coordinates in units of $h^{-1}\mathrm{Mpc}$ but we place galaxies in the mock in physical positions which we
 can measure. So coordinates in the mock catalog are scaled to get positions in units of $\mathrm{Mpc}$.
 
+\begin{wrapfigure}{r}{0.3\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{cube}
+    \caption{Consequences of a random rotation angle on initial cube.}
+\label{fig:rotation}
+\end{wrapfigure}
+
 Placing boxes as described previously can create a perspective effect from the point of view of an observer, and the consequences
 aren't predictable in a statistical sense when we try to use the mock catalog. To avoid this, we apply some transformations on
 galaxies in the initial cube like inversions, rotations and periodic translations. Rotations are multiples of $\pi/2$ around the
 three principal coordinates axes, because if other rotations are allowed, it can create some over-densities in some regions of the
 final mock which aren't physical. An example of such a problem is illustrated in figure (\ref{fig:rotation}).
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.4\linewidth]{cube}
-	\caption{\footnotesize{}Consequences of a random rotation angle on initial cube.}
-	\label{fig:rotation}
-\end{figure}
 Translations are performed on the three principal axes and when galaxies are out of the initial cube, periodic conditions are
 applied. All of those transformations are randomly generated for each cube in the final mock catalog.
 
