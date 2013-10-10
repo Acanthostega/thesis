@@ -1,0 +1,36 @@
+\chapter{Density profiles}
+
+\section{Introduction}
+
+In this chapter, there is some details on the computation of the
+density profiles and there derived quantities. We define here the different
+normalization used along the thesis for some useful current density profiles.
+
+\subsection{Definitions}
+
+The number of galaxies in a sphere of radius $r$ with a density profile in
+number $\nu(r)$ is the case of a spherical symmetry:
+\begin{equation}
+    N(r)=\int_0^r4\pi {r'}^2 \nu(r')\dd{r'}
+\end{equation}
+
+\section{\citet{NFW97}}
+
+To start, we define some functions with no dimension used to make easier
+some computations.
+\begin{align*}
+        N(r)&={N(a)}{\widetilde{N}{(r/a)}}\\
+        \nu(r)&=\frac{N(a)}{4\pi{a^3}}\widetilde{\nu}{(r/a)}\\
+\end{align*}
+with $a$ the radius at which the slope of the density profile is equal to -2.
+
+\subsection{Definitions}
+In the case of an NFW profile, we can write:
+\[
+    \widetilde{\nu}(x)=\cfrac{1}{\ln2-1/2}\quad\cfrac{1}{x{(1+x)}^2}
+\]
+and by integration:
+\[
+    \widetilde{N}(x)=\cfrac{1}{\ln2-1/2}\quad{\pg\ln{(1+x)}-\cfrac{x}{x+1}\pd}
+\]
+
