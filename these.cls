@@ -48,6 +48,16 @@
 \RequirePackage[a4paper]{geometry}
 \RequirePackage[colorinlistoftodos,shadow]{todonotes}
 %\RequirePackage{figure}
+\RequirePackage{minted}%
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage{everypage}
+\RequirePackage{pagecolor}
+\RequirePackage{afterpage}
+\RequirePackage{wrapfig}
+\RequirePackage{caption}
+\usetikzlibrary{calc}
+\usetikzlibrary{fit,backgrounds}
 
 % redéfinition des marges pour être équilibrées sur chaque bord
 
