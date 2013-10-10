@@ -11,6 +11,38 @@ Universe. But the most of the time, this function isn't used directly because of
 already adapted, this is not for all kinds of value. In following sections, we described how to use the NSWC implementation of
 elliptic integrals.
 
+\subsection{Luminosity distance}
+
+Our goal is to easily and precisely compute the luminosity distance
+given a cosmology according to the formula:
+\[
+    d_L(z)=\cfrac{c(1+z)}{H_0}\int_0^z\cfrac{\dd{t}}{\sqrt{\Omega_m{(1+t)}^3+\Omega_\Lambda}}
+\]
+Making the change of variable $u=1/t$ and defining $s=\sqrt{3}{(1-\Omega_m)/\Omega_m}$ gives us:
+\[
+    d_L(z)=\cfrac{c(1+z)}{H_0\sqrt{s\Omega_m}}\left[T(s)-T\pg\cfrac{s}{1+z}\pd\right]
+\]
+with
+\[
+    T(x)=\int_0^x\cfrac{\dd{u}}{\sqrt{u^4+u}}
+\]
+
+As described in \citet{Liu11}, this integral is an elliptic integral, and such
+integrals can be expressed in terms of Carlson symmetric forms $R_F(x_1,x_2,x_3)$:
+\[
+R_F(x_1,x_2,x_3)=\cfrac{1}{2}\int_0^\infty\cfrac{\dd{t}}{\sqrt{(t+x_1)(t+x_2)(t+x_3)}}
+\]
+With help of the reduction theorem, we can write:
+\comments{I can't remember how to do the computation.
+Some boring day, do it again for fun!}
+\[
+    T(x)=4R_F(m,m+3+2\sqrt{3},m+3-2\sqrt{3})
+\]
+where
+\[
+    m(x)=\cfrac{2\sqrt{x^2-x+1}}{x}+\cfrac{2}{x}-1
+\]
+
 \fss{Algorithm}
 
 
