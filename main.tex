@@ -1,74 +1,32 @@
-%###########################################################################################
-% TYPE DE DOCUMENT
-%###########################################################################################
-% pour les soucis avec les MAC
+% I don't like Apple...
 %!TEX encoding = UTF-8 Unicode
 %
 \documentclass[a4paper, 12pt, twoside]{these}
 %
-%\usepackage[english]{minitoc}
-%\usepackage{minted}%
-%\usepackage{titlesec}
-%\usepackage{titletoc}
-%\usepackage{everypage}
-%\usepackage{pagecolor}
-%\usepackage{afterpage}
-%\usetikzlibrary{calc}
-%\usetikzlibrary{fit,backgrounds}
+% load the commands as preamble
+\include{preamble}
 %
-\graphicspath{%
-{/home/manuel/DIVERS/Graphes/Memoire/}%
-{/home/manuel/DIVERS/Graphes/StageM2/}%
-{./appendix/sdss/images/}%
-{./appendix/gamma/images/}%
-{./chapters/images/}%
-{./chapters/images/thumbs/}%
-}%
-%
-\newcommand{\titree}{}%
-\newcommand{\auteur}{Manuel Duarte}%
-\newcommand{\dilog}[1]{%
-\mathrm{Li}_2\left(#1\right)%
-}%
-%
-%\newcommand{\testtitle}{true}
-%\renewcommand{\testtitle}{false}
-%pour les choix des styles des codes colorisés avec minted
-\usemintedstyle{perldoc}%
-%
-%\setcounter{minitocdepth}{1}%
-%
+% load the bart theme
 \include{bart_theme}
+%
 \begin{document}
-\bartchapterimage{andromede}
-\bartthumb{thumb_andromede}
-\frontmatter%
+%
+% load the titlepage
 \include{titlepage/titlepage}
 %
-%\dominitoc%
 \begin{sloppypar}
 %
-%\maketitle
+\tableofcontents%
 %
-%
-\tableofcontents\thispagestyle{these}%
-%
-\renewcommand{\labelitemi}{\textbullet} % changer les items des listes
-%
-\mainmatter%
 \input{chapters/chapters}
 %
 \input{appendix/appendix}
 %
 \end{sloppypar}%
-\backmatter%
-\bartchapterimage{library}%
-\bartthumb{thumb_library.jpg}%
-\bibliographystyle{unsrtnat}%
-\bibliography{/home/manuel/.texmf/tex/latex/ref.bib} % permet d'insérer une bibliographie
 %
+% include the bibliography
+\include{bibliography}
 %
 \end{document}%
 %###########################################################################################
-% FIN DU DOCUMENT
 %###########################################################################################

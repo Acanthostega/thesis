@@ -1,167 +1,21 @@
 % a template for the title page of the thesis
 %
-%\documentclass[a4paper, 12pt]{book}
-%
-%\usepackage{titlesec}
-%\usepackage{geometry}
-%\usepackage[english]{babel}
-%\usepackage[utf8]{inputenc}
-%\usepackage{tikz}
-%\usepackage{fancyhdr}
-%\usetikzlibrary{calc}
-%\geometry{nomarginpar, noheadfoot, margin=0pt,offset=0pt, a4paper}
-%\pagestyle{empty}
-%\parindent=0pt
-%\geometry{left=0cm,right=0cm,inner=0cm, outer=0cm, includeall=true}
-%\geometry{headsep=0cm, headheight=0pt}
-%\geometry{footskip=0cm,top=0cm,bottom=0cm,bindingoffset=0cm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
-% To place an image and a border
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
-% Search path
-%\graphicspath{%
-%{../chapters/images/}%
-%}%
-%\fancypagestyle{plain}{
-    %\fancyhead{}
-    %\fancyfoot{}
-    %\renewcommand{\headrulewidth}{0pt}%
-%}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Define the background
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\titlebackground}[2]{%
-    \begin{tikzpicture}[overlay, remember picture]
-        \begin{scope}
-            \node[] at ($ (current page.north east) + ( -0.5\paperwidth, -0.5\paperheight ) $)
-            {\color{#1}\rule{\paperwidth}{\paperheight}};
-        \end{scope}
-        \begin{scope}
-            \draw[opacity=0.7,very thick,yellow!35!black,fill=#1]
-            (current page.south west) grid[step=#2]
-            (current page.north east);
-        \end{scope}
-    \end{tikzpicture}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To place a text for title at left
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\barttitlefont}[2]{\fontfamily{ugq}\fontsize{#1}{#2}\selectfont}
-\newcommand{\titleright}[6]{%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-            \node[right=#3,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
-            inner xsep=15pt,rounded corners=#4] at ($ (current page.north west) + (0cm,-#2)$)
-            {\barttitlefont{#5}{#6}\vphantom{pb}\phantom{#1}\hspace{\paperwidth}\null};
-            \node[right=#3,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north west) + (0cm,-#2)$)
-            {\barttitlefont{#5}{#6}\vphantom{pb}\color{red!60!black}#1};
-        \end{scope}
-    \end{tikzpicture}
-}
-\newcommand{\titleleft}[6]{%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-            \node[left=#3,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
-            inner xsep=15pt,rounded corners=#4] at ($ (current page.north east) + (0cm,-#2)$)
-            {\barttitlefont{#5}{#6}\vphantom{pb}\phantom{#1}\hspace{\paperwidth}\null};
-            \node[left=#3,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north east) + (0cm,-#2)$)
-            {\barttitlefont{#5}{#6}\vphantom{pb}\color{red!60!black}#1};
-        \end{scope}
-    \end{tikzpicture}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Define the title image
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newlength{\hhimage}
-\newlength{\wwimage}
-\setlength{\hhimage}{10cm}
-\setlength{\wwimage}{17cm}
-\newcommand{\titleimage}[2]{%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-            \node[] at ($ (current page.north east) + ( -0.55\wwimage, -0.55\hhimage ) $)
-            {\color{#2}\rule{\wwimage}{\hhimage}};
-            \node[] at ($ (current page.north east) + ( -0.5\wwimage, -0.5\hhimage ) $)
-            {\includegraphics[height=\hhimage, width=\wwimage]{#1}};
-        \end{scope}
-    \end{tikzpicture}
-}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Define the footer of the page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\footer}[2]{%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-            \node[] at ($ (current page.south) + ( 0cm, 0.5#1 ) $)
-            {\color{#2}\rule{\paperwidth}{#1}};
-        \end{scope}
-    \end{tikzpicture}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To place random words into the background
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\tikzset{
-    distort/.style={
-        rotate=rand*10, 
-        yslant=rand/3, 
-        xslant=rand/3, 
-        xscale=1+rand/4,
-        yscale=1+rand/4,
-        execute at begin node={%
-            \pgfmathrandomitem{\newfont}{fonts}\newfont%
-        }
-    }
-}
-\newcommand{\background}[3]{%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-            \pgfmathsetseed{#3}
-            \pgfmathdeclarerandomlist{words}{#2}
-            \pgfmathdeclarerandomlist{fonts}{{\bf}{\tt}{\rm}{\sf}}
-            \foreach \a in {1,...,#1}{%
-                \pgfmathsetmacro{\x}{0.5*rand}%
-                \pgfmathsetmacro{\y}{0.5*rand}%
-                \pgfmathsetmacro{\opacity}{0.5+0.5* (0.5*rand+0.5)}%
-                \pgfmathrandomitem{\newfont}{fonts}
-                \pgfmathrandomitem{\mywd}{words}
-                \pgfmathrandominteger{\b}{40}{80}
-                \pgfmathrandominteger{\c}{40}{80}
-                \pgfmathrandominteger{\d}{0}{100}
-                \node[color=red!\d!yellow, opacity=\opacity,distort] at ($ (current page.center) +
-                    ( \x\paperwidth, \y\paperheight ) $)
-                    {\newfont\fontsize{\b}{\c}\selectfont{\mywd}};
-            }
-        \end{scope}
-    \end{tikzpicture}
-}
-%
 \newgeometry{nomarginpar, noheadfoot, margin=0pt,offset=0pt, layoutoffset=0pt,%
 includeall, onecolumn,columnsep=0pt,bindingoffset=0pt}
+\bartchapterimage{andromede}
+\bartthumb{thumb_andromede}
 \begin{titlepage}
 {%
-    %\newpagecolor{black!70}\afterpage{\restorepagecolor}
     \thispagestyle{empty}
-    \titlebackground{black!70}{1cm}
-    \background{50}{%
-        {$H_0$}%
-        {galaxy}%
-        {$M(r)=\int_0^r4\pi{r^2}\rho(r)\mathrm{d}r$}%
-        {$\phi(L)$}%
-        {groups}%
-        {stellar}%
-        {environment}%
-        {halo}%
-        {dynamic}%
-    }{4004}
-    \titleimage{andromede2}{black!20}%
-    \titleright{THESIS}{1cm}{17cm}{0.25cm}{20pt}{28pt}%
-    \titleright{Toward a new level of modeling}{7cm}{7cm}{0.75cm}{24pt}{30pt}%
-    \titleright{of environmental effects}{9cm}{10cm}{0.75cm}{24pt}{30pt}%
-    \titleleft{Manuel Duarte}{13cm}{15cm}{0.15cm}{20pt}{28pt}%
-    \titleleft{Advisor: Gary MAMON}{15cm}{12.5cm}{0.15cm}{20pt}{28pt}%
-    \titleleft{Observatoire de Paris-Meudon}{17cm}{10cm}{0.15cm}{20pt}{28pt}%
-    %\footer{9cm}{black!80}%
+    \barttitlebackground{black}{1cm}
+    \bartbackground{50}{4004}
+    \barttitleimage%
+    \tikzset{barttitleright/.style={rounded corners=0.25cm}}
+    \barttitleright{THESIS}{1cm}%
+    \bartrbox{\thebartthesistitle}{\thebartthesistitlewidth}{\thebartthesistitlegapy}{bartthesistitle}%
+    \bartlbox{\thebartadministration}{\thebartadministrationwidth}{\thebartadministrationgapy}{bartadministration}%
+    \bartlbox{\bartschoolboxtext}{\thebartschoolwidth}{\thebartschoolgapy}{bartschool}%
+    \bartlbox{\bartpeopleboxtext}{\thebartpeoplewidth}{\thebartpeoplegapy}{bartpeople}
 }
 \end{titlepage}
 \restoregeometry%

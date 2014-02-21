@@ -1,211 +1,121 @@
-% To define all commands relative to the bart theme for thesis
-% commands for fancy
-\definecolor{caption}{RGB}{245,222,179}
-\captionsetup[figure]{box=colorbox,boxcolor=caption,slc=off}
-\let\oldcaption=\caption%
-\renewcommand{\caption}[1]{{\oldcaption{\footnotesize#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% put here definitions for the different variables used for the bart theme
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% useful commands
-\newcommand{\ifempty}[3]{\ifx#1\empty#2\else#3\fi}
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
-% Define the geometry of the thesis
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
-\geometry{inner=1.5cm, outer=3.5cm, includefoot=true}
-\geometry{headsep=0cm, headheight=53pt}
-\geometry{footskip=-3cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For the filigran
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the color of the text
+\bartfiligrancolor{\thebartchaptercolor}
+% the text for even pages
+\bartfiligranleft{THESIS}
+% the text for odd pages
+\bartfiligranright{THESIS}
+% say to put the filigran on the page
+\bartsetfiligran%
 %
-% Put an image at the start of chapter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% First start by defining a command with title of chapter
-% in argument to create the chapter
-\newcommand{\thechapterimage}{}
-\newcommand{\bartchapterimage}[1]{\renewcommand*{\thechapterimage}{#1}}
-\newcommand{\bartchapterheadfont}{\fontfamily{ugq}\fontsize{24pt}{30pt}\selectfont}
-\newcommand{\newchaptercmd}[1]{%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-            \clip(current page.north west) rectangle ($ (current page.north east) + (0cm,-9cm)$);
-            \fill[black!20] (current page.north west) rectangle
-            ($ (current page.north east) + (0cm,-9cm)$);
-            \node[below=-0.35cm] (block) at (current page.north)
-            {\ifempty{\thechapterimage}{}{\includegraphics[height=9cm, width=\paperwidth]{\thechapterimage}}};
-            %\node[fill=red!60!blak] at (block.south) {\printcontents[chapters]{}{1}{}};
-        \end{scope}
-        \begin{scope}
-            \node[right=2cm,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
-            inner xsep=15pt,rounded corners=0.75cm] at ($ (current page.north west) + (0cm,-7cm)$)
-            {\bartchapterheadfont\vphantom{pb}\phantom{#1}\hspace{\paperwidth}\null};
-            \node[right=2cm,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north west) + (0cm,-7cm)$)
-            {\bartchapterheadfont\vphantom{pb}\color{red!60!black}#1};
-            \node[left=15cm,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
-            inner xsep=15pt,rounded corners=0.25cm] at ($ (current page.north east) + (0cm,-1cm)$)
-            {\bartchapterheadfont\vphantom{pb}\phantom{\chapterlabel}\hspace{5.5cm}\null};
-            \node[left=15cm,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north east) + (0cm,-1cm)$)
-            {\bartchapterheadfont\vphantom{pb}\color{red!60!black}{\centering\chaptertitlename~\chapterlabel}};
-        \end{scope}
-    \end{tikzpicture}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For the title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% image used upon the background
+\barttitlepageimage{andromede2}
+% the author of the thesis
+\bartauthor{DUARTE Manuel}
+% the director(s) of the thesis
+\bartdirector{MAMON Gary}
+% the members of the jury
+\bartjury{Sponge Bob,\\Bender,\\Fry,\\Pr. Farnsworth}
+% the title of the thesis
+\bartthesistitle{Toward a new level of modeling
+of environmental effects on galaxies}
+%
+% Administration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% affiliations for the administration
+\bartadministration{Observatoire de Paris \\
+Institut d'Astrophysique de Paris}
+% the width of the box for the administration
+\setlength\thebartadministrationwidth{10cm}
+% the gap between the middle of the box and the top of the page
+\setlength\thebartadministrationgapy{2cm}
+% the font properties of the text in the box for administration
+\bartadministrationboxfont{}
+% set here tikzstyle applied to the box
+\bartadministrationtikzstyle{font=\relsize{3}}
+% the school you belong to
+\bartschool{\textbf{\'Ecole doctorale}\\Astronomie et Astrophysique d'\^Ile-de-France}
+% the phd thesis wanted
+\bartphdthesis{Astronomie et Astrophysique}
+%
+% School box properties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% font properties
+\bartschoolboxfont{\bfseries}
+% tikzstyle applied to box
+\bartschooltikzstyle{fill=white,
+    font=\relsize{2},
+    text=red!60!black,
+    text opacity=1,
+    opacity=0.75,
+    draw=red!60!black,
+    very thick
 }
-% now specify format
-\titleformat{\chapter}
-    {\gdef\chapterlabel{}}
-    {\gdef\chapterlabel{\thechapter.\ }}
-    {0pt}
-    {\newchaptercmd}
-    {}
-\titlespacing*{\chapter}{0pt}{0pt}{5cm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To place the page number according to the parity of the page
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newlength{\lsquare}% square length
-\setlength{\lsquare}{\marginparwidth}% impose square length
-\makeatletter%
-\newcommand{\thethumbnail}{}
-\newcommand{\bartthumb}[1]{\renewcommand*{\thethumbnail}{#1}}
-\newcommand{\pagenumber}{%
-    % The text for the number to appear
-    \newcommand{\inter}{{\fontsize{37}{37}\bf\color{red!60!black}{\thepage}}}%
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-        \ifodd\c@page{%
-            \foreach \myi/\op in {0/1.,1/0.8,2/0.6,3/0.4,4/0.2} {%
-                \node[opacity=\op] at ($ (current page.north east) + ( -0.5\lsquare-\myi\lsquare, -0.5\lsquare ) $)
-                {\ifempty{\thethumbnail}{}{\includegraphics[height=\lsquare, width=\lsquare]{\thethumbnail}}};
-                \node[opacity=\op] at ($ (current page.north east) + ( -0.5\lsquare-\myi\lsquare, -0.5\lsquare ) $)
-                {\bartchapterheadfont\vphantom{pb}\color{red!60!black}\thepage};
-            }%
-        }%
-        \else{
-            \foreach \myi/\op in {0/1.,1/0.8,2/0.6,3/0.4,4/0.2} {%
-                \node[opacity=\op] at ($ (current page.north west) + ( 0.5\lsquare+\myi\lsquare, -0.5\lsquare ) $)
-                {\ifempty{\thethumbnail}{}{\includegraphics[height=\lsquare, width=\lsquare]{\thethumbnail}}};
-                \node[opacity=\op] at ($ (current page.north west) + ( 0.5\lsquare+\myi\lsquare, -0.5\lsquare ) $)
-                {\bartchapterheadfont\vphantom{pb}\color{red!60!black}\thepage};
-            }%
-        }\fi
-        \end{scope}
-    \end{tikzpicture}
-}%
-\makeatother%
+% width of the box
+\setlength\thebartpeoplewidth{5cm}
+% space between the middle of the box and the top of the page
+\setlength\thebartpeoplegapy{24cm}
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To set the filigran of the thesis
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makeatletter%
-\newlength{\hh}
-\newlength{\ww}
-\newcommand{\filigran}[2]{%
-    % The text for the number to appear
-    \settoheight{\hh}{{\fontsize{130}{150}\bf\color{#2}#1}}
-    \settowidth{\ww}{{\fontsize{130}{150}\bf\color{#2}#1}}
-    \begin{tikzpicture}[overlay,remember picture]
-        \begin{scope}
-        \ifodd\c@page{%
-            \node[shift={(-0.49\hh,0.51\ww)},rotate=90] at
-            ($ (current page.south east) $)
-            {{\fontsize{130}{150}\bf\color{black!25}#1}};
-            \node[opacity=1,shift={(-0.5\hh,0.5\ww)},rotate=90] at
-            ($ (current page.south east) $)
-            {{\fontsize{130}{150}\bf\color{#2!35!white}#1}};
-        }%
-        \else{
-            \node[shift={(0.49\hh,0.49\ww)},rotate=-90] at
-            ($ (current page.south west) $)
-            {{\fontsize{130}{150}\bf\color{black!25}#1}};
-            \node[opacity=1,shift={(0.5\hh,0.5\ww)},rotate=-90] at
-            ($ (current page.south west) $)
-            {{\fontsize{130}{150}\bf\color{#2!35!white}#1}};
-        }\fi
-        \end{scope}
-    \end{tikzpicture}
+% Peoples properties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% font of the box for people
+\bartpeopleboxfont{}
+% the tikzstyle applied to the box of the people
+\bartpeopletikzstyle{fill=white,
+    font=\relsize{1.75},
+    text=red!60!black,
+    text opacity=1,
+    opacity=0.75,
+    draw=red!60!black,
+    very thick%
 }%
-% Now apply it on all pages
-\AddToShipoutPicture{%
-    \filigran{THESIS}{vior}%
-}%
-\makeatother
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To define style of header en footer
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\makeatletter
 %
-% Define the style of odd pages with chapters
-\newcommand{\header}[5]{%
-    \ifthenelse{\equal{#1}{}}{}{%
-        \begin{tikzpicture}[remember picture]
-            \node[fill=#2,opacity=#4,drop shadow,rounded corners=#5,shift={(0.,1em)},inner sep=10pt] at (0.,0.)
-            {{\color{#3}#1}};
-    \end{tikzpicture}
-    }%
+% Background properties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the seed number used for the random generation
+\bartbackgroundseed{-17}
+% the number of words to place randomly on the page
+\bartbackgroundnumber{60}
+% the list of words to place
+\bartbackgroundlist{%
+    {$H_0$}
+    {galaxy}
+    {$M(r)=\int_0^r4\pi{r^2}\rho(r)\mathrm{d}r$}
+    {groups}
+    {$\phi(L)$}
+    {stellar}
+    {environment}
+    {halo}
+    {dynamic}
 }
-\fancypagestyle{plain}{
-    \fancyhead{}
-    \fancyfoot{}
-    \renewcommand{\headrulewidth}{0pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thesis properties
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\fancypagestyle{these}{%
-    \fancyhf{}
-    \fancyhead[LE]{\pagenumber\header{\rightmark}{bleuf}{white}{1}{0.3cm}}%
-    \fancyhead[RO]{\pagenumber\header{\leftmark}{vior}{white}{1}{0.3cm}}%
-    \fancyfoot[LO]{}
-    \fancyfoot[RE]{}
-}%
-\makeatother
+% Colors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the color associated to the chapters
+\bartchaptercolor{part}
+% same for section
+\bartsectioncolor{vior}
+% same for the subsections
+\bartsubsectioncolor{bleuc}
+% same sor the subsubsections
+\bartsubsubsectioncolor{bleuf}
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Set the page style
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\pagestyle{these}
-\renewcommand{\chaptermark}[1]{\markboth{\textbf{\chaptertitlename~\thechapter.}~#1}{}}
-%\renewcommand{\sectionmark}[1]{\markright{#1}}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% To put a note with a note style
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\definecolor{couleurPostIt}{rgb}{.9,.9,.35}
-\tikzset{fondPostit/.style={color= couleurPostIt}}
-\tikzset{ombrePunaise/.style={color={blue!10!gray}}}
-\tikzset{ombrePostit/.style={color={black},opacity=.5}}
-\tikzset{punaise/.style={ball color=red}}
-\newcommand{\epingle}[3]{
-\coordinate[rotate=#2,yshift={#3*0.375cm}] (e) at #1;
-\coordinate[shift={++(60:0.75)}] (g) at (e);
-\begin{scope} [scale=1.5]
- \begin{scope}[rotate=-30]
-   \coordinate[shift={++(30:0.75)}] (h) at (e);
-   \draw[ombrePunaise,line cap=round,line width=4pt] (e) -- ++(60:0.75);
-   \fill [ombrePunaise,rotate=-30,scale=0.5] (h) ellipse (.65 and .3) ;
-   \fill [ombrePunaise,rotate=60,scale=0.5] (h) ++(0.4,0) ellipse (.4 and .3);
-   \fill [ombrePunaise,rotate=60,scale=0.5] (h) ++(0.8,0) ellipse (.2 and .4);
- \end{scope}
- \draw[line cap=round,line width=4pt] (e) -- ++(60:0.75);
- \fill [punaise,rotate=-30,scale=0.5] (g) ellipse (.65cm and .3cm) ;
- \fill [punaise,rotate=60,scale=0.5] (g) ++(0.4,0) ellipse (.4 and .3);
- \fill [punaise,rotate=60,scale=0.5] (g) ++(0.8,0) ellipse (.2 and .4);
-\end{scope}}
-\tikzset{zlevel/.style={%
-    execute at begin scope={\pgfonlayer{#1}},
-        execute at end scope={\endpgfonlayer}
-}}
-\newlength{\mypostx}
-\newcommand{\postit}[2]{%
-    \setlength{\mypostx}{\marginparwidth}%
-    \marginpar{%
-    \begin{tikzpicture}[overlay,remember picture]%
-            \begin{scope}%
-            \node[opacity=0.7,inner sep=1em,rotate=#2,drop shadow,
-                text width=\marginparwidth-2em](block)
-                at (0.5\marginparwidth,0.){\color{black}#1};
-            \fill[yellow!50!white] (block.north west) -- (block.north east)
-                .. controls ($ (block.north east)+1.5*(block.west)$) ..
-                  ($ 0.9*(block.south east) $)
-                  .. controls ($ (block.south)$) ..
-                  (block.south west) -- cycle;
-            \node[inner sep=1em,rotate=#2,
-                text width=\marginparwidth-2em]
-                at (0.5\marginparwidth,0.){\color{black}#1};
-            \epingle{($ (block.north)-(0.,1em) $)}{5}{0.5};
-        \end{scope}%
-    \end{tikzpicture}%
-    }
-}
+% Style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the style for the headers, footers...
+\pagestyle{bart}
+% the coloration style for the code coloration
+\usemintedstyle{perldoc}%

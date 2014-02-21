@@ -1,60 +1,87 @@
-\bartchapterimage{halo}\bartthumb{thumb_halo}\cs{Halo mass functions}
-%\minitoc%
-
-A description of how to compute halo mass functions given simple models in some articles.
-
-\fs{Theory}
-
-\fss{Definition}
-
-By definition, the halo mass function by unit of comobile volume is the number of halos with mass $M$ comprise between $M$ and
-$M+\dd{M}$. If $N$ is the number of halos, the halo mass function $\phi\pg{M}\pd$ can be written:
-\begin{eq}
-	\phi\pg{M}\pd=\cfrac{\dd{N^2}}{\dd{M}\dd{V}}=\cfrac{\dd{n}}{\dd{M}}
-\end{eq}
-In this case, $n$ can be the comobile density of halos, or the CDF of the density. In the latter case, we have:
-\begin{eq}
-	n\pg{M,z}\pd=\int_0^M{\phi\pg{M,z}\pd\dd{M}}
-\end{eq}
+\bartchapterimage{halo}
+\bartthumb{thumb_halo}
+\chapter{Halo mass functions}
+%
+A description of how to compute halo mass functions given simple models in some
+articles.
+%
+\section{Theory}
+%
+\subsection{Definition}
+%
+By definition, the halo mass function by unit of comobile volume is the number
+of halos with mass $M$ comprise between $M$ and $M+\dd{M}$. If $N$ is the
+number of halos, the halo mass function $\phi\pg{M}\pd$ can be written:
+%
+\begin{equation}
+    \phi\pg{M}\pd=\cfrac{\dd{N^2}}{\dd{M}\dd{V}}=\cfrac{\dd{n}}{\dd{M}}
+\end{equation}
+%
+In this case, $n$ can be the comobile density of halos, or the CDF of the
+density. In the latter case, we have:
+%
+\begin{equation}
+    n\pg{M,z}\pd=\int_0^M{\phi\pg{M,z}\pd\dd{M}}
+\end{equation}
+%
 and so:
-\begin{eq}
-        \frac{\dd{n}}{\dd{M}}=\frac{\dd}{\dd{M}}\int_0^M{\phi\pg{M,z}\pd}\dd{M}=\frac{\dd}{\dd{M}}\pg{\Phi\pg{M,z}\pd}-{\Phi\pg{0,z}\pd}\pd={\phi\pg{M,z}\pd}
-\end{eq}
+%
+\begin{equation}
+    \frac{\dd{n}}{\dd{M}}=\frac{\dd}{\dd{M}}\int_0^M{\phi\pg{M,z}\pd}\dd{M}=\frac{\dd}{\dd{M}}\pg{\Phi\pg{M,z}\pd}-{\Phi\pg{0,z}\pd}\pd={\phi\pg{M,z}\pd}
+\end{equation}
+%
 where $\Phi$ is a primitive of $\phi$.
-
-\fss{In practice}
-
-Cosmological simulations give results with $f\pg\sigma\pd$ a fitted function on simulations. $\sigma\pg{M}\pd$ is the variance in
-mass of the smoothed density fields. We can link this function to the halo mass function by:
-\begin{eq}
-	\phi\pg{M,z}\pd=\frac{\dd\ln{\sigma^{-1}}}{\dd{M}}\frac{\rho_m\pg{z}\pd}{M}{f\pg\sigma\pd}=\frac{\rho_m\pg{z}\pd}{M^2}\left|{{M}\frac{\dd\ln\sigma}{\dd{M}}}\right|{f\pg\sigma\pd}
-\end{eq}
-where the computation of $\sigma$ involves the power spectrum $P\pg{k}\pd$ and the filter for spectrum $\tilde{W}\pg{k}\pd$:
-\begin{eq}
-	\sigma^2\pg{M}\pd=\cfrac{1}{2\pi^2}\int_0^\infty{P\pg{k}\pd\tilde{W}\pg{k}\pd^2{k^2}\dd{k}}
-\end{eq}
-This form is time consuming for the computation of the halo mass function and model dependent. In \citet{2002MNRAS.331...98V}, there
-is a good approximation for this formula which is resumed to:
-\begin{eq}
-        \sigma(M)=\sigma_8\frac{f(u)}{f(u_8)}
-\end{eq}
+%
+\subsection{In practice}
+%
+Cosmological simulations give results with $f\pg\sigma\pd$ a fitted function on
+simulations. $\sigma\pg{M}\pd$ is the variance in mass of the smoothed density
+fields. We can link this function to the halo mass function by:
+%
+\begin{equation}
+    \phi\pg{M,z}\pd=\frac{\dd\ln{\sigma^{-1}}}{\dd{M}}\frac{\rho_m\pg{z}\pd}{M}{f\pg\sigma\pd}=\frac{\rho_m\pg{z}\pd}{M^2}\left|{{M}\frac{\dd\ln\sigma}{\dd{M}}}\right|{f\pg\sigma\pd}
+\end{equation}
+%
+where the computation of $\sigma$ involves the power spectrum $P\pg{k}\pd$ and
+the filter for spectrum $\tilde{W}\pg{k}\pd$:
+%
+\begin{equation}
+    \sigma^2\pg{M}\pd=\cfrac{1}{2\pi^2}\int_0^\infty{P\pg{k}\pd\tilde{W}\pg{k}\pd^2{k^2}\dd{k}}
+\end{equation}
+%
+This form is time consuming for the computation of the halo mass function and
+model dependent. In \cite{2002MNRAS.331...98V}, there is a good approximation
+for this formula which is resumed to:
+%
+\begin{equation}
+    \sigma(M)=\sigma_8\frac{f(u)}{f(u_8)}
+\end{equation}
+%
 with the function $f$:
-\begin{eq}
-        f(u)=\num{64,087}{(1+\num{1,074}{u^{\num{0,3}}}-\num{1,581}{u^{\num{0,4}}}+\num{0.954}{u^{\num{0.5}}}-\num{0.185}{u^{\num{0.6}}})}^{-10}
-\end{eq}
+%
+\begin{equation}
+    f(u)=64,087{(1+1,074{u^{0,3}}-1,581{u^{0,4}}+0.954{u^{0.5}}-0.185{u^{0.6}})}^{-10}
+\end{equation}
+%
 and $u$, $u_8$ which are:
+%
 \begin{eqnarray}
-        u&=&\num{3.804e-4}\Gamma\left(\frac{Mh}{\Omega_{m,0}}\right)^{1/3}\nonumber\\
-        u_8&=&\num{32}\Gamma\nonumber\\
-        \Gamma&=&\Omega_{m,0}h\exp\left[{-\Omega_b(1+\sqrt{2h}/\Omega_{m,0})}\right]\nonumber\\
+    u&=&3.804e-4\Gamma\left(\frac{Mh}{\Omega_{m,0}}\right)^{1/3}\nonumber\\
+    u_8&=&32\Gamma\nonumber\\
+    \Gamma&=&\Omega_{m,0}h\exp\left[{-\Omega_b(1+\sqrt{2h}/\Omega_{m,0})}\right]\nonumber\\
 \end{eqnarray}
-Now, with this approximation, we can compute easily the derivative of $\sigma$ and:
-\begin{eq}
-        \pg{{M}\frac{\dd\ln\sigma}{\dd{M}}}\pd^{-1}+\undemi=\frac{\left(-0.000310111 X^{1.7}+0.00225895 X^{1.6}-0.00505879 X^{1.5}-0.1 X^{1.2}\right)}{\left(-0.000328357 X^{1.8}+0.00310111 X^{1.7}-0.0090358 X^{1.6}+0.0101176 X^{1.5}\right)}
-\end{eq}
+%
+Now, with this approximation, we can compute easily the derivative of $\sigma$
+and:
+\begin{equation}
+    \pg{{M}\frac{\dd\ln\sigma}{\dd{M}}}\pd^{-1}+\undemi=\frac{\left(-0.000310111 X^{1.7}+0.00225895 X^{1.6}-0.00505879 X^{1.5}-0.1 X^{1.2}\right)}{\left(-0.000328357 X^{1.8}+0.00310111 X^{1.7}-0.0090358 X^{1.6}+0.0101176 X^{1.5}\right)}
+\end{equation}
+%
 with:
-\comments{Check if we can used directly the power spectrum in the calculation without
-too many CPU time consuming...}
-\begin{eq}
-        X=\left(h \Omega _{m,0} e^{-\Omega _b \left(\frac{\sqrt{2} \sqrt{h}}{\Omega _{m,0}}+1\right)} \sqrt[3]{\frac{h M}{\Omega _{m,0}}}\right)
-\end{eq}
+%
+\comments{Check if we can used directly the power spectrum in the calculation
+without too many CPU time consuming\ldots}
+%
+\begin{equation}
+    X=\left(h \Omega _{m,0} e^{-\Omega _b \left(\frac{\sqrt{2} \sqrt{h}}{\Omega _{m,0}}+1\right)} \sqrt[3]{\frac{h M}{\Omega _{m,0}}}\right)
+\end{equation}

@@ -1,0 +1,71 @@
+\NeedsTeXFormat{LaTeX2e}[1999/01/01]
+\ProvidesPackage{commands}[2011/09/30]
+%
+\ProcessOptions%
+%
+%###########################################################################################
+% DEFINITIONS DES COULEURS
+%###########################################################################################
+\definecolor{vert}{RGB}{49,148,31}
+\definecolor{griscode}{RGB}{181,181,181}
+%
+%###########################################################################################
+% Mathematical
+%###########################################################################################
+
+% right derivation
+\newcommand{\dd}{{\rm{d}}}
+
+% half
+\newcommand{\undemi}{\frac{1}{2}}
+
+% parenthesis
+\newcommand{\pg}{\left(}
+\newcommand{\pd}{\right)}
+
+% hypergeometric functions
+\newcommand{\HG}[1]{{\mathcal{H}2{\rm{F}}1\pg3-\alpha,\beta-\alpha,4-\alpha,-#1\pd}}
+\newcommand{\HGG}[4]{{\mathcal{H}2{\rm{F}}1\pg#1,#2,#3,#4\pd}}
+\newcommand{\Hg}[1]{{\mathcal{H}2{\rm{F}}1\pg#1\pd}}
+
+% nabla
+\newcommand{\N}{\vec{\nabla}}
+
+% partial derivative
+\newcommand{\ddp}[2]{\cfrac{{\partial} #1}{{\partial} #2}}
+\newcommand{\ddpe}[2]{\cfrac{{\partial}}{{\partial}#2}\left(#1\right)}
+\newcommand{\ddpp}[2]{\cfrac{{\partial}^{2} {#1}}{{\partial} {#2} ^{2}}}
+\newcommand{\ddppe}[2]{\cfrac{{\partial}^{2}}{{\partial} {#2} ^{2}}\left(#1\right)}
+
+% decimal logarithm
+\newcommand{\logg}{\log_{10}}
+
+%###########################################################################################
+% For comments
+%###########################################################################################
+
+% les commentaires et ajouts personnels
+\newcommand{\com}[1]{\textcolor{vert}{\bfseries{Manuel: #1}}}
+
+% pour une note de chose à faire
+\newcommand{\note}[1]{\todo[color=bleu]{#1}}
+
+% pour les choses importantes
+\newcommand{\alert}[1]{\todo[color=red!80]{#1}}
+
+% pour des commentaires
+\newcommand{\comments}[1]{\todo[color=green]{#1}}
+
+\newcommand{\mybeta}{%
+\beta(r)%
+}
+\newcommand{\mysigma}{%
+\Sigma(r)%
+}
+\newcommand{\mysiglos}{%
+\sigma_{\mathrm{LOS}}^2(R)%
+}
+\newcommand{\myprofil}{%
+\nu(r)%
+}
+\endinput
