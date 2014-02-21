@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 
-\ProvidesClass{these}[02/11/2011 Classe pour les mémoires de thèse, V1.0]
+\ProvidesClass{bart}[21/02/2014 Class for the thesis]
 
 % the base class is the book class and all options passed too the
 % bart thesis class will be passed to book
