@@ -45,16 +45,17 @@
 %###########################################################################################
 
 % les commentaires et ajouts personnels
-\newcommand{\com}[1]{\textcolor{vert}{\bfseries{Manuel: #1}}}
+\bartenvbox{vert}{comment}{Manuel comment}{true}
+\newcommand{\com}[1]{\begin{comment}#1\end{comment}}
+\newcommand{\comments}[1]{\begin{comment}#1\end{comment}}
 
 % pour une note de chose à faire
-\newcommand{\note}[1]{\todo[color=bleu]{#1}}
+\bartenvbox{blue}{todo}{TODO}{true}
+\newcommand{\note}[1]{\begin{todo}#1\end{todo}}
 
 % pour les choses importantes
-\newcommand{\alert}[1]{\todo[color=red!80]{#1}}
-
-% pour des commentaires
-\newcommand{\comments}[1]{\todo[color=green]{#1}}
+\bartenvbox{red}{warning}{Warning}{true}
+\newcommand{\alert}[1]{\begin{warning}#1\end{warning}}
 
 \newcommand{\mybeta}{%
 \beta(r)%

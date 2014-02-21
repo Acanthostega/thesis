@@ -29,15 +29,16 @@
 \RequirePackage{fix-cm}
 \RequirePackage{ifthen}
 \RequirePackage[a4paper]{geometry}
-\RequirePackage[colorinlistoftodos,shadow]{todonotes}
 \RequirePackage{minted}%
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{wrapfig}
 \RequirePackage{relsize}
 \RequirePackage{hyphenat}
+\RequirePackage[framemethod=Tikz]{mdframed}
 \usetikzlibrary{calc}
 \usetikzlibrary{fit,backgrounds}
+\usetikzlibrary{shadows}
 %
 % To define all commands relative to the bart theme for thesis
 %
@@ -591,6 +592,78 @@ text=orange, opacity=0.5, text opacity=1]
     pdfcreator  = {PDFLaTeX},%
     pdfproducer = {PDFLaTeX}%
 }
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Create some box for useful things
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define the boxes
+\newcommand{\bartdefbox}[2]{%
+    \newmdenv[
+        backgroundcolor=#1!10,
+        innerleftmargin=5pt,
+        innerrightmargin=5pt,
+        innertopmargin=5pt,
+        innerbottommargin=5pt,
+        leftmargin=0cm,
+        rightmargin=0cm,
+        linecolor=#1,
+        outerlinewidth=.1pt,
+        roundcorner=4pt,
+        skipabove=\baselineskip,
+        skipbelow=\baselineskip
+    ]{#2}
+    \newmdenv[
+        skipabove=7pt,
+        skipbelow=7pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        backgroundcolor=#1!10,
+        innerleftmargin=5pt,
+        innerrightmargin=5pt,
+        innertopmargin=5pt,
+        innerbottommargin=5pt,
+        leftmargin=0cm,
+        rightmargin=0cm,
+        linewidth=4pt,
+        linecolor=#1,
+        skipabove=\baselineskip,
+        skipbelow=\baselineskip
+    ]{internal#2}
+}
+%
+% define the environment for the box
+\newcommand{\bartenvbox}[4]{%
+    \bartdefbox{#1}{box#2}
+    \ifthenelse{\equal{#4}{true}}{%
+        \newcounter{c#2}
+        \setcounter{c#2}{1}
+    }
+    {%
+    }
+    \newenvironment{#2}{%
+        \vspace*{.5em}
+        \begin{box#2}
+            \textbf{#3}
+            \ifthenelse{\equal{#4}{true}}{\textbf{\expandafter\csname thec#2\endcsname}
+                \refstepcounter{c#2}
+            }%
+            {}%
+            ~\vspace*{-1em}
+            \begin{internalbox#2}
+    }{%
+                \hfill{%
+                    \color{#1}\tiny\ensuremath{\blacksquare}
+                }
+            \end{internalbox#2}
+        \end{box#2}
+    }
+}
+%
+% Define some useful boxes
+\bartenvbox{black}{bartabstract}{Abstract}{true}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To put a note with a note style
