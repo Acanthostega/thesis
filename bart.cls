@@ -21,7 +21,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{caption}
 \RequirePackage[dvipsnames, table]{xcolor}
-\RequirePackage[square,numbers]{natbib}
+\RequirePackage[sort]{natbib}
 \RequirePackage{subfig}
 \RequirePackage{fancybox}
 \RequirePackage{eso-pic}
@@ -556,18 +556,29 @@ text=orange, opacity=0.5, text opacity=1]
 % To define style of header en footer
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Define the style of odd pages with chapters
+% Define the style of odd pages with chapter and even with section
 \newcommand{\bartheader}[5]{%
     \ifthenelse{\equal{#1}{}}{}{%
         \begin{tikzpicture}[remember picture]
-            \node[fill=#2,opacity=#4,drop shadow,rounded corners=#5,shift={(0.,1em)},inner sep=10pt] at (0.,0.)
-            {{\color{#3}#1}};
+            \node[
+                fill=#2,
+                opacity=#4,
+                drop shadow,
+                rounded corners=#5,
+                shift={(0.,1em)},
+                inner sep=10pt
+            ] at (0.,0.) {{\color{#3}#1}};
     \end{tikzpicture}
     }%
 }
 %
+% Redefine the chapter title for the header
 \renewcommand{\chaptermark}[1]{\markboth{\textbf{\chaptertitlename~\thechapter.}~#1}{}}
+%
+% No lines to separate the header
 \renewcommand{\headrulewidth}{0pt}
+%
+% define styles for header
 \fancypagestyle{bart}{%
     \fancyhf{}
     \fancyhead[LE]{\bartpagenumber\bartheader{\rightmark}{\thebartsectioncolor}{white}{1}{0.3cm}}%
@@ -575,6 +586,9 @@ text=orange, opacity=0.5, text opacity=1]
     \fancyfoot[LO]{}
     \fancyfoot[RE]{}
 }%
+%
+% leave the header empty after
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For hyperlinks
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
