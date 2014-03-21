@@ -44,18 +44,22 @@
 % For comments
 %###########################################################################################
 
-% les commentaires et ajouts personnels
-\bartenvbox{vert}{comment}{Manuel comment}{true}
+% for my personal comments
+\bartenvbox{vert}{comment}{Manuel comment}{true}{true}
 \newcommand{\com}[1]{\begin{comment}#1\end{comment}}
 \newcommand{\comments}[1]{\begin{comment}#1\end{comment}}
 
-% pour une note de chose à faire
-\bartenvbox{blue}{todo}{TODO}{true}
+% for a list of TODO
+\bartenvbox{blue}{todo}{TODO}{true}{true}
 \newcommand{\note}[1]{\begin{todo}#1\end{todo}}
 
-% pour les choses importantes
-\bartenvbox{red}{warning}{Warning}{true}
+% import things to note
+\bartenvbox{red}{warning}{Warning}{true}{true}
 \newcommand{\alert}[1]{\begin{warning}#1\end{warning}}
+
+% for a simple box for description
+\bartenvbox{orange}{remarkable}{Remark}{true}{true}
+\newcommand{\remark}[1]{\begin{remarkable}#1\end{remarkable}}
 
 \newcommand{\mybeta}{%
 \beta(r)%

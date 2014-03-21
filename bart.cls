@@ -16,7 +16,6 @@
 \RequirePackage{amsfonts}
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
-\RequirePackage[linktocpage]{hyperref}
 \RequirePackage{fancyhdr}
 \RequirePackage{graphicx}
 \RequirePackage{caption}
@@ -36,6 +35,8 @@
 \RequirePackage{relsize}
 \RequirePackage{hyphenat}
 \RequirePackage[framemethod=Tikz]{mdframed}
+\RequirePackage{newfloat}
+\RequirePackage[linktocpage]{hyperref}
 \usetikzlibrary{calc}
 \usetikzlibrary{fit,backgrounds}
 \usetikzlibrary{shadows}
@@ -612,7 +613,7 @@ text=orange, opacity=0.5, text opacity=1]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Define the boxes
-\newcommand{\bartdefbox}[2]{%
+\newcommand{\bartdefbox}[3]{%
     \newmdenv[
         backgroundcolor=#1!10,
         innerleftmargin=5pt,
@@ -625,7 +626,7 @@ text=orange, opacity=0.5, text opacity=1]
         outerlinewidth=.1pt,
         roundcorner=4pt,
         skipabove=\baselineskip,
-        skipbelow=\baselineskip
+        skipbelow=\baselineskip,
     ]{#2}
     \newmdenv[
         skipabove=7pt,
@@ -644,40 +645,44 @@ text=orange, opacity=0.5, text opacity=1]
         linewidth=4pt,
         linecolor=#1,
         skipabove=\baselineskip,
-        skipbelow=\baselineskip
+        skipbelow=\baselineskip,
+        frametitle=#3,
     ]{internal#2}
 }
 %
 % define the environment for the box
-\newcommand{\bartenvbox}[4]{%
-    \bartdefbox{#1}{box#2}
+\newcommand{\bartenvbox}[5]{%
     \ifthenelse{\equal{#4}{true}}{%
         \newcounter{c#2}
         \setcounter{c#2}{1}
     }
-    {%
+    {}
+    \ifthenelse{\equal{#5}{true}}{%
+        \DeclareFloatingEnvironment[placement={!ht}]{float#2}
     }
-    \newenvironment{#2}{%
-        \vspace*{.5em}
-        \begin{box#2}
-            \textbf{#3}
+    {}
+    \bartdefbox{#1}{box#2}{{\textbf{#3}
             \ifthenelse{\equal{#4}{true}}{\textbf{\expandafter\csname thec#2\endcsname}
                 \refstepcounter{c#2}
             }%
-            {}%
-            ~\vspace*{-1em}
+    {}}}
+    \newenvironment{#2}{%
+        \ifthenelse{\equal{#5}{true}}{\begin{float#2}}{}
+        \begin{box#2}
             \begin{internalbox#2}
+                \setlength{\parindent}{1em}
     }{%
                 \hfill{%
                     \color{#1}\tiny\ensuremath{\blacksquare}
                 }
             \end{internalbox#2}
         \end{box#2}
+        \ifthenelse{\equal{#5}{true}}{\end{float#2}}{}
     }
 }
 %
 % Define some useful boxes
-\bartenvbox{black}{bartabstract}{Abstract}{true}
+\bartenvbox{black}{bartabstract}{Abstract}{true}{false}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To put a note with a note style
