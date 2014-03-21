@@ -469,7 +469,7 @@ recover. Essentially for the bright population whose number is low
 relatively to the faint one.
 
 Results are also dependent of the initial guess chosen for the minimization.
-This a problem if we want to iteratively correct for missing galaxies in
+This is a problem if we want to iteratively correct for missing galaxies in
 MAGGIE, since we need it to be robust against this choice. Indeed, the group
 population is varying along the iterative process and the modulation of
 galaxy properties with halos will evolve, as our assumptions on the
@@ -479,3 +479,49 @@ Since it can be very difficult to correct our groups in a flux-limited
 sample, we will just use doubly complete samples, where corrections are not
 needed.
 %
+\section{Red and blue galaxies}
+%
+Galaxies form a bimodal distribution, mainly separated into red and blue
+ones. From previous studies, their repartition inside galaxy groups isn't
+the same. Using this segregation into MAGGIE should improve the group
+selection and our measures of the environment.
+
+This integration is done inside the probability of being in a group. We
+compute a different probability if the galaxy is red or blue, by adjusting
+the models according to the galaxy color. Such models are updated in the
+iterative process, in order to get a relative independence of our results to
+the adopted models.
+
+Taking again the computation of the probability, if we know the fraction of
+blue or red galaxies at a given radius to the group center, we can multiply
+the density profile by this fraction, giving us the projected phase space
+density of blue or red galaxies in halos. We have:
+%
+\begin{equation}
+    g_\mathrm{halo}^i\left(R, v_z\right)=\int_R^{r_v} f_i\left(r\right) \rho\left(r\right)
+    \cfrac{r}{\sqrt{r^2-R^2}} h\left(v_z|R,r\right) \dd{r}
+\end{equation}
+%
+where $h\left(v_z|R,r\right)$ is the line of sight velocity distribution and
+$f_i\left(r\right)$ is the fraction of $i$ galaxies, with
+$i\in\left\{\mbox{red, blue}\right\}$. The fraction is model whose
+parameters must be fitted to the data for each iteration with the set of
+extracted groups. Since its a distribution function, this implies the use of
+MLE with numerical computation of the integral, and a double integral for
+the normalization of the density since:
+%
+\begin{equation}
+    g_\mathrm{halo}^i\left(R, v_z\right) = \cfrac{\dd^2N}{\dd R\dd v_z}
+\end{equation}
+
+Supposing this computation can be easily done, there is still two problems.
+\begin{itemize}
+    \item The NFW profile is dependent of the concentration. Many studies
+        shows that the concentration of blue and red galaxies inside halos
+        is different. \note{Ask Gary for the articles.}.
+    \item The probability needs to be normalized with the projected phase
+        space density of interlopers. But we have no idea of their
+        distribution when red and blue galaxies are separated. This needs to
+        be extracted from mock catalogues, leading to densities not
+        universal and dependent of the semi-analytical code used.
+\end{itemize}
