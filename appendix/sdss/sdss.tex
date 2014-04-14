@@ -4,107 +4,114 @@
 %
 \section{Introduction}
 %
-In order to realize the mock catalogue for the group finder algorithm, we need
-to mimic the SDSS\@. This mock have to be realistic. But our algorithm needs to
-have the redshift for \emph{all} galaxies in the volume selected and the SDSS
-provides spectroscopic redshifts just for galaxies that could have been
-targeted due to the problem of fibre collision. So for galaxies in this
-situation we use the photometric redshift. The problem is that dense regions on
-the survey are more susceptible to don't have a spectroscopic redshift than a
-galaxy in a lower dense region. So we have to determine how the fraction of
-photometric galaxies depends on the density of galaxies in the sky in order to
-apply this in our mock catalogue.
-
-In the SDSS, there are different ways to estimate photometric so we list the
-methods here. \com{Add the list of method available in the SDSS}.
-
-We can select galaxies in the sample with an SQL query. All queries used will
-be summary here.
-%
-\begin{wrapfigure}{r}{0.5\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{figures/sdss/SpectroGalStripesSDSSoriginal.png}
-    \caption{Spectroscoped galaxies in the SDSS DR8 with stripes limits as
-    planned. Coordinates are in degrees.}
-\label{fig:SDSSspecgalstripes}
-\end{wrapfigure}
 %
 \section{Analysis}
 %
 \subsection{Definitions}
 %
-In the SDSS there is something called ``stripes'' which is a band of
-observations in the sample. Those \emph{bands} can overlap contrary to
-``chunks'' which are similar bands but don't overlapping (they make a complete
-partition of the survey in their union). We can use this stripes in order to
-select galaxies in regions of interest for our studies. Data on the SDSS
-provide limits of this stripes, so we can use it to fix borders of the survey.
-In reality, in the region of the survey we consider, we don't see overlapping
-of the stripes. So it is more useful to use them in order to define limits of
-survey in region of our interest.
+Strips are bands of observations along great circles of the survey. Each of
+them is composed of six parallel scanlines (of 13 arcmin wide) with gaps of
+approximately the same width between the between them. Two strips make a
+single stripe of 2.5°. Each scanline include all the data (in $ugriz$), and
+is divided in fields (which can overlap). So when accessing to an
+observation at a given position in the sky, we access a specific field. A
+given observation is completely defined by its run number, the number of the
+camcol of the scanline and by the field number.
 
-Following definitions given in the SDSS website, we can define two other
-coordinate systems in the survey which we can use to select galaxies.
+On each field, the pipeline of the SDSS is applied for the objects
+extraction. They are detected as pixels over-densities relatively to the
+background. With this method, multiple real and different objects can be
+seen as one. They are linked by their pixels as galaxies in
+Friends-of-Friends algorithm. A deblending algorithm is then applied to
+resolve child objects from their parents (defined as the first detection).
+Then a resolve algorithm is applied to extract the best object when multiple
+fields are overlapping.
+
+Flags exist for selection with good galaxies. For example, \texttt{FLAGS1}
+and \texttt{FLAGS2} flags are combined in a 64 bits mask \texttt{FLAGS} to
+know bad object with poor photometry. In the \texttt{Photometry} table,
+there is also a \texttt{clean} for a predefined selection of the most common
+good flags, and facilitate the selection.
+
+There is many problems with photometry, with cases of bright galaxies with
+sky levels not well estimated and missing faint galaxies for example. Most
+of these known problems are corrected in the recent releases (DR9 and DR10).
+
+Old releases worked with a spectrograph of 640 fibers, with collisions at
+55'', while the new BOSS survey works with a 1000 fibers spectrograph but
+with a greater collision size of 64''. The coverage of the old releases
+should be used for the new BOSS, so its better to use latest releases.
+Moreover, the pipeline used for the spectrum had changed and improved along
+releases.
+
+Following definitions given in the SDSS website, we can define two
+coordinate systems in the survey.
+%
 \begin{description}
-    \item[Great Circle:] This coordinates system is define with two angle
-        $(\mu, \nu)$. Coordinates are relatives to one stripe so it can be use
-        when working with galaxies in the region of the stripe we consider.
-        \com{More definitions of this}.
+    \item[Great Circle:] This coordinates system is define with two angles
+        $(\mu, \nu)$. Coordinates are relatives to one stripe so they can be
+        used when working with galaxies inside a stripe region.
 
     \item[Survey Coordinates:] It's an other system similar to celestial
-        coordinates but ``centred'' on the ``block'' of galaxies of the survey that
-        we can see in maps. Coordinates are written $(\eta,\lambda)$. If we use
-        celestial coordinates, we have:
-    \begin{equation}
-            {(0,90°)}_{(\eta,\lambda)}={(275°,0)}_{(\alpha,\delta)}\;\;\;\;
-            {(57.5°,90°)}_{(\eta,\lambda)}={(0,90°)}_{(\alpha,\delta)}
-    \end{equation}
-    It results from this that $-\cfrac{\pi}{2}<\eta<\cfrac{\pi}{2}$ and $-\pi<\lambda<\pi$.
+        coordinates but ``centred'' on the contiguous block of galaxies  of
+        the survey. Coordinates are written $(\lambda, \eta)$. The range of
+        these coordinates is: $-\cfrac{\pi}{2}<\eta<\cfrac{\pi}{2}$ and
+        $-\pi<\lambda<\pi$.
 \end{description}
-
-Wee this informations we can write the transformations between the different
-coordinate systems.
+%
+We will work only with survey coordinates as they allow us to easily define
+a mask for the SDSS\@. The celestial coordinates and survey coordinates are
+the same system of coordinates, except that one is a particular rotation of
+the other. The relation between the two systems can be computed and are:
 %
 \subsubsection{Survey coordinates to celestial coordinates}
 %
-From previous definitions, we see that the relation between those systems is
-just a rotation. So:
 \begin{eqnarray}
-        \delta &=& \arcsin\pg\cos\lambda\sin\pg\eta+32.5°\pd\pd\nonumber\\
-        \alpha &=& \mathrm{atan2}\pg\sin\lambda,\cos\lambda\cos\pg\eta+32.5°\pd\pd+185°\nonumber\\
+    \delta &=& \arcsin\left(\cos\lambda\sin\left(\eta+\delta_0\right)\right)\nonumber\\
+    \alpha &=&
+    \mathrm{atan2}\left(\sin\lambda,\cos\lambda\cos\left(\eta+\delta_0\right)\right)+\lambda_0\nonumber\\
 \end{eqnarray}
+%
+with
+${(\alpha_0,\delta_0)}_{(\alpha,\delta)}={(185°,32.5°)}_{(\alpha,\delta)}={(0,0)}_{(\lambda),
+\eta}$.
 %
 \subsubsection{Celestial coordinates to survey coordinates}
 %
-The inverse transformation is in consequence:
+The inverse transformation is:
+%
 \begin{eqnarray}
-        \eta &=& \mathrm{atan2}\pg\sin\delta,\cos\delta\cos\pg\alpha-\alpha_0\pd\pd-\delta_0\nonumber\\
-        \lambda &=& \arcsin\pg\cos\delta\sin\pg\alpha-\alpha_0\pd\pd\nonumber\\
+    \eta &=& \mathrm{atan2}\left(\sin\delta,\cos\delta\cos\left(\alpha-\alpha_0\right)\right)-\delta_0\nonumber\\
+    \lambda &=& \arcsin\left(\cos\delta\sin\left(\alpha-\alpha_0\right)\right)\nonumber\\
 \end{eqnarray}
-with ${(\alpha_0,\delta_0)}_{(\alpha,\delta)}={(0,0)}_{(\eta,\lambda)}$. We
-have to apply too periodic conditions in the angles founded by the latter
-equation in order to have values in the correct range. So conditions are:
-\begin{eqnarray}
-        \mathrm{Where}&\;& \eta<-90°\;\mathrm{or}\; \eta>90°:\nonumber\\
-        & & \eta\rightarrow\eta+180°\nonumber\\
-        & & \lambda\rightarrow180°-\lambda\nonumber\\
-\end{eqnarray}
-\begin{eqnarray}
-        \mathrm{Where}&\;& \eta>180°:\nonumber\\
-        & & \eta\rightarrow\eta-360°\nonumber\\
-\end{eqnarray}
-\begin{eqnarray}
-        \mathrm{Where}&\;& \lambda>180°:\nonumber\\
-        & & \lambda\rightarrow\lambda-360°\nonumber\\
-\end{eqnarray}
-
-Determining the number of a stripe to which a galaxy pertains is easy too because stripes are organized such they have a constant
-width along the $\eta$ coordinate, with a width of 2.5°. The number of the stripe $n$ of a galaxy with $\eta$ position is:
+%
+with
+${(\alpha_0,\delta_0)}_{(\alpha,\delta)}={(185°,32.5°)}_{(\alpha,\delta)}={(0,0)}_{(\lambda),
+\eta}$. Periodic conditions must be applied to angles found by the latter
+equation:
+%
 \begin{equation}
-        n = \mathrm{floor}\pg\cfrac{\pg\eta+58.75°\pd}{2.5°}\pd
+    \begin{cases}
+        \eta\rightarrow\eta+180° \; \lambda\rightarrow180°-\lambda&
+        \mbox{if} \eta<-90°\;\mbox{or}\; \eta>90°\\
+        \eta\rightarrow\eta-360° &
+        \mbox{if} \eta>180°\\
+        \lambda\rightarrow\lambda-360° &
+        \mbox{if} \lambda>180°\\
+    \end{cases}
 \end{equation}
-
+%
+\subsubsection{Stripe number}
+%
+Stripes have a constant width of 2.5° along the $\eta$ coordinate, with a
+width of 2.5°. So, stripe number $n$ of a galaxy with $\eta$ coordinate is:
+%
+\begin{equation}
+    n = \mathrm{floor}\left(\cfrac{\left(\eta+58.75°\right)}{2.5°}\right)
+\end{equation}
+%
 \subsection{Galaxies selection}
+%
 There are many tables in the SDSS saving galaxies and other objects properties
 extracted from images of the survey. Those tables are the results of different
 selections in objects detected in images. When crossing objects between images
