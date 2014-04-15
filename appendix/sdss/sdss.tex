@@ -112,72 +112,104 @@ width of 2.5°. So, stripe number $n$ of a galaxy with $\eta$ coordinate is:
 %
 \subsection{Galaxies selection}
 %
-There are many tables in the SDSS saving galaxies and other objects properties
-extracted from images of the survey. Those tables are the results of different
-selections in objects detected in images. When crossing objects between images
-of the survey that overlap, there are some differences of positions between the
-same object in the two images. So there are possibilities that an object is
-observed twice or more. In many of those tables, there is no ``double objects''.
+Many tables in the SDSS save galaxies and other objects properties extracted
+from images of the survey. These tables are the results of different
+selections in objects extracted in images. When crossing objects between
+images of the survey that overlap, there are some differences of positions
+between the same object in the two images. So there are possibilities that
+an object is observed twice or more. In many of those tables, there is no
+object duplicated.
 
-The \texttt{Galaxy} view is a selection from the \texttt{PhotoPrimary} for
-objects flagged as \emph{galaxy}. The \texttt{Galaxy} view contains the
-photometric parameters (no redshifts or spectroscopic parameters) measured for
-resolved primary objects. But we have other useful informations to link with
-tables that give us photometric and spectroscopic redshifts. There is the
-\texttt{specobjid} to link with spectroscopic redshifts in the table
-\texttt{SpecObj} which doesn't contain duplicates (it's a clean table of
-\texttt{SpecObjAll} with clean redshifts). If \texttt{specobjid=0}, the galaxy
-doesn't have a spectroscopic redshift. The \texttt{objid} is a link to the
-\texttt{Photoz} table which contains all photometric redshifts for galaxies in
-the \texttt{Galaxy} table. Estimation is based on a robust fit on
-spectroscopically observed objects with similar colors and inclination angle.
-There is also the \texttt{PhotozRF} where estimates are based on the Random
-Forest technique. Galaxies in the \texttt{SpecObj} are limited to $m_r<17.77$
-and a surface brightness selection \com{Add This!!}. So we need to do the same
+In the SDSS database, the \texttt{Galaxy} view is a selection from the
+\texttt{PhotoPrimary} for objects flagged as \emph{galaxy}. The
+\texttt{Galaxy} view contains the photometric parameters (no redshifts or
+spectroscopic parameters) measured for resolved primary objects. But we have
+other useful informations to link with tables that give us photometric and
+spectroscopic redshifts. There is the \texttt{specobjid} to link with
+spectroscopic redshifts in the table \texttt{SpecObj} which doesn't contain
+duplicates (it's a clean table of \texttt{SpecObjAll} with clean redshifts).
+If \texttt{specobjid=0}, the galaxy doesn't have a spectroscopic redshift
+(the galaxy wasn't spectroscoped). The \texttt{objid} is a link to the
+\texttt{Photoz} table which contains all photometric redshifts for galaxies
+in the \texttt{Galaxy} table. Estimation is based on a robust fit on
+spectroscopically observed objects with similar colors and inclination
+angle. There is also the \texttt{PhotozRF} where estimates are based on the
+Random Forest technique. Galaxies in the \texttt{SpecObj} are limited to
+$m_r<17.77$ and a given surface brightness. So we need to apply the same
 flux limitations when selecting galaxies on the \texttt{Galaxy} table. A
-possible SQL query for selecting galaxies in this table and link them with
-redshifts tables could be for spectroscoped galaxies:
+possible \texttt{SQL} query for selecting galaxies in this table and link
+them with redshift tables is for spectroscoped galaxies:
+%
 \begin{listing}[H]
-\begin{minted}[bgcolor=griscode, linenos]{sql}
-select GG.ra, GG.dec, GG.petroMag_u, GG.petroMag_g, GG.petroMag_r,
+    \begin{minted}[bgcolor=griscode, linenos]{sql}
+SELECT GG.ra, GG.dec, GG.petroMag_u, GG.petroMag_g, GG.petroMag_r,
 GG.petroMag_i, GG.petroMag_z, GG.specobjid, GG.objid, Z.z, Z.Zerr
-from Galaxy as GG, SpecObj as Z
-where Z.specobjid=GG.specobjid and GG.specobjid!=0 and GG.petroMag_r<17.77
-and GG.ra<275 and GG.ra>100 and GG.dec>-10 and GG.dec<75
-\end{minted}
+FROM Galaxy AS GG, SpecObj AS Z WHERE Z.specobjid=GG.specobjid AND
+GG.specobjid!=0 AND GG.petroMag_r<17.77 AND GG.ra<275 AND GG.ra>100 AND
+GG.dec>-10 AND GG.dec<75
+    \end{minted}
 \end{listing}
-\noindent and for galaxies which couldn't be spectroscoped:
+%
+and for galaxies which couldn't be spectroscoped:
+%
 \begin{listing}[H]
-\begin{minted}[bgcolor=griscode, linenos]{sql}
-select GG.ra, GG.dec, GG.petroMag_u, GG.petroMag_g, GG.petroMag_r,
+    \begin{minted}[bgcolor=griscode, linenos]{sql}
+SELECT GG.ra, GG.dec, GG.petroMag_u, GG.petroMag_g, GG.petroMag_r,
 GG.petroMag_i, GG.petroMag_z, GG.specobjid, GG.objid, Z.z, Z.Zerr
-from Galaxy as GG, Photoz as Z
-where GG.specobjid=0 and GG.objid=Z.objid and GG.petroMag_r<17.77
-and GG.ra<275 and GG.ra>100 and GG.dec>-10 and GG.dec<75
-\end{minted}
+FROM Galaxy AS GG, Photoz AS Z WHERE GG.specobjid=0
+AND GG.objid=Z.objid AND GG.petroMag_r<17.77 AND GG.ra<275
+AND GG.ra>100 AND GG.dec>-10 AND GG.dec<75
+    \end{minted}
 \end{listing}
 
-Limits of stripes are given in the SDSS table \texttt{StripeDefs} but this
-limits aren't actual limits, they are planned limits when survey started. We
-can see it on the figure (\ref{fig:SDSSspecgalstripes}) where planned limits
-are shown in red and spectroscoped galaxies are the points.
+Stripe limits are given in the table \texttt{StripeDefs} but this
+limits aren't actual, they were planned at the beginning of the survey.
 
-We see that some planned regions aren't still observed (spectroscopically
-speaking). So we need to define other limits in $\lambda$ coordinates for that
-stripes that aren't completes. We find by hand the new limits of stripes which
-contains spectroscoped galaxies. Now, the survey mask is like in figure
-(\ref{fig:SDSSspecgalstripesnew}). We will consider just galaxies in this mask
-in order to find groups in the SDSS\@. Other galaxies aren't easy in order to
-define borders of the survey and find groups.
+Some planned regions aren't still observed, so we need to define other
+limits in $\lambda$ coordinates for not complete stripes. We find by hand
+the new limits of stripes which contains spectroscoped galaxies. Now, the
+survey mask is like in figure (\ref{fig:sdss}). We will
+consider just galaxies in this mask in order to find groups in the SDSS\@.
+%
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=\linewidth]{figures/sdss/SpectroGalStripesSDSSnew.png}
-    \caption{Spectroscoped galaxies in the SDSS DR8 with stripes
-    limits chosen in order to find easily groups at the border of the survey.}
-\label{fig:SDSSspecgalstripesnew}
+    \includegraphics[width=\linewidth]{figures/sdss/sdss.png}
+    \caption{Galaxies in the SDSS DR10 with stripes limits defined by hand.
+    The red lines limits of the stripes make the SDSS mask used to identify
+edges.\label{fig:sdss}}
 \end{figure}
+%
+\subsubsection{Flags in the SDSS}
+%
+Galaxy photometry can have some troubles in the SDSS\@. In the general case,
+those objects are flagged with the \texttt{clean} property which indicates
+by 1 that the photometry is OK and by 0 when there is a problem. Details of
+the problems are in the bit flag. But for groups, we need to select all
+galaxies, even if they are not clean, or our groups will suffer
+incompleteness in their members and their physical properties such as
+luminosity, stellar mass\ldots will be biased.
 
-For fibre collisions galaxies, we use galaxies selected in the table of the
+\texttt{Galaxy} table is a selection from \texttt{PhotoPrimary} view for
+objects with $\mathrm{\texttt{type}}=3$ (galaxy).
+\com{%
+    I think that we don't have to care of the ``good'' photometry of
+    galaxies in the \texttt{Galaxy} view, but we can leave a flag in the
+    group finder algorithm to say if a galaxy is in this case.
+}
+
+However, we have to take into account the error on the redshift estimation
+using the \texttt{zErr}. For photometric redshift, if the \texttt{zErr} is
+too high, we can use the \texttt{nnAvgZ} which is the average redshift of
+galaxies in the neighbourhood of the considered galaxy. It can be better too
+if the photometric redshift is too different from it.
+
+The \texttt{SpecObjAll} contains duplicates and bad datas. But the
+\texttt{SpecObj} contains just clean spectras. The field \texttt{zWarning}
+can be used to decide if we keep a redshift or not.
+%
+\subsection{Fibre collision estimation}
+%
+For fibre collision galaxies, we use galaxies selected in the table of the
 photometric redshifts and keep galaxies that are in the mask defined
 previously. Now we have a sample of galaxies in a region of the SDSS for which
 we can easily characterize borders and where all galaxies, given the flux limit
@@ -188,34 +220,6 @@ tested on a mock catalogue which is ``perfect'' if we don't take in account
 this problem of less robust photometric redshifts. In order to know the
 behaviour of the algorithm with those problematic redshifts, we need to
 implement this in our mock catalogue.
-%
-\subsubsection{Flags in the SDSS}
-%
-Galaxies can have some troubles with photometry due to fit and estimations in
-the SDSS\@. in the general case, those objects are flagged with the
-\texttt{clean} property which indicates by 1 that the photometry is OK
-and by 0 when there is a problem. Details of the problems are in the bit
-flag. But for groups, we need to select all galaxies, whether there are not
-clean.
-
-\texttt{Galaxy} table is a selection from \texttt{PhotoPrimary} view for
-objects with $\mathrm{\texttt{type}}=3$ (galaxy). I think that we don't have to
-care of the ``good'' photometry of galaxies in the \texttt{Galaxy} view, but we
-can leave a flag in the group finder algorithm to say if a galaxy is in this
-case.
-
-However, we have to take into account the error on the redshift estimation
-using the \texttt{zErr}. For photometric redshift I think that if the
-\texttt{zErr} is too high, we can use the \texttt{nnAvgZ} which is the average
-redshift of galaxies in the neighbourhood of the considered galaxy. It can be
-better too if the photometric redshift is too different from it.
-
-The \texttt{SpecObjAll} contains duplicates and bad datas. But the
-\texttt{SpecObj} contains just clean spectras. We use \texttt{zWarning} to
-decide if we keep the redshift (\texttt{zWarning}=0) or not. In the latter
-case, we use the photometric redshift instead.
-%
-\subsection{Fibre collision estimation}
 %
 In the SDSS, obtaining spectroscopic redshifts of galaxies is done using a
 plate of 1.5° diameter, in which there is a certain number of fibres in
@@ -232,7 +236,7 @@ two galaxies. As expected, the number of galaxies which are closer than
 overlapping of runs can permit to get redshifts for galaxies behind this limit.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/sdss/distredSDSSDR8}
+    \includegraphics[width=0.6\linewidth]{figures/sdss/plane.pdf}
     \caption{\footnotesize{}Distribution of spectroscoped galaxies in the SDSS DR8 in angular size and redshift differences with
     the nearest neighbour galaxy.}
 \label{fig:angreddist}
@@ -248,7 +252,7 @@ neighbourhood of 1.5° of a galaxy, and in the same time, we determine the
 fraction of galaxies that don't have a spectroscopic redshift. We deduce of
 this a relation between the density field and the fraction of fibre collisions.
 In the mock catalogue, we compute the same density field and we apply the
-relation estimated in the SDSS sample to the mock.\com{Do it!!} We need for
+relation estimated in the SDSS sample to the mock. We need for
 each galaxy to count the fraction of non spectroscoped galaxies in a region of
 1.5° radius around. We have to remove galaxies that are to close of the
 border of the survey, because if we don't remove those galaxies, there are some
