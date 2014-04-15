@@ -209,203 +209,134 @@ can be used to decide if we keep a redshift or not.
 %
 \subsection{Fibre collision estimation}
 %
-For fibre collision galaxies, we use galaxies selected in the table of the
-photometric redshifts and keep galaxies that are in the mask defined
-previously. Now we have a sample of galaxies in a region of the SDSS for which
-we can easily characterize borders and where all galaxies, given the flux limit
-of the SDSS, are presents. There is just the problem of fibre collisions
-galaxies for which the redshift in our possession is photometric, in
-consequence less precise than spectroscopic redshifts. But our algorithm is
-tested on a mock catalogue which is ``perfect'' if we don't take in account
-this problem of less robust photometric redshifts. In order to know the
-behaviour of the algorithm with those problematic redshifts, we need to
-implement this in our mock catalogue.
-%
+We need a sample of galaxies for which we can easily characterize borders
+and where all galaxies, given the flux limit of the survey, are presents.
+But there is the problem of fibre collisions galaxies But our algorithm is
+tested on a ``perfect'' mock catalogue. In order to know the behaviour of
+the algorithm with these problematic galaxies, we need to implement this in
+our mock catalogue.
+
 In the SDSS, obtaining spectroscopic redshifts of galaxies is done using a
 plate of 1.5° diameter, in which there is a certain number of fibres in
-order to get spectrum of the galaxy. But in the field of the plate, the number
-of fibres is limited, and the number of coverings of a portion of the sky is
-limited too because of the time needed to obtain a spectrum. Although runs may
-overlap, there is sometime galaxies that can't be spectroscoped. Moreover,
-fibres have a dimension of 55'', so when galaxies are closer than this
-size, one (or more) of those galaxies aren't spectroscoped. We can see that in
-the figure (\ref{fig:angreddist}) where we have taken the nearest neighbour of a
-galaxy and determined the differences in angular size and redshift between the
-two galaxies. As expected, the number of galaxies which are closer than
-55'' decreases dramatically. There are still some galaxies because the
-overlapping of runs can permit to get redshifts for galaxies behind this limit.
+order to get spectrum of the galaxy. But in the plate, the number of fibres
+is limited. Moreover, each portion of the sky can't be respectroscoped
+multiple times, because spectrum are acquired slowly. Although runs may
+overlap, there are galaxies that can't be spectroscoped. Indeed, fibres have
+a dimension of 55''. When galaxies are closer than this distance, one (or
+more) of those galaxies aren't spectroscoped. We can see that in the figure
+(\ref{fig:plane}) where we have taken the nearest neighbour of a galaxy
+on the celestial sphere, and determined the differences in angular size and
+redshift between the two galaxies. As expected, the number of galaxies which
+are closer than 55'' decreases dramatically. There are still some galaxies
+because the overlapping of runs can permit to get redshifts for galaxies
+behind this limit.
+%
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\linewidth]{figures/sdss/plane.pdf}
-    \caption{\footnotesize{}Distribution of spectroscoped galaxies in the SDSS DR8 in angular size and redshift differences with
-    the nearest neighbour galaxy.}
-\label{fig:angreddist}
+    \caption{\footnotesize{}Distribution of spectroscoped galaxies in the
+    SDSS DR8 in angular size and redshift differences with the nearest
+neighbour galaxy.\label{fig:plane}}
 \end{figure}
+%
+A consequence is that in denser regions, the number of fibre collision
+increases, affecting more our groups analysis.
 
-A consequence of those problems is that in denser regions, the number of fibre
-collision increases, affecting more our groups analysis because the number of
-photometric redshifts is higher in those dense regions.
+We tried to implement this selection effect in our mock catalogue. For that
+we computed the local density in the field, taking all galaxies
+(spectroscoped or not) in the neighbourhood of 1.5° of each galaxy, and in
+the same time, we determine the fraction of galaxies that don't have a
+spectroscopic redshift. We expected to deduce a relation between the density
+field and the fraction of fibre collisions. In the mock catalogue, we will
+compute the same density field and we apply the relation estimated in the
+SDSS sample to the mock. We need for each galaxy to count the fraction of
+non spectroscoped galaxies in a region of 1.5° radius around. We have to
+remove galaxies that are close to survey edges, because if we don't, there
+are missing galaxies and the fraction will be affected. The way of selecting
+those galaxies is to compute a circle of 1.5° around a galaxy, and if a
+generated point is out of the survey, the galaxy is defined as to be closer
+to the limits.
 
-We need to implement this selection effect in our mock catalogue. For that we
-compute the local density in the field, taking all galaxies in the
-neighbourhood of 1.5° of a galaxy, and in the same time, we determine the
-fraction of galaxies that don't have a spectroscopic redshift. We deduce of
-this a relation between the density field and the fraction of fibre collisions.
-In the mock catalogue, we compute the same density field and we apply the
-relation estimated in the SDSS sample to the mock. We need for
-each galaxy to count the fraction of non spectroscoped galaxies in a region of
-1.5° radius around. We have to remove galaxies that are to close of the
-border of the survey, because if we don't remove those galaxies, there are some
-regions with missing galaxies and the fraction estimation will be affected. The
-way of selecting those galaxies is to compute a circle of 1.5° around a
-galaxy, and if a generated point is out of the survey, the galaxy is defined as
-to be closer to the limits.
+\remark{%
+    We can generate samples of points at an angular distance $d$ to a point
+    of coordinate $(\alpha_0,\delta_0)$ using formulas of the spherical
+    triangle. If we define a triangle by the pole, the point
+    $(\alpha_0,\delta_0)$ and the point whose we want coordinates
+    $(\alpha,\delta)$, we can write the following relations using the
+    spherical triangle and its dual:
+    %
+    \begin{eqnarray}
+        \sin\delta&=&\sin\delta_0\cos d + \cos\delta_0\sin d
+        \cot\gamma\nonumber\\
+        \sin\delta_0\cos\gamma&=&\cos\delta_0\cot{d}-\sin\gamma\cot\left(\alpha-\alpha_0\right)\nonumber\\
+    \end{eqnarray}
+    %
+    where $\gamma$ is like a polar angle, which have all the values between 0
+    and $2\pi$. We can rewrite:
+    %
+    \begin{eqnarray}
+        \delta &=&
+        \arcsin\left(\sin\delta_0\cos d + \cos\delta_0\sin d\cos\gamma\right)\nonumber\\
+        \alpha-\alpha_0 &=& \arctan\left(\cfrac{\sin\gamma}{\cos\delta_0\cot{d}-\sin\delta_0\cos\gamma}\right)\nonumber\\
+    \end{eqnarray}
+    %
+    There are problems at poles. For a $\gamma_0$ limit, angles can't be recovered
+    with above formulas. Indeed, the problem appears when
+    $\tan\Delta\alpha\rightarrow\infty$. So:
+    %
+    \begin{equation}
+        \cos\delta_0\cot d -\cos\gamma_0\sin\delta_0 = 0
+    \end{equation}
+    %
+    implying:
+    \begin{equation}
+        \cos\gamma_0=\cfrac{1}{\tan d\tan\delta_0}
+    \end{equation}
+    %
+    So to handle these limit cases, we summarize the correction for the
+    differences in right ascensions by:
+    %
+    \begin{eqnarray}
+        \Delta\alpha \rightarrow \Delta\alpha+\pi &\mathrm{if}&
+        \mathrm{sign}\left(\delta_0\right)\cos\gamma \geqslant
+        \mathrm{sign}\left(\delta_0\right)\cos\gamma_0\nonumber\\
+    \end{eqnarray}
+    %
 
-We can generate samples of points at an angular distance $d$ to a point of
-coordinate $(\alpha_0,\delta_0)$ using formulas of the spherical triangle. If
-we define a triangle by the pole, the point $(\alpha_0,\delta_0)$ and the point
-whose we want coordinates $(\alpha,\delta)$ denoted $M$, we can write the
-following relations:
+    An other way to draw circles in the sphere is to consider the point for
+    which we want to know celestial coordinates around a given angular
+    distance as the pole of a new coordinate system. In this system, points
+    at given distance of our central point are just points with
+    $\pi/2-\delta$ and $\alpha$ running between 0 and $2\pi$. We now can
+    determine cartesian coordinates of those points in this system and apply
+    a rotation to go from the ``real'' system and the system where the
+    central point is the pole. This can be easily done if we know the axis
+    of rotation and the angle using quaternions, numerically better than
+    Euler angles.
+}
 %
-\begin{eqnarray}
-        \sin\pg\alpha-\alpha_0\pd&=&\cfrac{\sin{d}\sin\gamma}{\cos\delta}\nonumber\\
-        \sin\delta_0\cos\gamma&=&\cos\delta_0\cot{d}-\sin\gamma\cot\pg\alpha-\alpha_0\pd\nonumber\\
-\end{eqnarray}
-%
-where $\gamma$ is like a polar angle, which have all the values between 0 and $2\pi$.
-So we have now:
-%
-\begin{eqnarray}
-        \alpha-\alpha_0 &=& \arctan\pg\cfrac{\sin\gamma}{\cos\delta_0\cot{d}-\sin\delta_0\cos\gamma}\pd\nonumber\\
-        \delta &=& \arccos\pg\cfrac{\sin{d}\sin\gamma}{\sin\pg\alpha-\alpha_0\pd}\pd\nonumber\\
-\end{eqnarray}
-%
-There are problems in poles and equator with those formulas. For a $\gamma$
-limit, angles can't be recovered with those formulas. We have in those cases:\\
-with $\gamma_0=\arccos\pg\cfrac{-\sin\delta_0\cos{d}}{\cos\delta_0\sin{d}}\pd$
-%
-\begin{eqnarray}
-        \mathrm{Where}&\;& \delta_0-d<0\; \mathrm{and} \;\delta_0>0 \; \mathrm{and}\; \gamma_0<\gamma<2\pi-\gamma_0:\nonumber\\
-        & & \delta\rightarrow-\delta\nonumber\\
-\end{eqnarray}
-%
-\begin{eqnarray}
-        \mathrm{Where}&\;& \delta_0+d>0\; \mathrm{and}\;\delta_0<0 \; \mathrm{and}\; \gamma_0>\gamma\;\mathrm{or}\;\gamma>2\pi-\gamma_0:\nonumber\\
-        & & \delta\rightarrow-\delta\nonumber\\
-\end{eqnarray}
-%
-with $\gamma_0=\arccos\pg\cfrac{\cos\delta_0\cot{d}}{\sin\delta_0}\pd$
-%
-\begin{eqnarray}
-        \mathrm{Where}&\;& \delta_0+d>\cfrac{\pi}{2} \; \mathrm{and}\; \gamma_0>\gamma:\nonumber\\
-        & & \delta\rightarrow\alpha+\pi\nonumber\\
-        & & \alpha\rightarrow\pi-\delta\nonumber\\
-\end{eqnarray}
-%
-\begin{eqnarray}
-        \mathrm{Where}&\;& \delta_0+d>\cfrac{\pi}{2} \; \mathrm{and}\; \gamma>2\pi-\gamma_0:\nonumber\\
-        & & \delta\rightarrow\alpha-\pi\nonumber\\
-        & & \alpha\rightarrow\pi-\delta\nonumber\\
-\end{eqnarray}
-%
-\begin{eqnarray}
-        \mathrm{Where}&\;& \delta_0-d<-\cfrac{\pi}{2} \; \mathrm{and}\; \gamma_0<\gamma<2\pi-\gamma_0:\nonumber\\
-        & & \delta\rightarrow\alpha+\pi\nonumber\\
-        & & \alpha\rightarrow-\pi-\delta\nonumber\\
-\end{eqnarray}
+We didn't see the trend we expected with the density field, so we thought
+that it can be due to the large area in which we compute the fraction of
+spectroscoped galaxies and we ran the same with a radius of 0.3°, but
+without success too.
 
-An other way to draw circles in the sphere is to consider the point for which
-we want to know celestial coordinates around a given angular distance as the
-pole of a new coordinate system. In this system, points at given distance of
-our central point are just points with $\pi/2-\delta$ and $\alpha$ running
-between 0 and $2\pi$. We now can determine cartesian coordinates of
-those points in this system and apply a rotation to go from the ``real'' system
-and the system where the central point is the pole. In the new system we have:
-%
-\begin{eqnarray}
-        X'&=&r\cos\alpha'\cos\delta' \nonumber\\
-        Y'&=&-r\sin\alpha'\cos\delta' \nonumber\\
-        Z'&=&r\sin\delta' \nonumber\\
-\end{eqnarray}
-%
-Then the rotation matrix to go from the ``real'' system to the new is:
-%
-\begin{equation}
-    R =
-    \begin{pmatrix}
-    \cos\pg\cfrac{\pi}{2}-\delta_0\pd\cos\alpha_0 & \sin\alpha_0 & \sin\pg\cfrac{\pi}{2}-\delta_0\pd\cos\alpha_0 \\
-    -\cos\pg\cfrac{\pi}{2}-\delta_0\pd\sin\alpha_0 & \cos\alpha_0 & -\sin\pg\cfrac{\pi}{2}-\delta_0\pd\sin\alpha_0 \\
-    -\sin\pg\cfrac{\pi}{2}-\delta_0\pd & 0 & \cos\pg\cfrac{\pi}{2}-\delta_0\pd \\
-    \end{pmatrix}
-\end{equation}
-%
-with $\vec{X}=R\vec{X'}$ where $\vec{X}=(X,Y,Z)$. Then we have just to convert
-those coordinates in celestial angles using:
-%
-\begin{equation}
-        \alpha=\left\{ \begin{array}{lcr}
-                         -\mbox{arctan2}(Y,X)+2\pi & \mbox{if} & Y>0 \\
-                         -\mbox{arctan2}(Y,X) & \mbox{else} & \\
-                        \end{array}\right.\nonumber%
-\end{equation}
-%
-\begin{equation}
-        \delta=\mbox{sign}(Z)\arccos\left(\frac{\sqrt{X^2+Y^2}}{\sqrt{X^2+Y^2+Z^2}}\right)
-\end{equation}
+Moreover, including photometric redshifts in the mock catalogue and in
+MAGGIE is very complex. For example, we measured the bias and dispersion of
+the distribution of differences between spectrocoped and photometric
+redshifts in the SDSS\@. While the dispersion remains roughly constant, the
+bias increases with the spectroscoped redshift. So some effects are not
+still under control when computing photometric redshifts, and we should
+avoid their utilization in any galaxy group algorithm.
 %
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/sdss/FracNonSpec.png}
-    \caption{Fraction of galaxies non-spectroscoped in the SDSS versus the local density field computed in a
-    1.5° radius region around galaxies not to close than this radius to the border of the survey. Density is in unit of galaxies
-    per degree$^2$.}
-\label{fig:fracnonspec}
-\end{figure}
-%
-Fibre collisions are more probable in dense region of the sky in projection,
-but for the mock catalogue we need to quantify this. In order to do that, we
-have selected for all galaxies in the SDSS survey as defined previously
-galaxies that are closer than 1.5° in angular size, which is the radius
-of a plate used for spectroscopy in the SDSS\@. With that, we can estimate the
-local density field $\Sigma_{1.5°}$ in unit of number of galaxies per
-degree$^2$. In this selection, we can determine which galaxies had been
-spectroscoped or not, and so we can estimate the fraction of non-spectroscoped
-galaxies. We remove for computing it galaxies that are to close of the border
-of the survey, and so galaxies which are closer than the radius selected can't
-be used to search neighbours because some galaxies may be missed and can affect
-our estimations. Results are shown in the figure (\ref{fig:fracnonspec}). We
-can't see the trend we have expected with the density field, so we thought that
-it can be due to the large region in which we consider galaxies and we ran the
-same with a radius of 0.3°. Results are in figure
-(\ref{fig:fracnonspec0.3}).
-%
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.6\linewidth]{figures/sdss/FracNonSpec03.png}
-    \caption{Fraction of galaxies non-spectroscoped in the SDSS versus the
-    local density field computed in a 0.3° radius region around galaxies not to
-close than this radius to the border of the survey. Density is in unit of
-galaxies per degree$^2$.}
-\label{fig:fracnonspec0.3}
-\end{figure}
-
-In order to decide which redshift to assign to a galaxy in the mock catalogue
-which has been chosen to have a photometric redshift, we have estimated the
-distribution of photometric redshifts versus the spectroscopic redshift in the
-SDSS sample of spectroscoped galaxies. Results show that a normal distribution
-is a well fit for those distributions, so we get for this parameters in figure
-(\ref{fig:evolnormred}).
-%
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/sdss/EvolErrZphotSDSSDR8EqualBins}
+    \includegraphics[width=0.8\linewidth]{figures/sdss/redshift_difference.pdf}
     \caption{Parameters of a normal distribution for photometric redshifts
-    versus spectroscopic redshifts in the SDSS.}
-\label{fig:evolnormred}
+    versus spectroscopic redshifts in the SDSS\@.}
+\label{fig:redshift_difference}
 \end{figure}
-
-In the mock catalogue, we have interpolated this parameters and we assign a
-photometric redshift for a galaxy chosen to be in fibre collision.
+%
+\note{Redo this graph}
 %
 \section{Coverage of the SDSS}
 %
