@@ -76,7 +76,7 @@
 % Define the geometry of the thesis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \geometry{inner=1.5cm, outer=3.5cm, includefoot=true}
-\geometry{headsep=0cm, headheight=53pt}
+\geometry{headsep=0cm, headheight=53pt, textheight=650pt}
 \geometry{footskip=-3cm}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,7 +178,9 @@
 \setlength{\bartsquare}{\marginparwidth}% impose square length
 \makeatletter%
 \newcommand{\thethumbnail}{}
-\newcommand{\thepagenumberstyle}{\thechapterheadfont\color{red!60!black}}
+\newcommand{\thepagenumberfont}{\fontfamily{ugq}\fontsize{24pt}{30pt}\selectfont}
+\newcommand{\bartpagenumberfont}[1]{\renewcommand*{\thepagenumberfont}{#1}}
+\newcommand{\thepagenumberstyle}{\thepagenumberfont\color{red!60!black}}
 \newcommand{\bartthumb}[1]{\renewcommand*{\thethumbnail}{#1}}
 \newcommand{\bartpagenumber}{%
     \begin{tikzpicture}[overlay,remember picture]
@@ -566,7 +568,7 @@ text=orange, opacity=0.5, text opacity=1]
                 opacity=#4,
                 drop shadow,
                 rounded corners=#5,
-                shift={(0.,1em)},
+                shift={(0.,20pt)},
                 inner sep=10pt
             ] at (0.,0.) {{\color{#3}#1}};
     \end{tikzpicture}
