@@ -26,7 +26,7 @@ Making the change of variable $u=1/t$ and defining
 $s=\sqrt{3}{(1-\Omega_m)/\Omega_m}$ gives us:
 %
 \begin{equation}
-    d_L(z)=\cfrac{c(1+z)}{H_0\sqrt{s\Omega_m}}\left[T(s)-T\pg\cfrac{s}{1+z}\pd\right]
+    d_L(z)=\cfrac{c(1+z)}{H_0\sqrt{s\Omega_m}}\left[T(s)-T\left(\cfrac{s}{1+z}\right)\right]
 \end{equation}
 %
 with
@@ -59,23 +59,24 @@ where
 \subsection{Algorithm}
 %
 \section{Incomplete gamma function}
+\label{sec:gamma}
 %
 \subsection{Introduction}
 %
 By default, many algorithm used to compute incomplete gamma function doesn't
 allowed to have negative parameters. By definition, the incomplete gamma
-function $\Gamma\pg{a,x}\pd$ is:
+function $\Gamma\left({a,x}\right)$ is:
 %
 \begin{equation}
-    \Gamma\pg{a,x}\pd=\int_x^\infty{e^{-t}{t^{a-1}}\dd{t}}
+    \Gamma\left({a,x}\right)=\int_x^\infty{e^{-t}{t^{a-1}}\dd{t}}
 \end{equation}
 %
 when $a\leq0$, we can't compute this function with usual algorithms. Moreover,
 we need to used an algorithm which doesn't use the ``simple'' gamma function
-$\Gamma\pg{a}\pd$:
+$\Gamma\left({a}\right)$:
 %
 \begin{equation}
-    \Gamma\pg{a}\pd=\int_0^\infty{e^{-t}{t^{a-1}}\dd{t}}
+    \Gamma\left({a}\right)=\int_0^\infty{e^{-t}{t^{a-1}}\dd{t}}
 \end{equation}
 %
 Indeed this function have singularities for negative values of $a$ where $a$ is
@@ -84,8 +85,7 @@ an integer, as we can see in figure (\ref{fig:gamma}).
 \begin{figure}[hbtp]
     \centering
     \includegraphics[width=0.5\linewidth]{figures/gamma/gamma}
-    \caption{\footnotesize{}The gamma function.}
-\label{fig:gamma}
+    \caption{The gamma function.\label{fig:gamma}}
 \end{figure}
 %
 So we need an algorithm which not involves to use the gamma function for
@@ -99,13 +99,13 @@ The best way to compute the incomplete gamma function for $a$ negative values
 is to use recurrence relations. Let us define:
 %
 \begin{equation}
-    \Gamma\pg{a+1,x}\pd=\int_x^\infty{e^{-t}{t^{a}}\dd{t}}
+    \Gamma\left({a+1,x}\right)=\int_x^\infty{e^{-t}{t^{a}}\dd{t}}
 \end{equation}
 %
 Defining $u'=e^{-t}$ and $v=t^a$, we can use integration by parts:
 %
 \begin{equation}
-    \Gamma\pg{a+1,x}\pd={\left[-e^{-t}{t^a}\right]}_x^\infty + a \int_x^\infty{e^{-t}{t^{a-1}}\dd{t}}
+    \Gamma\left({a+1,x}\right)={\left[-e^{-t}{t^a}\right]}_x^\infty + a \int_x^\infty{e^{-t}{t^{a-1}}\dd{t}}
 \end{equation}
 %
 The all integrated part is always zero for all values of $a$ at infinity, and
@@ -114,14 +114,14 @@ the definition of the incomplete gamma function. So the recurrence relation for
 the incomplete gamma function is:
 %
 \begin{equation}
-    \Gamma\pg{a+1,x}\pd=e^{-x}{x^a} + a \Gamma\pg{a,x}\pd
+    \Gamma\left({a+1,x}\right)=e^{-x}{x^a} + a \Gamma\left({a,x}\right)
 \end{equation}
 %
 We can see that computing the incomplete gamma function for $a<=0$ can be done
 with a recursive function using the function at higher values of $a$.
 %
 \begin{equation}
-    \Gamma\pg{a,x}\pd= \cfrac{\Gamma\pg{a+1,x}\pd - e^{-x}{x^a}}{a}
+    \Gamma\left({a,x}\right)= \cfrac{\Gamma\left({a+1,x}\right) - e^{-x}{x^a}}{a}
 \end{equation}
 %
 The previous equation shows that there is still a problem for integer values of
@@ -130,20 +130,20 @@ value of 0 for $a$ which create problems. If we refer to
 \citet{abramowitz+stegun}, the definition of the elliptical integral is:
 %
 \begin{equation}
-    E_n\pg{z}\pd=\int_1^\infty{e^{-zt}}{t^{-n}}\dd{t}
+    E_n\left({z}\right)=\int_1^\infty{e^{-zt}}{t^{-n}}\dd{t}
 \end{equation}
 %
 for integer values of $n$. If we change the variable in the integral to
 $t'=zt$, we can rewrite the equation to have:
 %
 \begin{equation}
-    E_n\pg{z}\pd={z^{n-1}}\Gamma\pg{1-n,z}\pd
+    E_n\left({z}\right)={z^{n-1}}\Gamma\left({1-n,z}\right)
 \end{equation}
 %
 so:
 %
 \begin{equation}
-    \Gamma\pg{a,x}\pd={x^a}E_{1-a}\pg{x}\pd
+    \Gamma\left({a,x}\right)={x^a}E_{1-a}\left({x}\right)
 \end{equation}
 %
 for $a\leq0$ and $a$ integer. Now we have a good computation for the incomplete
@@ -156,17 +156,17 @@ zero.
 An other definition of the incomplete gamma function is:
 %
 \begin{equation}
-    \Gamma\pg{a,x}\pd=\Gamma\pg{a}\pd-\gamma\pg{a,x}\pd=\Gamma\pg{a}\pd\pg{1-P\pg{a,x}\pd}\pd
+    \Gamma\left({a,x}\right)=\Gamma\left({a}\right)-\gamma\left({a,x}\right)=\Gamma\left({a}\right)\left({1-P\left({a,x}\right)}\right)
 \end{equation}
 %
 with:
 %
 \begin{equation}
-    \gamma\pg{a,x}\pd=\int_0^x{e^{-t}{t^{a}}\dd{t}}
+    \gamma\left({a,x}\right)=\int_0^x{e^{-t}{t^{a}}\dd{t}}
 \end{equation}
 %
 In \citet{NumericalRecipes} exists a precise computation of the function
-$P\pg{a,x}\pd$. We can remark that this function isn't needed in the recursion
+$P\left({a,x}\right)$. We can remark that this function isn't needed in the recursion
 if we have already access to a function which compute the incomplete gamma
 function for positive values of $a$.
 
