@@ -2,131 +2,191 @@
 \bartthumb{thumb_formulas}
 \chapter{Formulas}
 
-%\minitoc%
-
 \section{Introduction}
 
-In this appendix are described the formulas used in all computations realized during my thesis. Its just a simple way to share and
-verify that the job id done correctly. References to those formulas are indicated too, in order to improve search when some doubts
-are presents.\comments{Add a little more in the introduction.}
+In this appendix are described the formulas used in all computations realized
+during my thesis. Its just a simple way to share and verify that the job id
+done correctly. References to those formulas are indicated too, in order to
+improve search when some doubts are presents.\comments{Add a little more in the
+introduction.}
 
 \section{Formulas}
 
 \subsection{Cosmology}
+
 Formulas which are related to the cosmology.
 
 \noindent\rule{\linewidth}{1pt}
-The luminosity distance is defined as the relation between the galaxy flux $S$ and its absolute luminosity
-$L$ by:
+%
+The luminosity distance is defined as the relation between the galaxy flux $S$
+and its absolute luminosity $L$ by:
+%
 \begin{equation}
 	d_{\mathrm{lum}}=\sqrt{\cfrac{L}{4\pi{S}}}
 \end{equation}
-An analytical precise computations isn't possible, but numerical computations exist. Although precise, numerical recipes aren't
-sufficiently fast in practice. Some other analytical approximations of this distance was created.
+%
+An analytical precise computations isn't possible, but numerical computations
+exist. Although precise, numerical recipes aren't sufficiently fast in
+practice. Some other analytical approximations of this distance was created.
 
-For example, in \citet{WU10}, an approximation good to 0.3\% is available for a range of values in $\Omega_\Lambda$ compatible
-with WMAP and Planck results.In this approximation we have:
+For example, in \citet{WU+10}, an approximation good to 0.3\% is available for
+a range of values in $\Omega_\Lambda$ compatible with WMAP and Planck
+results.In this approximation we have:
+%
 \begin{equation}
-	d_{\mathrm{lum}}\pg{z}\pd=\cfrac{c}{3H_0}\cfrac{1+z}{\Omega_\Lambda^{1/6}\pg{1-\Omega_\Lambda}\pd^{1/3}}[\Psi\pg{x\pg{0,\Omega_\Lambda}\pd}\pd-\Psi\pg{x\pg{z,\Omega_\Lambda}\pd}\pd]
+	d_{\mathrm{lum}}\left({z}\right) = \cfrac{c}{3H_0}
+    \cfrac{1+z}{\Omega_\Lambda^{1/6}
+    {\left({1-\Omega_\Lambda}\right)}^{1/3}}\left[\Psi\left({x\left({0,\Omega_\Lambda}\right)}\right)-\Psi\left({x\left({z,\Omega_\Lambda}\right)}\right)\right]
 \end{equation}
+%
 with:
+%
 \begin{equation}
-	\Psi\pg{x}\pd=3x^{1/3}{2^{2/3}}\left[1-\cfrac{x^2}{252}-\cfrac{x^4}{21060}\right]\\
+	\Psi\left({x}\right)=3x^{1/3}{2^{2/3}}\left[1-\cfrac{x^2}{252}-\cfrac{x^4}{21060}\right]\\
 \end{equation}
+%
 \begin{equation}
-	x\pg{\alpha}\pd=\ln\pg{\alpha+\sqrt{\alpha^2+1}}\pd\\
+	x\left({\alpha}\right)=\ln\left({\alpha+\sqrt{\alpha^2+1}}\right)\\
 \end{equation}
+%
 \begin{equation}
-	\alpha\pg{z,\Omega_\Lambda}\pd=1+2\cfrac{\Omega_\Lambda}{1-\Omega_\Lambda}\cfrac{1}{\pg1+z\pd^3}
+	\alpha\left({z,\Omega_\Lambda}\right) = 1+2\cfrac{\Omega_\Lambda}
+    {1-\Omega_\Lambda}\cfrac{1}{{\left(1+z\right)}^3}
 \end{equation}
-The other distances are simply linked to this luminosity distance. The angular distance $d_{\mathrm{ang}}$ and the proper distance
-$d_{\mathrm{pm}}$ are $d_{\mathrm{lum}}(z)={(1+z)}^2d_{\mathrm{ang}}(z)=(1+z)d_{\mathrm{pm}}(z)$.
+%
+The other distances are simply linked to this luminosity distance. The angular
+distance $d_{\mathrm{ang}}$ and the proper distance $d_{\mathrm{pm}}$ are
+$d_{\mathrm{lum}}(z)={(1+z)}^2d_{\mathrm{ang}}(z)=(1+z)d_{\mathrm{pm}}(z)$.
 
 \noindent\rule{\linewidth}{1pt}
-The element of comoving volume is expressed using the Robertson-Walker metric as:
+%
+The element of comoving volume is expressed using the Robertson-Walker metric
+as:
+%
 \begin{equation}
-	\dd{V}=\cfrac{c}{H\pg{z}\pd}{d_{\mathrm{pm}}\pg{z}\pd}^2\dd{\Omega}\dd{z}
+	\dd{V}=\cfrac{c}{H\left({z}\right)}{d_{\mathrm{pm}}\left({z}\right)}^2\dd{\Omega}\dd{z}
 \end{equation}
 
 \noindent\rule{\linewidth}{1pt}
+%
 The evolution of the fraction of matter, and dark energy is the following:
+%
 \begin{equation}
-	\Omega_m\pg{z}\pd=\Omega_{m,0}\cfrac{\pg1+z\pd^3}{E\pg{z}\pd^2}
+	\Omega_m\left({z}\right)=\Omega_{m,0}
+    \cfrac{{\left(1+z\right)}^3}{E{\left({z}\right)}^2}
 \end{equation}
+%
 \begin{equation}
-	\Omega_\Lambda\pg{z}\pd=\cfrac{\Omega_{\Lambda,0}}{E\pg{z}\pd^2}
+	\Omega_\Lambda\left({z}\right) =
+    \cfrac{\Omega_{\Lambda,0}}{E{\left({z}\right)}^2}
 \end{equation}
-where $z$ is the redshift and the subscript 0 refers to the actual value of the parameter.
+%
+where $z$ is the redshift and the subscript 0 refers to the actual value of the
+parameter.
 
 \noindent\rule{\linewidth}{1pt}
-The distance modulus represents the magnitude difference betweenthe observed flux of the galaxy and it would be if the galaxy was at
-a distance of 10$pc$. So it's:
+%
+The distance modulus represents the magnitude difference betweenthe observed
+flux of the galaxy and it would be if the galaxy was at a distance of 10$pc$.
+So it's:
+%
 \begin{equation}
-	DM\pg{z}\pd=5\log_{10}\pg\cfrac{d_{\mathrm{lum}}\pg{z}\pd}{10pc}\pd%
+	DM\left({z}\right)=5\log_{10}\left(\cfrac{d_{\mathrm{lum}}\left({z}\right)}{10pc}\right)%
 \end{equation}
-where $z$ is the redshift of the galaxy and $d_{\mathrm{lum}}$ is the luminosity distance.
+%
+where $z$ is the redshift of the galaxy and $d_{\mathrm{lum}}$ is the
+luminosity distance.
 
 \noindent\rule{\linewidth}{1pt}
-The apparent magnitude $m$ of galaxy in the perfect case where isn't K-correction, extinction\ldots, is just:
+%
+The apparent magnitude $m$ of galaxy in the perfect case where isn't
+K-correction, extinction\ldots, is just:
+%
 \begin{equation}\label{eq:magappdm}
-	m=M+DM\pg{z}\pd%
+	m=M+DM\left({z}\right)%
 \end{equation}
-where $M$ is the absolute magnitude of this galaxy in the same band of $m$ and $DM(z)$ is the distance modulus at redshift $z$.
+%
+where $M$ is the absolute magnitude of this galaxy in the same band of $m$ and
+$DM(z)$ is the distance modulus at redshift $z$.
 
 \noindent\rule{\linewidth}{1pt}
-Magnitudes are defined at a given constant which is the same for each object so:
+%
+Magnitudes are defined at a given constant which is the same for each object
+so:
+%
 \begin{equation}
-	M-M_\odot=-2.5\log_{10}\pg\cfrac{L}{L_\odot}\pd%
+	M-M_\odot=-2.5\log_{10}\left(\cfrac{L}{L_\odot}\right)%
 \end{equation}
-where $M$ is absolute magnitude, $L$ the luminosity of the object and $\odot$ refers to Sun's quantities.
-We can determined the luminosity by this relation which gives:
+%
+where $M$ is absolute magnitude, $L$ the luminosity of the object and $\odot$
+refers to Sun's quantities. We can determined the luminosity by this relation
+which gives:
+%
 \begin{equation}
-	\cfrac{L}{L_\odot}=10^{0.4\pg{M_\odot-M}\pd}
+	\cfrac{L}{L_\odot}=10^{0.4\left({M_\odot-M}\right)}
 \end{equation}
 
 \noindent\rule{\linewidth}{1pt}
-For galaxies at a given redshift $z$, we can see all galaxies with an absolute magnitude
-lower than (using equation (\ref{eq:magappdm})):
+%
+For galaxies at a given redshift $z$, we can see all galaxies with an absolute
+magnitude lower than (using equation (\ref{eq:magappdm})):
+%
 \begin{equation}
-	m_{\mathrm{lim}}=M+DM\pg{z}\pd%
+    m_{\lim}=M+DM\left({z}\right)%
 \end{equation}
-where $m_{\mathrm{\lim}}$ is the apparent magnitude limit for a survey, and $M$ is the
-absolute magnitude threshold to be seen at this redshift.
+%
+where $m_{\mathrm{\lim}}$ is the apparent magnitude limit for a survey, and $M$
+is the absolute magnitude threshold to be seen at this redshift.
 
 \noindent\rule{\linewidth}{1pt}
-The virial radius $r_\Delta$ is defined as the radius at which the density is $\Delta$ times the critical density of the Universe.
-So we have:
+%
+The virial radius $r_\Delta$ is defined as the radius at which the density is
+$\Delta$ times the critical density of the Universe. So we have:
+%
 \begin{equation}\label{eq:radcrit}
-	\rho\pg{r_\Delta}\pd=\Delta\rho_c
+	\rho\left({r_\Delta}\right)=\Delta\rho_c
 \end{equation}
-with $\rho_c=\cfrac{3H\pg{z}\pd^2}{8\pi{G}}$.
+%
+with $\rho_c=\cfrac{3H{\left({z}\right)}^2}{8\pi{G}}$.
 
 If we suppose that the density is constant in this radius, we have:
+%
 \begin{equation}
-	\Delta\cfrac{3H\pg{z}\pd^2}{8\pi{G}}=\cfrac{M_\Delta}{4\pi{r_\Delta}^3/3}
+	\Delta\cfrac{3H{\left({z}\right)}^2}{8\pi{G}} =
+    \cfrac{M_\Delta}{4\pi{r_\Delta}^3/3}
 \end{equation}
-where $M_\Delta$ is the virial mass.
-We can now defined three quantities, the virial mass as:
+%
+where $M_\Delta$ is the virial mass. We can now defined three quantities, the
+virial mass as:
+%
 \begin{equation}
-	M_\Delta=\cfrac{\Delta{H\pg{z}\pd^2{r_\Delta}^3}}{2G}
+	M_\Delta=\cfrac{\Delta{H{\left({z}\right)}^2{r_\Delta}^3}}{2G}
 \end{equation}
+%
 the virial radius as:
+%
 \begin{equation}
-	r_\Delta=\pg\cfrac{2 G M_\Delta}{\Delta{H\pg{z}\pd^2}}\pd^{1/3}
+    r_\Delta={\left(\cfrac{2 G M_\Delta}
+    {\Delta{H{\left({z}\right)}^2}}\right)}^{1/3}
 \end{equation}
+%
 and the virial velocity as:
+%
 \begin{equation}
-	v_\Delta=\sqrt{\cfrac{G M_\Delta}{r_\Delta}}=\sqrt{\cfrac{\Delta}{2}} H\pg{z}\pd{r_\Delta}
+	v_\Delta=\sqrt{\cfrac{G M_\Delta}{r_\Delta}}=\sqrt{\cfrac{\Delta}{2}} H\left({z}\right){r_\Delta}
 \end{equation}
 
 \noindent\rule{\linewidth}{1pt}
-Sometimes, the density at the virial radius isn't defined in relation with the critical density but instead with mean density of
-the Universe. So the equation (\ref{eq:radcrit}) becomes:
+%
+Sometimes, the density at the virial radius isn't defined in relation with the
+critical density but instead with mean density of the Universe. So the equation
+(\ref{eq:radcrit}) becomes:
+%
 \begin{equation}
-	\rho\pg{r_\Delta}\pd=\Delta\rho_m=\Delta{\Omega_m}\rho_c
+	\rho\left({r_\Delta}\right)=\Delta\rho_m=\Delta{\Omega_m}\rho_c
 \end{equation}
-We can treat this situation in the same way as previously, but formally with $\Delta\rightarrow\Delta\Omega_m$.
+%
+We can treat this situation in the same way as previously, but formally with
+$\Delta\rightarrow\Delta\Omega_m$.
 
 \noindent\rule{\linewidth}{1pt}
-%\bibliographystyle{unsrtnat}
-%\scriptsize{\cbleu{\bibliography{ref}}}

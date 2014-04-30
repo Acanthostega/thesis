@@ -54,8 +54,7 @@ An example of the resulting ``mock cube'' is shown on figure
     \centering
     \includegraphics[width=\linewidth]{figures/mock/mock}
     \caption{The structure of the mock catalog once we have replicated the
-    simulation box chosen to populate dark matter halos.}%
-\label{fig:cubemock}
+    simulation box chosen to populate dark matter halos.\label{fig:cubemock}}%
 \end{wrapfigure}
 
 Now if we take an observer at some position into this big box, we can have
@@ -189,7 +188,7 @@ theoretical templates of SEDs. Such templates can be obtained with existing
 programs as PEGASE \comments{Add references}, which give us SEDs with some
 assumptions on the galaxy. But those programs are a little time consuming,
 which can be a problem for mock when we want to run several of them. A good
-solution is given by \citet{CMAZ10}, where the K-correction is fitted on
+solution is given by \citet{Chilingarian+10}, where the K-correction is fitted on
 templates for SED as given by PEGASE in terms of a polynomial of the redshift
 of the galaxy and its colour. The corresponding K-correction is precise for
 redshifts until 0.3 in different survey bands (including $ugriz$ for the SDSS).
@@ -200,14 +199,14 @@ By definition, the K-correction $K$ for a galaxy of apparent magnitude $m_X$ in
 a given band $X$ and absolute magnitude $M_X$ in the same band is:
 %
 \begin{equation}
-    {m_X}={M_X} + {5\log_{10}\pg{d_{\mathrm{lum}}\left[pc\right]}\pd} - 5 + K
+    {m_X}={M_X} + {5\log_{10}\left({d_{\mathrm{lum}}\left[pc\right]}\right)} - 5 + K
 \end{equation}
 %
 In our case, the K-correction depends on the redshift of the galaxy and its
 colour in apparent magnitude given two bands. So we can rewrite:
 %
 \begin{equation}\label{eq:appmag}
-    m_X = M_X + 5\log_{10}\pg{d_{\mathrm{lum}}\left[pc\right]}\pd - 5 + K( z, m_X - m_{X'} )
+    m_X = M_X + 5\log_{10}\left({d_{\mathrm{lum}}\left[pc\right]}\right) - 5 + K( z, m_X - m_{X'} )
 \end{equation}
 %
 where:
