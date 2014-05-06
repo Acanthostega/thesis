@@ -9,7 +9,7 @@
 \RequirePackage[english]{babel}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{ucs}
-\RequirePackage[utf8]{inputenc}
+\RequirePackage[utf8x]{inputenc}
 \RequirePackage{amssymb}
 \RequirePackage{amsmath}
 \RequirePackage{amscd}
