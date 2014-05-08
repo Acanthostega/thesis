@@ -54,7 +54,8 @@ optimized LLs of \citeauthor{Eke+04}, \citeauthor{Berlind+06}, and
 \citeauthor{Robotham+11} (see Table~\ref{tab:groupalgos}).
 %
 \begin{table}
-\caption{Friends-of-Friends linking lengths and physical parameters}
+\caption{Friends-of-Friends linking lengths and physical
+parameters\label{tab:groupalgos}}
 \begin{center}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{llllcrl}
@@ -80,23 +81,22 @@ Tempel et al. 14 ($M_r<-21$)        & SDSS    & 0.066  & 0.67 & 10 & 830 & 1.4
 \end{center}
 \parbox{\hsize}{%
 Notes: The (normalized) linking lengths of~\cite{HG82},~\cite{RGH89},
-and~\cite{TrasartiBattistoni98} are derived (using eqs.~[\ref{bperpdef}] and
-[\ref{bpardef}]) from their physical linking lengths at the fiducial distance
-and from the mean density at that distance, as derived by integrating the
-respective luminosity functions given by these authors. The linking lengths
-of~\cite{MZ02} are estimated directly from the overdensity $\delta n/n$ given
-by these authors (using eq.~[\ref{dnovernfromb}]), those of~\cite{Tago+10} are
-found from the densities deduced from the numbers of galaxies counted by these
-authors (again with eq.~[\ref{bperpdef}] and [\ref{bpardef}]).~\cite{Eke+04}
-provide $b_\perp$ and $b_\parallel/b_\perp$, while~\cite{Berlind+06}
-and~\cite{Tempel+14} provide $b_\perp$ and $b_\parallel$. When not provided by
-the authors, the overdensity $\delta n/n$ is obtained through
-equation~(\ref{dnovernfromb}), and should be multiplied by 1.5 for a more
-accurate estimation (see text). Finally, the number of group velocity
-dispersions along the LOS, $\kappa$ is obtained with
-equation~(\ref{kappafromlls}) assuming $\Omega_{\rm m}=0.3$.
+and~\cite{TrasartiBattistoni98} are derived (using \bartrefequation{bperpdef}
+and \bartrefequation{bpardef}) from their physical linking lengths at the
+fiducial distance and from the mean density at that distance, as derived by
+integrating the respective luminosity functions given by these authors. The
+linking lengths of~\cite{MZ02} are estimated directly from the overdensity
+$\delta n/n$ given by these authors (using \bartrefequation{dnovernfromb}),
+those of~\cite{Tago+10} are found from the densities deduced from the numbers
+of galaxies counted by these authors (again with \bartrefequation{bperpdef} and
+\bartrefequation{bpardef}).~\cite{Eke+04} provide $b_\perp$ and
+$b_\parallel/b_\perp$, while~\cite{Berlind+06} and~\cite{Tempel+14} provide
+$b_\perp$ and $b_\parallel$. When not provided by the authors, the overdensity
+$\delta n/n$ is obtained through \bartrefequation{dnovernfromb}, and should be
+multiplied by 1.5 for a more accurate estimation (see text). Finally, the
+number of group velocity dispersions along the LOS, $\kappa$ is obtained with
+\bartrefequation{kappafromlls} assuming $\Omega_{\rm m}=0.3$.
 }
-\label{tab:groupalgos}
 \end{table}
 
 Moreover, we believe that in this era of large  redshift surveys of $>10^5$
@@ -142,6 +142,25 @@ richness.
 \subsection{Predicted linking lengths and galaxy reliability}
 \label{sec:fofpred}
 
+Because of the redshift distortions, the physical linking lengths are chosen to
+be of order of 10 times longer for the LOS separations than for the POS ones.
+Moreover, for flux-limited galaxy catalogs, the physical linking lengths are
+scaled with the mean three-dimensional separation between neighboring galaxies,
+$s \simeq n ^{-1/3}$, where $n$ is the mean number density of galaxies in the
+Universe at a given redshift \citep{HG82}. In other words, the FoF algorithm
+involves two dimensionless linking lengths (hereafter LLs):
+%
+\begin{eqnarray}
+    b_\perp &=& {{\rm Max} (S_\perp)\over s} \ ,
+\label{eq:bperpdef}
+\\
+    b_\parallel &=& {{\rm Max} (S_\parallel) \over s} \ ,
+\label{eq:bpardef}
+\end{eqnarray}
+%
+where $S_\perp$ and $S_\parallel$ are the POS
+and LOS nearest neighbor separations, respectively.
+
 One can relate the choice of $b_\perp$ to the minimum galaxy overdensity (in
 number) of the groups with
 %
@@ -174,7 +193,7 @@ One can also estimate the ratio of LOS to transverse LLs, as the ratio of LOS
 to POS group sizes caused by redshift distortions: if the LOS velocities span
 $\pm \kappa$ group velocity dispersions, the inferred LOS spread of distances
 in redshift space will be $\pm \eta \kappa\, v_{200} / H_0 = \pm \eta \kappa
-\sqrt{\Delta/2}\,r_{200}$ (see \citealp{MBM10}), where  $\eta = \sigma_v/v_{\rm
+\sqrt{\Delta/2}\,r_{200}$ (see \citealp{MBM+10}), where  $\eta = \sigma_v/v_{\rm
 v} \simeq 0.65$ for an NFW model with realistic concentration and velocity
 anisotropy \citep{MBB13}, and where we used \bartrefequation{dnovernfromb}.
 Therefore,
@@ -385,7 +404,7 @@ estimate the mean number density of galaxies directly from the data.
 Finally, for each galaxy, we computed the maximal angular distance to define
 the region in which potential neighbors could be found for the given transverse
 linking length. With the  celestial sphere grid that we have constructed (see
-Appendix~\ref{app:grid}), we searched for galaxies obeying the criterion of
+\bartrefappendix{quadtree}), we searched for galaxies obeying the criterion of
 \bartrefequation{thetamax}, and then searched for galaxies meeting
 \bartrefequation{deltadmax}. The linked galaxies were then placed in a tree
 structure according to the Union-Find method \citep{Tarjan84}. Once all
@@ -515,9 +534,7 @@ measured the masses of our EGs using the virial theorem formula of
 %
 where $\langle R \rangle_{\rm h} = \langle 1/R_{ij}\rangle^{-1}$ is the
 harmonic mean projected separation, while $\sigma_v$ is the unbiased measure of
-the standard deviation of the group velocities, given as solutions of
-\bartrefequation{zfromvp} for $v_{\rm p}^{\rm LOS}$, replacing $z_{\cos}$ by
-the redshift of the MMG of the EG\@.
+the standard deviation of the group velocities.
 
 More precisely, we computed the accuracy of the log masses, respectively
 defining the \emph{bias} and \emph{inefficiency} as the median and equivalent
@@ -571,78 +588,77 @@ both qualities is $\sqrt{2}$.
 \subsection{Scope of the tests}
 
 We limit our tests to TGs containing at least 3 galaxies and that are not split
-by the transformations of the simulation box (see \bartrefsection{mockzspace}).
+by the transformations of the simulation box (see \bartrefchapter{mock}).
 Moreover, we only consider EGs with at least 3 galaxies and that do not lie
 near the survey edges (the virial radius, 2.3 Mpc, of a true group of log mass
-15.2 in solar units, placed at $z=z_{\min}=0.01$, i.e.\ at an angle of
-more than $3\fdg27$) or redshift limits ($1.8\,v_{200} \approx 2.7 \,\sigma_v$,
-of the same mass group, corresponding to $3073 \, \rm km \, s^{-1}$). Typically
-60\% (sample 2) to 25\% (sample 6) of the groups are flagged (see
-Appendix~\ref{sec:flag}). Finally, the tests of galaxy completeness and
-reliability, as well as mass bias and inefficiency are restricted to primary
-EGs of TGs (not fragments).
+15.2 in solar units, placed at $z=z_{\min}=0.01$, i.e.\ at an angle of more
+than $3\fdg27$) or redshift limits ($1.8\,v_{200} \approx 2.7 \,\sigma_v$, of
+the same mass group, corresponding to $3073 \, \rm km \, s^{-1}$). Typically
+60\% (sample 2) to 25\% (sample 6) of the groups are flagged. Finally, the
+tests of galaxy completeness and reliability, as well as mass bias and
+inefficiency are restricted to primary EGs of TGs (not fragments).
 
 \section{Results}
 \label{sec:results}
 %
-\begin{figure*}
-    \centering
-    \includegraphics[height=0.415\textheight]{%
-        figures/fof/results/mvir_true_1_fof_analysis.pdf%
-    }
-    \caption{Contours of group fragmentation (\emph{first column}) and merging
-        (\emph{second column}), as well as mean galaxy completeness
-        (\emph{third column}) and reliability (\emph{fourth column}) computed
-        for a 16$\times$16 grid of linking lengths for the nearby doubly
-        complete galaxy subsample 2 in Table~\ref{tab:samples}. Results are
-        shown for three bins of true group masses, for  unflagged groups of at
-        least 3 members (for both the extracted and parent groups), and further
-        restricted to primary groups in the completeness and reliability
-        panels. Pairs of linking lengths corresponding to previous are also
-        shown as \emph{red letters}
-        (H\@: Huchra \& Geller 1982;
-        R\@: Ramella et al. 1989;
-        t:        Trasarti-Battistoni 1998;
-        E\@: Eke et al. 2004;
-        B\@: Berlind et al. 2006;
-        T\@: Tago et al. 2010;
-        $R$: Robotham et al. 2011;
-        $T$: Tempel et al. 2014). }
-\label{fig:test_true_small}
-\end{figure*}
+\begin{figure}
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[height=0.415\textheight]{%
+            figures/fof/results/mvir_true_1_fof_analysis.pdf%
+        }
+        \captionof{figure}{Contours of group fragmentation (\emph{first column}) and merging
+            (\emph{second column}), as well as mean galaxy completeness
+            (\emph{third column}) and reliability (\emph{fourth column}) computed
+            for a 16$\times$16 grid of linking lengths for the nearby doubly
+            complete galaxy subsample 2 in Table~\ref{tab:samples}. Results are
+            shown for three bins of true group masses, for  unflagged groups of at
+            least 3 members (for both the extracted and parent groups), and further
+            restricted to primary groups in the completeness and reliability
+            panels. Pairs of linking lengths corresponding to previous are also
+            shown as \emph{red letters}
+            (H\@: Huchra \& Geller 1982;
+            R\@: Ramella et al. 1989;
+            t:        Trasarti-Battistoni 1998;
+            E\@: Eke et al. 2004;
+            B\@: Berlind et al. 2006;
+            T\@: Tago et al. 2010;
+            $R$: Robotham et al. 2011;
+        $T$: Tempel et al. 2014).\label{fig:test_true_small}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[height=0.415\textheight]{%
+            figures/fof/results/halo_mass_1_fof_analysis.pdf%
+        }
+        \captionof{figure}{Same as \bartreffigure{test_true_small}, but where
+        the different rows correspond to different bins of extracted group
+    masses estimated from the virial theorem. The white zones show cases where
+the linking lengths led to no unflagged groups extracted.
+\label{fig:test_estimated_small}}
+    \end{minipage}
+\end{figure}
 %
-\begin{figure*}
-    \centering
-    \includegraphics[height=0.415\textheight]{%
-        figures/fof/results/halo_mass_1_fof_analysis.pdf%
-    }
-    \caption{Same as \bartreffigure{test_true_small}, but
-      where the different rows correspond to different bins of extracted group
-  masses estimated from the virial theorem. The white zones show cases where
-  the linking lengths led to no unflagged groups extracted. }
-\label{fig:test_estimated_small}
-\end{figure*}
-%
-\begin{figure*}
-    \centering
-    \includegraphics[height=0.415\textheight]{%
-        figures/fof/results/mvir_true_5_fof_analysis.pdf%
-    }
-    \caption{Same as \bartreffigure{test_true_small}, but for the distant
-    doubly complete galaxy subsample 6 in
-Table~\ref{tab:samples}.\label{fig:test_true_big}}
-\end{figure*}
-%
-\begin{figure*}
-    \centering
-    \includegraphics[height=0.415\textheight]{%
-        figures/fof/results/halo_mass_5_fof_analysis.pdf%
-    }
-    \caption{Same as \bartreffigure{test_true_big}, but where the different
-    rows correspond to different bins of estimated
-masses.\label{fig:test_estimated_big}}
-%
-\end{figure*}
+\begin{figure}
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[height=0.415\textheight]{%
+            figures/fof/results/mvir_true_5_fof_analysis.pdf%
+        }
+        \captionof{figure}{Same as \bartreffigure{test_true_small}, but for the
+        distant doubly complete galaxy subsample 6 in
+    Table~\ref{tab:samples}.\label{fig:test_true_big}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+        \centering
+        \includegraphics[height=0.415\textheight]{%
+            figures/fof/results/halo_mass_5_fof_analysis.pdf%
+        }
+        \captionof{figure}{Same as \bartreffigure{test_true_big}, but where the
+        different rows correspond to different bins of estimated
+    masses.\label{fig:test_estimated_big}}
+    \end{minipage}
+\end{figure}
 %
 We have applied the FoF algorithm on near and distant doubly complete
 subsamples (numbers 2 and 6 in Table~\ref{tab:samples}), repeating the tests
@@ -753,7 +769,7 @@ reliability into a single local quality factor.
 
 \subsection{Mass accuracy}
 %
-\begin{figure*}
+\begin{figure}[t]
     \centering
     \includegraphics[height=0.44\textheight]{%
         figures/fof/results/1_fof_analysis_masses.pdf%
@@ -772,7 +788,7 @@ reliability into a single local quality factor.
         for galaxy subsamples 2 and 6. The symbols are as in
         \bartreffigure{test_true_small}. The white zones indicate linking
         lengths with no unflagged groups extracted.\label{fig:masses_diff}}
-\end{figure*}
+\end{figure}
 
 The left columns  of the two panels of \bartreffigure{masses_diff} show that
 the primary EG masses recovered by the FoF algorithm are systematically biased
@@ -811,6 +827,32 @@ $\Omega_{\rm m}=0.3$ yields $b_\perp=0.11$ and $b_\parallel=1.3$. Finally,
 estimating the contamination by interlopers, we predict between 80\% (NFW model
 extended outwards) to 90\% (NFW model truncated to sphere plus random
 interlopers) galaxy reliability.
+%
+\begin{figure}[t]
+    \begin{minipage}{0.5\linewidth}
+        \centering
+        \includegraphics[width=0.85\linewidth]{%
+            figures/fof/parallel_link_behaviour.pdf%
+        }
+        \captionof{figure}{Variation of the mass bias and reliability as a
+        function of $b_\parallel$ for $b_\bot =0.1$, for subsamples 2
+    (\emph{left}) and 6 (\emph{right}).\label{fig:parallel_behaviour}}
+    \end{minipage}
+    \begin{minipage}{0.5\linewidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/fof/group_halo.pdf}
+        \captionof{figure}{An example of group and halo for $b_\parallel=20.8$
+            and $b_\bot=0.1$ for subsample 4. The width of the cone is
+            exaggerated by a factor of roughly 5 for illustrative purposes.
+            \emph{Outer} and \emph{inner circle colors} respectively refer to
+            the TGs and EGs. The \emph{horizontal green} and \emph{red lines}
+            respectively indicate the maximum redshift, $z_{\max}$ and the
+            redshift where galaxies are flagged for being close to $z_{\max}$.
+            Some galaxies of the red EG, whose TG is the black one, are flagged
+            for being close to $z_{\max}$, hence the group would not be
+        considered in our tests.\label{fig:group}}
+    \end{minipage}
+\end{figure}
 
 We then built a mock redshift space galaxy catalog with the properties of the
 flux-limited SDSS primary spectroscopic sample, from which we extracted 2
@@ -859,13 +901,6 @@ $b_\parallel$ for galaxy reliability may seem surprising at first. We checked
 our analysis by measuring the reliability for $b_\perp=0.1$, for a very wide
 range of $b_\parallel$ extending from 0.3 to 40.
 %
-\begin{figure}
-    \includegraphics[width=0.3\textheight]{figures/fof/parallel_link_behaviour.pdf}
-    \caption{Variation of the mass bias and reliability as a function of
-    $b_\parallel$ for $b_\bot =0.1$, for subsamples 2 (\emph{left}) and 6
-(\emph{right}).\label{fig:parallel_behaviour}}
-\end{figure}
-%
 The top panels of \bartreffigure{parallel_behaviour} indicate that the
 reliability does end up decreasing fairly fast beyond some large value of
 $b_\parallel \simeq 6$, i.e.\ beyond the limits of
@@ -892,21 +927,6 @@ reached the limits of the catalog with a very large value of \bpar{}.
 This may explain why increasing $b_\parallel$ has only a small effect on
 galaxy reliability: there is a void behind the main TG (black outer
 circles).
-%
-\begin{figure}
-    \centering
-    \includegraphics[width=0.3\textheight]{figures/fof/group_halo.pdf}
-    \caption{An example of group and halo for $b_\parallel=20.8$ and
-        $b_\bot=0.1$ for subsample 4. The width of the cone is  exaggerated by
-        a factor of roughly 5 for illustrative purposes. \emph{Outer} and
-        \emph{inner circle colors} respectively refer to the TGs and EGs. The
-        \emph{horizontal green} and \emph{red lines} respectively indicate the
-        maximum redshift, $z_{\max}$ and the redshift where galaxies are
-        flagged for being close to $z_{\max}$. Some galaxies of the red EG,
-    whose TG is the black one, are flagged for being close to $z_{\max}$, hence
-the group would not be considered in our tests.\label{fig:group}}
-\end{figure}
-%
 
 While fragmentation, measured in bins of true group mass, decreases with
 increasing $b_\parallel$, as expected (\bartreffigure{test_true_small} and
