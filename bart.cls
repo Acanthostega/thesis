@@ -92,13 +92,31 @@
 \newlength{\thechaptertitlelabelx}
 \newlength{\thechaptertitlelabely}
 \newlength\thechaptertitleblank
+\newlength\thechapterlength
 \setlength\thechapterinnerlabelx{15pt}
 \setlength\thechapterinnerlabely{10pt}
 \setlength\thechaptertitlelabelx{15pt}
 \setlength\thechaptertitlelabely{10pt}
 \setlength\thechaptertitleblank{2cm}
-\tikzset{bartchaptertitle/.style={rectangle,draw,color=white,fill=white,opacity=0.7,rounded corners=0.75cm}}
-\tikzset{bartchapterlabel/.style={rectangle,draw,color=white,fill=white,opacity=0.7,rounded corners=0.25cm}}
+\setlength\thechapterlength{\paperwidth}
+\addtolength\thechapterlength{-\thechaptertitleblank}
+\addtolength\thechapterlength{-2\thechapterinnerlabelx}
+\tikzset{bartchaptertitle/.style={%
+    rectangle,
+    draw,
+    color=white,
+    fill=white,
+    opacity=0.7,
+    rounded corners=0.75cm
+}}
+\tikzset{bartchapterlabel/.style={%
+    rectangle,
+    draw,
+    color=white,
+    fill=white,
+    opacity=0.7,
+    rounded corners=0.25cm
+}}
 \newcommand{\thechapterimage}{}
 \newcommand{\thechapterheadfont}{\fontfamily{ugq}\fontsize{24pt}{30pt}\selectfont}
 \newcommand{\thechapterstyle}{\color{red!60!black}}
@@ -122,19 +140,46 @@
         \end{scope}
         \begin{scope}
             % for the text of the chapter title
-            \node[right=\thechaptertitleblank,inner ysep=\thechaptertitlelabely,
-            inner xsep=\thechaptertitlelabelx, bartchaptertitle] at ($ (current page.north west) + (0cm,-7cm)$)
-            {\thechapterheadfont\phantom{#1}\hspace{\paperwidth}\null};
-            \node[right=\thechaptertitleblank,inner ysep=\thechaptertitlelabely,inner xsep=\thechaptertitlelabelx] at ($ (current page.north west) + (0cm,-7cm)$)
-            {\thechapterheadfont\thechapterstyle#1};
+            \node[
+                right=\thechaptertitleblank,
+                inner ysep=\thechaptertitlelabely,
+                inner xsep=\thechaptertitlelabelx,
+                bartchaptertitle
+            ] at ($ (current page.north west) + (0cm,-7cm)$)
+            {%
+                    \thechapterheadfont\phantom{%
+                        \begin{minipage}{\thechapterlength}
+                            {\thechapterheadfont\thechapterstyle#1}
+                        \end{minipage}
+                    }
+                    \hspace{\thechapterlength}\null
+            };
+            \node[
+                right=\thechaptertitleblank,
+                inner ysep=\thechaptertitlelabely,
+                inner xsep=\thechaptertitlelabelx,
+            ] at ($ (current page.north west) + (0cm,-7cm)$)
+            {%
+                \begin{minipage}{\thechapterlength}
+                    {\thechapterheadfont\thechapterstyle#1}
+                \end{minipage}
+            };
 
             % the text for the label and number of the title
             \ifempty{\chapterlabel}{}
             {%
-                \node[left=\barttitlelabel,inner ysep=\thechapterinnerlabely,
-                inner xsep=\thechapterinnerlabelx, bartchapterlabel] at ($ (current page.north east) + (0cm,-1cm)$)
+                \node[
+                    left=\barttitlelabel,
+                    inner ysep=\thechapterinnerlabely,
+                    inner xsep=\thechapterinnerlabelx,
+                    bartchapterlabel
+                ] at ($ (current page.north east) + (0cm,-1cm)$)
                 {\thechapterheadfont\phantom{\chapterlabel}\hspace{5.5cm}\null};
-                \node[left=\barttitlelabel,inner ysep=\thechapterinnerlabely,inner xsep=\thechapterinnerlabelx] at ($ (current page.north east) + (0cm,-1cm)$)
+                \node[
+                    left=\barttitlelabel,
+                    inner ysep=\thechapterinnerlabely,
+                    inner xsep=\thechapterinnerlabelx,
+                ] at ($ (current page.north east) + (0cm,-1cm)$)
                 {\thechapterstyle\thebartchapterlabel};
             }
         \end{scope}
@@ -193,7 +238,7 @@
                 {\thepagenumberstyle\thepage};
             }%
         }%
-        \else{
+        \else{%
             \foreach \myi/\op in {0/1.,1/0.8,2/0.6,3/0.4,4/0.2} {%
                 \node[opacity=\op] at ($ (current page.north west) + ( 0.5\bartsquare+\myi\bartsquare, -0.5\bartsquare ) $)
                 {\ifempty{\thethumbnail}{}{\includegraphics[height=\bartsquare, width=\bartsquare]{\thethumbnail}}};
@@ -236,7 +281,7 @@
             ($ (current page.south east) $)
             {{\fontsize{130}{150}\bf\color{\thefiligrancolor!35!white}\thefiligranright}};
         }%
-        \else{
+        \else{%
             \node[shift={(0.49\barthhl,0.49\bartwwl)},rotate=-90] at
             ($ (current page.south west) $)
             {{\fontsize{130}{150}\bf\color{black!25}\thefiligranleft}};
