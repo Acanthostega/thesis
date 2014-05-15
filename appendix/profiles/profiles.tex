@@ -1,10 +1,12 @@
 \chapter{Density profiles}
+\label{cha:profiles}
 
 \section{Introduction}
 
 In this chapter, there is some details on the computation of the density
 profiles and there derived quantities. We define here the different
-normalization used along the thesis for some useful current density profiles.
+normalization used along the thesis for some useful current density
+profiles.
 
 \subsection{Definitions}
 
@@ -12,32 +14,265 @@ The number of galaxies in a sphere of radius $r$ with a density profile in
 number $\nu(r)$ is the case of a spherical symmetry:
 %
 \begin{equation}
-    N(r)=\int_0^r4\pi {r'}^2 \nu(r')\dd{r'}
+    N\left(r\right)=\int_0^r4\pi {r'}^2 \nu(r')\dd{r'}
 \end{equation}
-
-\section{\citet{NFW+97}}
 
 To start, we define some functions with no dimension used to make easier some
 computations.
 %
-\begin{align*}
-        N(r)&={N(a)}{\widetilde{N}{(r/a)}}\\
-        \nu(r)&=\frac{N(a)}{4\pi{a^3}}\widetilde{\nu}{(r/a)}\\
-\end{align*}
+\begin{eqnarray}
+    N\left(r\right)&=N\left(a\right){\widetilde{N}\left(r/a\right)}\nonumber\\
+    \nu\left(r\right)&=
+        \frac{N\left(a\right)}{4\pi{a^3}}
+        \widetilde\nu\left(r/a\right)\nonumber\\
+\end{eqnarray}
 %
-with $a$ the radius at which the slope of the density profile is equal to -2.
+with $a$ the radius at which the slope of the density profile is equal to
+-2 in logarithmic space. We also define the same relations for a virial
+normalization.
+%
+\begin{eqnarray}
+    N\left(r\right)&={N_v}{\overline{N}\left(r/\rvir\right)}\nonumber\\
+    \nu\left(r\right)&=
+        \frac{N_v}{4\pi\rvir^3}\overline\nu\left(r/\rvir\right)\nonumber\\
+\end{eqnarray}
 
-\subsection{Definitions}
+We also define the concentration $c$ as the ratio between the virial radius
+$\rvir$ and the radius $a$, i.e.\ $c=\rvir/a$.
 
-In the case of an NFW profile, we can write:
+\section{Density profiles}
+\label{sec:density_profiles}
+
+\subsection{\citet{NFW+97}}
+
+The definition of a NFW profile is:
 %
 \begin{equation}
-    \widetilde{\nu}(x)=\cfrac{1}{\ln2-1/2}\quad\cfrac{1}{x{(1+x)}^2}
+    \nu \left(r\right) = \cfrac{\nu_0}{r {\left(r+a\right)}^2}
 \end{equation}
 %
-and by integration:
+with $\nu_0$ a constant.
+
+We can write by integrating previous relations and searching for the
+constant $\rho_0$:
 %
 \begin{equation}
-    \widetilde{N}(x)=\cfrac{1}{\ln2-1/2}\quad{\left(\ln{(1+x)}-\cfrac{x}{x+1}\right)}
+    \widetilde\nu\left(x\right)=\cfrac{1}{\ln2-1/2}
+        \quad\cfrac{1}{x{\left(1+x\right)}^2}
+\end{equation}
+%
+\begin{equation}
+    \widetilde{N}\left(x\right)=\cfrac{1}{\ln2-1/2}
+        \quad\left(\ln\left(1+x\right)-\cfrac{x}{x+1}\right)
+\end{equation}
+%
+\begin{equation}
+    \overline\nu\left(x\right)=
+        \cfrac{1}{\ln\left(1+c\right)-c/ \left(1+c\right)}
+        \quad\cfrac{1}{x{\left(1/c+x\right)}^2}
+\end{equation}
+%
+\begin{equation}
+    \overline{N}\left(x\right)=
+        \cfrac{1}{\ln \left(1+c\right)-c/ \left(1+c\right)}
+        \quad\left(\ln\left(1+xc\right)-\cfrac{xc}{xc+1}\right)
 \end{equation}
 
+\subsection{Einasto}
+\label{sub:einasto}
+
+For an Einasto density profile:
+\begin{equation}
+    \nu \left(r\right) = \nu_0 \exp
+    \left(- {\left(\cfrac{r}{b}\right)}^{1/m}\right)
+\end{equation}
+
+Writing the definition of the $a$ radius with this density profile, we have:
+%
+\begin{equation}
+    {\left(\cfrac{1}{b}\right)}^{1/m} = 2m{\left(\cfrac{1}{a}\right)}^{1/m}
+\end{equation}
+%
+leading to the following normalizations:
+%
+\begin{equation}
+    \widetilde\nu \left(x\right) = \cfrac{{\left(2m\right)}^{3m}}{m\gamma
+    \left(3m, 2m\right)} \exp \left(-2mx^{1/m}\right)
+\end{equation}
+%
+\begin{equation}
+    \widetilde{N} \left(x\right) = \cfrac{\gamma \left(3m, 2m
+    x^{1/m}\right)}{\gamma \left(3m, 2m\right)}
+\end{equation}
+%
+\begin{equation}
+    \overline\nu \left(x\right) = \cfrac{{\left(2m\right)}^{3m}}{m\gamma
+    \left(3m, 2m c^{1/m}\right)} \exp \left(-2m{\left(xc\right)}^{1/m}\right)
+\end{equation}
+%
+\begin{equation}
+    \overline{N} \left(x\right) = \cfrac{\gamma \left(3m, 2m
+        {\left(xc\right)}^{1/m}\right)}{\gamma \left(3m, 2m c^{1/m}\right)}
+\end{equation}
+
+\subsection{Generalized NFW}
+\label{sub:generalized_nfw}
+
+If any previous density profiles isn't sufficient to describe the
+distribution of dark matter particles or galaxies inside the halos, a
+solution is possibly to fit a generalized NFW profile, whose the density is:
+%
+\begin{equation}
+    \nu \left(r\right) =
+    \cfrac{\nu_0}{r^\alpha{\left(r+a\right)}^{\beta-\alpha}}
+\end{equation}
+
+In this case:
+%
+\begin{equation}
+    \widetilde{N} \left(x\right) = \cfrac{%
+        \mathcal{B}_{-x} \left(3-\alpha, 1+\alpha-\beta\right)}
+    {\mathcal{B}_{-1} \left(3-\alpha, 1+\alpha-\beta\right)}
+\end{equation}
+%
+\begin{equation}
+    \widetilde\nu \left(x\right) = \cfrac{1}
+    {{\left(-1\right)}^{\alpha+1}
+        \mathcal{B}_{-1} \left(3-\alpha, 1+\alpha-\beta\right)}
+    \quad\cfrac{1}
+    {x^\alpha {\left(1+x\right)}^{\beta-\alpha}}
+\end{equation}
+%
+and for the virial normalization:
+%
+\begin{equation}
+    \overline{N} \left(x\right) = \cfrac{%
+        \mathcal{B}_{-xc} \left(3-\alpha, 1+\alpha-\beta\right)}
+    {\mathcal{B}_{-c} \left(3-\alpha, 1+\alpha-\beta\right)}
+\end{equation}
+%
+\begin{equation}
+    \overline\nu \left(x\right) = \cfrac{1}
+    {{\left(-1\right)}^{\alpha+1}
+        \mathcal{B}_{-c} \left(3-\alpha, 1+\alpha-\beta\right)}
+    \quad\cfrac{1}
+    {{\left(xc\right)}^\alpha {\left(1+xc\right)}^{\beta-\alpha}}
+\end{equation}
+%
+where $\mathcal{B}$ is the function defined as:
+%
+\begin{equation}
+    \mathcal{B} \left(a, b\right) =
+    \cfrac{\Gamma \left(a\right) \Gamma \left(b\right)}
+    {\Gamma \left(a+b\right)} =
+    \int_0^1 t^{a-1} {\left(1+t\right)}^{b-1} \dd t
+\end{equation}
+%
+and its incomplete version is:
+%
+\begin{equation}
+    \mathcal{B}_z \left(a, b\right) =
+    \int_0^z t^{a-1} {\left(1+t\right)}^{b-1} \dd t
+\end{equation}
+
+\section{Radial velocity dispersion}
+\label{sec:radial_velocity_dispersion}
+
+Galaxies in groups (and their associated dark matter halos) are assumed to
+be a system of particles only submitted to the gravitation. Neglecting
+mergers and other physical processes inside galaxy groups, the number of
+galaxies doesn't evolve in phase space, and the distribution function is
+constant along the evolution of the system. In this case, we can use the
+Boltzmann equation without collisions to extract dynamical properties of
+galaxy groups.
+
+The Jeans equation is a particular case of the Boltzmann equation, assuming
+a spherical symmetry of the system and stationarity. It is expressed as:
+%
+\begin{equation}
+    \label{eq:jeans}
+    \ddp{\left(\nu(r)\sigma_r^2(r)\right)}{r} + \cfrac{2\mybeta}{r}\left(\nu(r)\sigma_r^2(r)\right)=
+    -\nu(r)\cfrac{GM(r)}{r^2}
+\end{equation}
+
+We can compute the radial velocity dispersion using \bartrefequation{jeans}
+for a spherical system at equilibrium. The solution to this equation is
+given by:
+%
+\begin{equation}
+    \myprofil\sigma_r^2(r)=\int_r^\infty K_r(r,s)\nu(s)\cfrac{GM(s)}{s^2}\dd{s}
+\end{equation}
+%
+with $K_r(r,s)$ the kernel of the integral defined as:
+%
+\begin{equation}
+    K_r(r,s)=\exp\left[2\int_r^s\mybeta\cfrac{\dd{t}}{t}\right]
+\end{equation}
+
+There is two ways of normalizing the radial velocity dispersion according to
+the normalization used for the density and mass profiles. We show it for the
+virial normalization for illustration:
+%
+\begin{equation}
+    \label{eq:sigma_norm}
+    \overline\sigma_r^2(x)= \cfrac{1}{\overline\nu \left(x\right)}
+    \int_x^\infty K_r(x,s)\overline\nu(s)\cfrac{\overline{M}(s)}{s^2}\dd s
+\end{equation}
+%
+with:
+%
+\begin{equation}
+    \sigma_r^2(r) = \cfrac{GM_v}{\rvir}\overline\sigma_r^2(r/\rvir)
+\end{equation}
+
+We are interested only in the NFW profile in the thesis, since it
+is accurate enough to adjust the model. If we want analytical form, we need
+to choose the model we want for the anisotropy profile. We provide here some
+expressions of the radial velocity dispersion, assuming the NFW density
+profile, for some anisotropy models.
+
+\subsection{\citet{ML+05}}
+\label{sub:ml05}
+
+This model is of the form:
+%
+\begin{equation}
+    \beta \left(r\right) = \undemi\cfrac{r}{r+b}
+\end{equation}
+%
+where $b$ is a characteristic radius of the model. Introducing this
+expression in \bartrefequation{sigma_norm}, we obtain:
+%
+\begin{align}
+    \widetilde\sigma_r^2(x)=&
+        -\frac{1}{3 x (1+r x)
+        {(-1+\ln\left(4\right))}^2}2
+        \left(-\frac{1}{2}+\ln\left(2\right)\right)\nonumber\\
+    &\left(x \left(3+x \left(\pi ^2 (-3+2 r)
+        {(1+x)}^2-3 (-9+5 r-7 x+4 r x)
+        \right)\right.\vphantom{\ln\left(1+\frac{1}{x}\right)}\right.
+        \nonumber\\
+    &\left.-3 x^3 \ln\left(1+\frac{1}{x}\right)+3 x (1+2 x)
+        \ln\left(x\right)\right)\nonumber\\
+    & -3 (1+2 x (-1-2 x (2+x)+r (1+x) (1+2 x)))
+        \ln\left(1+x\right)+3 (-3+2 r) {\left(x+x^2\right)}^2
+        \ln{\left(1+x\right)}^2\nonumber\\
+    & \left.+6 (-3+2 r) x^2 {(1+x)}^2
+        Li_2\left(-x\right)\vphantom{\ln\left(1+\frac{1}{x}\right)}\right)
+        \nonumber\\
+\end{align}
+\begin{align}
+    \widetilde\sigma_r^2(x)=&
+        \frac{1}{6 x (1+r x) \left(-1+\frac{1}{1+c}+\ln\left(c\right)\right)}
+        \left(c x \left(-3+x \left(3 c \left(-9+\pi ^2\right)+
+        \left(15-2 \pi ^2\right) r\right.\right.
+        \vphantom{{(1+c x)}^2}\right.\\
+    &\left. -4 c \left(-3+\pi ^2\right) r x+
+        3 c^3 \pi ^2 x^2+c^2 x \left(-21+\pi ^2 (6-2 r x)\right)\right)\\
+    & \left.+6 c^3 x^3 {\rm arccoth} \left(1+2 c x\right)-
+        3 c x (1+2 c x) \ln\left(c x\right)\right)\\
+    &+3(1+2 x (r+c (-1+x (-4 c+3 r+2 c (-c+r) x))))
+        \ln\left(1+c x\right)\\
+    &\left.+3c(3 c-2 r) x^2 {(1+c x)}^2 {\left(\ln\left(1+c x\right)\right)}^2+
+        6 c (3 c-2 r) x^2 {(1+c x)}^2 Li_2\left(-c x\right)\right)\\
+\end{align}
