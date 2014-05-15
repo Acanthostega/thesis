@@ -372,10 +372,11 @@ $\hat{v_z}=v_z/v_v$, the ratio between the interloper and halo \emph{pps}
 density is:
 %
 \begin{equation}
+    \label{eq:gi_over_gh}
     \frac{g_i}{g_h}\left(R,v_z\right)=
     \frac{{\left(2\pi\right)}^{3/2}\hat{g}_i{(R/r_v,|v_z|/v_v)}}
         {\int_0^{\rm{acosh}\left(\frac{c}{x_R}\right)}
-            \frac{\left(x_R\cosh{u}\right)\tilde\rho\left(x_R\cosh{u}\right)}
+            \cfrac{\left(x_R\cosh{u}\right)\tilde\rho\left(x_R\cosh{u}\right)}
             {{\tilde\sigma}_z\left(x_R,x_R\cosh{u}\right)}
     \times\exp\left(-\undemi\frac{{\hat{v}_z}^2}
     {{\tilde\sigma}_z^2\left(x_R,x_R\cosh{u}\right)}\right)\dd u}
@@ -390,9 +391,65 @@ the Jeans equation (see \bartrefappendix{profiles}).
 \subsection{Comparisons with simulations}
 \label{sub:comparisons_with_simulations}
 
-To test our computation of the probability, we compared out theoretical
+To test our computation of the probability, we compared our theoretical
 expression with the dark matter particles from the simulations used in
-\citet{MBM+10} to deduce the \emph{pps} density of interlopers.
+\citet{MBM+10} to deduce the \emph{pps} density of interlopers. For this, a
+selection of high masses dark matter halos was performed on the cosmological
+simulation. Then, particles coordinates where translated to make the center of
+the halo the origin of the simulation box. A fictive observer is placed in a
+side of the box, and all observed coordinates in phase space are computed from
+the observer point of view. The coordinates of all particles in the cone
+defined by the observer and the radius of the halo are computed in units of the
+virial radius and velocity. This allows to easily define a particle as an
+interloper or not, with their three dimensional radial coordinate $r$. If in units
+of the virial radius, $r\leqslant1$ means that the particle is belonging to the
+halo, else it's an interloper. We can stack all the particles from all the
+cones of each halo to create an unique halo, with numerous particles, used as a
+test case for our models and to estimate the interloper \emph{pps} density.
+
+In \bartreffigure{probabilities}, we show the contours of the probability to
+belong to the halo (in gray for the simulation, in black for our model from the
+\bartrefequation{gi_over_gh}) in the \emph{pps}. For this model, we used a
+Gaussian velocity distribution of particles in the halo, with the anisotropy
+from \citet{ML+05} that fit the anisotropy profile of dark matter particles,
+and we assumed a NFW density profile. Moreover, we assume that the
+characteristic radius of the anisotropy of \citet{ML+05} is equal to the $a$
+radius at which the slope of the density profile is -2. The theory fits
+relatively well the data from the cosmological simulation, excepted for high
+values of the line-of-sight velocity.
+%
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figures/maggie/probabilities.pdf}
+    \caption{The probability contours from the simulation of Borgani (put a
+        reference) and our model. In \emph{gray} the contours obtained with
+        particles from the cosmological simulation, and in \emph{black} the
+        theoretical expectation from \bartrefequation{gi_over_gh}. The color
+        scale reflects the probability from the simulation. The theoretical
+        probability agree with the cosmological simulation except for high
+        velocities along the line-of-sight, in part explained by the lack of
+        particles with such velocities, giving a bad constraint for the
+        probability to be in the halo from the simulation.
+\label{fig:probabilities}}
+\end{figure}
+
+\remark{%
+    We can first think that the observed discrepancies in
+    \bartreffigure{probabilities} are the consequence of a bad choice for the
+    ratio $a/b$ (see \bartrefappendix{profiles}) or for the concentration, but
+    changing this values doesn't reduce them. The contours for the simulation
+    seem to show a cut-off in the line-of-sight velocity dispersion for high
+    velocities, like if the distribution is truncated above a given velocity. A
+    functional form with such a property is the generalization of the Gaussian
+    called the $q$-Gaussian or Tsallis distribution. Assuming such a velocity
+    distribution, the computation of the probability involves several
+    integrals, which is CPU time consuming. Instead, we can fit a $q$-Gaussian
+    on the line-of-sight velocity distribution from the simulation and
+    incorporate it in the probability computation. But unfortunately, this
+    doesn't solve the problem. It seems that the number of particles with high
+    velocities is too low to correctly define the probability to be in the
+    virial sphere of the halo, and to compare it to theoretical expectations.
+}
 
 \section{Results on mock catalogue}
 \label{sec:results_on_mock_catalogue}
