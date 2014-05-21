@@ -451,8 +451,574 @@ values of the line-of-sight velocity.
     virial sphere of the halo, and to compare it to theoretical expectations.
 }
 
+Here we assume that the density profile follow a NFW, since the dark matter
+particles of the \citet{Borgani+04} simulation follow this distribution. But we
+are interested in groups of galaxies and they must follow the same distribution
+to apply our model. We used the galaxies from the output of the \citet{Guo+11}
+semi-analytical code and checked that they follow a NFW density profile too.
+But as expected \note{Add reference for bias}, there is a bias between the
+galaxies and dark matter particles. Indeed, if we fit the concentration of the
+NFW profile in \citet{Guo+11} and compare it to the model of \citet{Maccio+08}
+obtained from dark matter particles, we can see that the two functional are
+different. A consequence is that the link between halo mass and concentration
+must be adjusted for galaxies in our model. The difference between the two
+model of concentration is shown in \bartreffigure{concentration_bias}.
+%
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/maggie/concentrations.pdf}
+    \caption{The concentration in function of the halo mass for
+        \citet{Maccio+08} in \emph{green} and fitted on the \citet{NFW+97}
+        density profile of galaxies from \citet{Guo+11} with $M_r\leqslant-15$
+        in \emph{blue}. The concentration of galaxies is slightly different
+    from that of dark matter particles.\label{fig:concentration_bias}}
+\end{figure}
+%
+But we note that the modulation of the concentration with the halo mass is
+dependent of the cut-off in luminosity applied on the galaxy sample, making the
+use of a specific density profile for galaxies inadequate. We checked the
+influence of this choice on MAGGIE by comparing the performance with the
+concentration from \citet{Guo+11} and from \citet{Maccio+08}. No noticeable
+impact is observed in the completeness, reliability and fragmentation, except
+on stellar masses and luminosities of groups but without being significant.
+
 \section{Results on mock catalogue}
 \label{sec:results_on_mock_catalogue}
+
+\subsection{Description}
+\label{sub:maggie_tests_description}
+
+For tests we proceed as described in \citet{Yang+07} and \citet{DM+14a}. To
+link a selected group by the algorithm in redshift space to the true halo in
+real space, we use the most massive galaxy of the group. The true halo of a
+group is the true halo to which the most massive galaxy in the selected group
+(referred as the central galaxy) belongs to. With this link, we compute the
+completeness and reliability of groups relatively to this halo in real space.
+We define statistics used to quantify the performance of MAGGIE\@. The
+completeness $C$ is the fraction of galaxies in the real space group recovered
+in the selected group. The reliability $R$ is the fraction of galaxies in the
+selected group present in the real space group. A primary group is defined as a
+selected group whose the central galaxy match the central galaxy of the real
+space associated halo, remaining groups are fragments. A complete and detailed
+description of the statistics can be found in \citet{DM+14a}.
+
+The reliability in the case of MAGGIE is more complex since we use
+probabilities for galaxies in groups. We let, with our definition, many
+galaxies potentially belong to a given group. This artificially decreases
+the reliability of a group because of the interlopers being systematically
+considered group members with the previous definition. To take advantage of
+our probabilities, let us give a new definition for the reliability. In
+\citet{DM+14a}, we wrote:
+%
+\begin{equation}
+    R=\frac{T \cap E}{E}=\frac{\sum_{i\in T\cap E}}{\sum_{i\in E}}
+\end{equation}
+%
+But many galaxies pertains to our group with this definition and so we
+weight galaxies in the previous sum by their probabilities in order to have
+a coherent definition of the reliability with our probabilistic
+determination of groups. Our new definition in the case of a probabilistic
+galaxy group algorithm as MAGGIE is:
+%
+\begin{equation}
+    R=\frac{T \cap E}{E}=\frac{\sum_{i\in T\cap E} p_i}{\sum_{i\in E}p_i}
+\end{equation}
+%
+For the completeness, since the probability doesn't introduce a bias in the
+selection relatively to the real group, we keep the computation as described
+in \citet{DM+14a}, without weighting by probabilities.
+
+Without probabilities, galaxies in groups form a complete partition of the
+survey since groups can be seen as disjoints sets of the redshift space. But
+with MAGGIE and probabilities, a galaxy can be in multiple groups so the
+sets of groups are overlapping, and the \emph{dual} analysis done in
+\citet{DM+14a} for the merging of real space groups can't be correctly done.
+This is because the central galaxy of a real space group can be potentially
+belonging to several extracted group in the redshift space.
+
+\subsection{Optimization}
+
+MAGGIE has a free parameter which is the probability threshold used to
+decide if a galaxy can be a potential central galaxy of a group. We ran
+MAGGIE with different values of this threshold to see if improvements can be
+done. It seems that the choice is not well important if we keep this
+threshold to low values. If we increasing it too (around values of 0.3) the
+fragmentation starts to affect high halo mass groups. But for the other
+range of mass, results are not significant. Keeping this threshold probability
+low, we don't allow groups to fragment on other groups improving in this way
+the completeness of select galaxy groups. The bias in mass computation is
+not affected but the dispersion vary a little for big probability threshold
+but it is not significant.
+
+So extracted groups are relatively robust against the free parameter for low
+values, but we can see its effect for higher values in the fragmentation
+which doesn't correspond to the optimized values. In consequence, MAGGIE
+doesn't really have a free parameter. We fixed its value to 0.001.
+
+\subsection{Results}
+
+The following tests result from the application of MAGGIE on the perfect mock
+catalogue whose construction is described in \bartrefchapter{mock}. In this
+case, we assume the halo mass function extracted from the Millennium-II
+outputs, with a NFW density profile for galaxies identical to dark matter
+particles in their halos. The influence of this assumptions will be developed
+in \bartrefsection{maggie_discussions}.
+
+We compare MAGGIE with the most popular galaxy group algorithm that is the
+percolation algorithm (see \bartrefchapter{friends_of_friends_algorithm}). Two
+sets of linking lengths for the FoF are used: one from \citet{Berlind+06} which
+is a popular implementation of this algorithm and the other set is from
+\citet{Robotham+11}, where as described in
+\bartrefchapter{friends_of_friends_algorithm} is close two the optimal linking
+length we determined. This will let us see if the introduction of Bayesian
+model improves the galaxy grouping compared to a simple geometrical approach as
+FoF.
+
+\subsubsection{Completeness and reliability}
+
+\begin{figure}[t]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 2]
+        {%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/result_1_comp-rel.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 6]
+        {%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/result_5_comp-rel.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{The cumulative distribution of the completeness $F(>C)$ and
+        reliability $F(>R)$ for bins in true halo masses for two sub-samples of
+        the mock catalogue. In \emph{green} MAGGIE, in \emph{red} the optimal
+        FoF of \citet{Robotham+11} and in \emph{blue} the linking lengths of
+    \citet{Berlind+06}. Results are shown only for primary groups (i.e.\
+groups that are not fragments of real space halos).\label{fig:comp_rel}}
+\end{figure}
+
+\bartreffigure{comp_rel} shows the cumulative distribution function of the
+completeness $C$ and reliability $R$ as defined in
+\bartrefsubsection{maggie_tests_description} for MAGGIE and the two sets of
+linking lengths of FoF algorithm. Results are shown only for two doubly
+complete sub-samples (see \bartrefchapter{mock}), the same as in
+\bartrefchapter{friends_of_friends_algorithm}. Only two bins in halo mass are
+used, and we use the true halo mass, i.e.\ the virial mass of the true halo
+associated to the extracted group. MAGGIE (in green) shows a better behaviour
+in completeness for all masses in the two catalogue than \citet{Robotham+11}
+(in red) and \citet{Berlind+06} (in blue), while the reliability is equivalent
+to the optimal FoF, except for high masses for the bigger catalog.
+
+\subsubsection{Group properties}
+
+\begin{figure}[t]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \begin{minipage}{\linewidth}
+            \subfloat[Differences for luminosities]
+            {%
+                \includegraphics[width=\linewidth]{%
+                    figures/maggie/result_diff_luminosity_true_luminosity.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \subfloat[Bias and dispersion for luminosities]
+            {%
+                \includegraphics[width=\linewidth]{%
+                    figures/maggie/result_bias_disp_luminosity_true_luminosity.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Comparison of group luminosities with the real space
+        for primary groups in catalogs 2 and 6. In the top panel the difference
+    on luminosities $L$ in the $r$ band. In the bottom panel, the bias and the
+dispersion of the luminosity differences.\label{fig:bias_disp_lum}}
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \begin{minipage}{\linewidth}
+            \subfloat[Differences for stellar masses]
+            {%
+                \includegraphics[width=\linewidth]{%
+                    figures/maggie/result_diff_stellarmass_true_stellarmass.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \subfloat[Bias and dispersion for stellar masses]
+            {%
+                \includegraphics[width=\linewidth]{%
+                    figures/maggie/result_bias_disp_stellarmass_true_stellarmass.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Comparison of group stellar masses with the real
+        space for primary groups in catalogs 2 and 6. In the top panel the
+    difference on stellar masses $m$. In the bottom panel, the bias and the
+dispersion of the stellar mass differences.\label{fig:bias_disp_stellarmass}}
+    \end{minipage}
+\end{figure}
+
+We test the deduced stellar mass and luminosity of selected groups for each
+algorithm. For non-probabilistic FoF, they are just the sum of the galaxy
+contributions. But for MAGGIE, we use the computed probabilities inside the
+group to weight the stellar mass and luminosity of each galaxy. If $X$ is the
+property of the group, $x_i$ the property of the galaxy $i$ in the group with
+the probability $p_i$:
+%
+\begin{equation}
+    X = \sum_i p_i x_i
+\end{equation}
+
+In \bartreffigure{bias_disp_lum}, we compare the true luminosity of groups
+(computed assuming a perfect selection of groups in the sub-sample) with the
+luminosity computed with the galaxy membership of each algorithm. In the bottom
+panel, we show the bias and the dispersion of the difference between the true
+and estimated luminosities. The \bartreffigure{bias_disp_stellarmass} is the
+same for stellar masses. The optimal FoF algorithm has a lower bias than MAGGIE
+since we can't observe a trend of the bias with the true halo mass, while the
+dispersion is better for MAGGIE at high masses thanks to the probability
+weighting that reduces the effect of interlopers.
+
+\subsubsection{Fragmentation}
+
+Estimating the fraction of groups in the selection that are the result of the
+fragmentation of a real group is important since an observer using a group
+catalog can't distinguish the primary group from the other. In
+\bartreffigure{fragments}, we show the fraction of fragmented groups (defined
+as in \bartrefchapter{friends_of_friends_algorithm}) in function of the
+estimated halo mass. This allows to see the expected fraction of fragmented
+groups by an observer using a group catalog with only information on the
+estimated halo mass.
+
+MAGGIE shows a very better behaviour in the case of the fragmentation. The
+observer can be always certain that a big halo isn't the result of the
+fragmentation of a true halo. This due to the combination of the abundance
+matching which gives good estimations of virial masses and the ordered search
+of groups from galaxy stellar masses. But the fragmentation increases with the
+decreasing estimated virial mass, since with groups of few members, it is
+easier to make a mistake in the selection of the central galaxy of the group.
+
+\subsubsection{Virial masses}
+%
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \includegraphics[width=\linewidth]{%
+            figures/maggie/result_fragments.pdf%
+        }
+        \captionof{figure}{The fraction of fragments according to the estimated
+            halo mass of the group.\label{fig:fragments}}
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \begin{minipage}{\linewidth}
+            \subfloat[Differences for virial masses]
+            {%
+                \includegraphics[width=\linewidth]{%
+                    figures/maggie/result_diff_mvir_true_halo_mass.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \subfloat[Bias and dispersion for virial masses]
+            {%
+                \includegraphics[width=\linewidth]{%
+                    figures/maggie/result_bias_disp_mvir_true_halo_mass.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{\label{fig:bias_disp_virial_mass}}
+    \end{minipage}
+\end{figure}
+
+In \bartreffigure{bias_disp_virial_mass}, we compare the estimation of
+the virial mass by application of the virial theorem for FoF algorithms and by
+abundance matching.
+
+\section{Discussions}
+\label{sec:maggie_discussions}
+
+\subsection{Halo mass estimations}
+\label{sec:hmf_test}
+
+The estimation of the virial mass of the groups is an important aspect. Halo
+masses are linked to the global environment of galaxies and a biased
+estimation will affect observed trends of galaxy properties with the
+environment.
+
+Our mass computation needs to be precise in the larger mass range possible,
+and independent of polluted environment of groups by some interlopers. The
+abundance matching technique seems to be a good way to estimate the virial
+mass of galaxy group halos. In principle, it seems more biased than using
+the luminosities or stellar masses of groups, but since the central galaxy
+in a selected group is well recovered, this is a quantity less affected by
+interlopers and so the halo mass estimation will be good enough. But since
+there is a saturation of the relation between the halo mass and the central
+stellar mass at high halo mass, we expect that the estimation will be poorer
+for high masses than other methods.
+
+The majority of the halo mass function described in the literature fit the FoF
+mass of the halos instead of the spherical over-density mass, which is related
+to the virial mass of the halo. Since we used the galaxy catalogue from
+\citet{Guo+11} whose the semi-analytical code was applied onto the
+Millennium-II run, we fit the virial halo mass function directly on its output.
+%
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.6\linewidth]{figures/maggie/hmf.pdf}
+    \caption{Cumulative halo mass function for the output of the Millennium-II
+    run for FoF masses (red) and virial masses (black), and some models of halo
+mass functions. We show the fit we have done on the virial mass function
+(green).\label{fig:hmf}}
+\end{figure}
+%
+We show it in \bartreffigure{hmf} where we plot the FoF mass function (in red)
+and the virial mass function (in black) for halos in the Millennium-II
+simulations at redshift zero. Virial masses are lower than FoF masses so we
+don't use existing models of halo mass functions displayed too on the figure.
+
+\subsection{Prior halo mass --- central stellar mass relation}
+
+We tested the choice for the initial relation between the halo mass and the
+central stellar mass of groups to see its effects on MAGGIE\@. We used the
+relation from \citet{BCW+10} against a simple ratio relation with different
+values for the ratio. Extracted groups are insensitive to this choice, if we
+keep this choice with physical values. The iterative process corrects a bad
+assumption in our initial guess.
+
+\subsection{Influence of the halo mass function model}
+
+The robustness of MAGGIE against the choice of the halo mass function is
+important because this choice will affect the completeness and reliability
+of our selected groups and their properties too. We used the
+\citet{Warren+06} model. It is a fit for mass of FoF halos but we apply it
+to see the effect of a very bad assumption on the halo mass function.
+%
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 1]{%
+            \includegraphics[width=\linewidth]{%
+figures/maggie/msii_courtin_warren_CDF_completeness_reliability_1_article_C_R.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 5]{%
+            \includegraphics[width=\linewidth]{%
+figures/maggie/msii_courtin_warren_CDF_completeness_reliability_5_article_C_R.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{Errors for the choice of the halo mass function.\label{fig:cdf_hmf}}
+\end{figure}
+%
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group halo masses]{%
+            \includegraphics[width=\linewidth]{%
+            figures/maggie/msii_courtin_warren_bias_dispersion_halo_mass.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group stellar masses]{%
+            \includegraphics[width=\linewidth]{%
+            figures/maggie/msii_courtin_warren_bias_dispersion_stellarmass.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group luminosities]{%
+            \includegraphics[width=\linewidth]{%
+            figures/maggie/msii_courtin_warren_bias_dispersion_luminosity.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{Errors for the choice of the halo mass function.\label{fig:bias_disp_hmf}}
+\end{figure}
+
+\subsection{Influence of the cosmology}
+
+Our problematic is still the same: as an observer, we don't know the real
+space and its properties. So, we assume a given set of cosmological
+parameters. When applying group finders on our mock catalog, we use the
+cosmology of the simulation from which are constructed our mock. But in
+reality, we know those parameters with a given uncertainty and we want to
+know their effects on the group extraction.
+
+To answer this question, we must know where the cosmology is relevant in the
+algorithm. For example, when computing the projected radius of a galaxy at the
+redshift of the group, we implicitly need to compute the luminosity distance
+which is cosmology dependent. We assume in our case a flat Universe and in this
+case, it is computed using just elliptic integrals \citep{Liu+11},
+\citet{Eisenstein+97}. So cosmological parameters have an influence on this
+distance, and in consequence on the membership of galaxy groups. Moreover, the
+halo mass function is dependent of the cosmology assumed by the observer for
+many models and can affect the virial mass estimations. In our case, the halo
+mass function is fitted on the real space data and its influence can't be
+really measured. But we expect it has the same influence as a bad choice for
+the halo mass function. We ran MAGGIE with the true cosmology (from
+Millennium-II simulation) and two false cosmology with respect to our mock
+catalog (Planck and WMAP9) to compare results.
+%
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 1]{%
+            \includegraphics[width=\linewidth]{%
+figures/maggie/planck_wmap9_CDF_completeness_reliability_1_article_C_R.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 5]{%
+            \includegraphics[width=\linewidth]{%
+figures/maggie/planck_wmap9_CDF_completeness_reliability_5_article_C_R.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{Errors for the choice of the cosmology.\label{fig:cdf_cosmology}}
+\end{figure}
+%
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group halo masses]{%
+            \includegraphics[width=\linewidth]{%
+            figures/maggie/planck_wmap9_bias_dispersion_halo_mass.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group stellar masses]{%
+            \includegraphics[width=\linewidth]{%
+            figures/maggie/planck_wmap9_bias_dispersion_stellarmass.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group luminosities]{%
+            \includegraphics[width=\linewidth]{%
+            figures/maggie/planck_wmap9_bias_dispersion_luminosity.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{Errors for the choice of the
+    cosmology.\label{fig:bias_disp_cosmology}}
+\end{figure}
+
+\subsection{Influence of observational errors}
+
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\linewidth]{figures/maggie/stellar_mass_models.pdf}
+    \caption{The differences between stellar mass models applied onto galaxies
+    from the SDSS\@. Contours are showing levels in unit of $\sigma$. Ordinates
+and abscissas are the stellar masses of galaxies in decimal logarithm of the
+solar mass.\label{fig:stellar_mass_models}}
+\end{figure}
+
+Our way of sorting galaxies by mass uses our prior on the galaxy formation
+scenario. Indeed, the stellar mass of the central galaxy of a dark matter halo
+is correlated to its virial mass. This can be seen in the
+Figure~\ref{fig:stellar_halo_guo}. But the relation is saturated at high halo
+masses. So the intrinsic precision is affected by this choice.
+
+Moreover, the estimation of stellar masses from the observations and spectrum
+is not very precise and can significantly differ according to the way of
+computing it. We show the differences between some models present in the SDSS
+data base, with the bias and dispersion for each distribution, in
+\bartreffigure{stellar_mass_models}.
+%
+Typically, the errors in the estimation is roughly 0.3 dex. We introduce such
+errors in the stellar masses of the mock catalogue to estimate the effect of
+the bad estimation. We generated Gaussian errors without bias and dispersion of
+0.3, 0.5, 0.9 dex.
+%
+\begin{figure}[tb]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 1]{%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/1_comp-rel.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Catalog 5]{%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/5_comp-rel.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{\label{fig:cdf_errors_stellar}}
+\end{figure}
+%
+\begin{figure}[tb]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group halo masses]{%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/bias_disp_mvir_true_halo_mass.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group stellar masses]{%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/bias_disp_stellarmass_true_stellarmass.pdf%
+            }
+        }
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \subfloat[Group luminosities]{%
+            \includegraphics[width=\linewidth]{%
+                figures/maggie/bias_disp_luminosity_true_luminosity.pdf%
+            }
+        }
+    \end{minipage}
+    \caption{Errors due to choice of the
+    cosmology.\label{fig:bias_disp_cosmology}}
+\end{figure}
+%
+The effect of an error on stellar masses is quite catastrophic in the
+completeness and the dispersion of group properties, while bias is
+unaffected since we didn't introduced one.
+
+We should use an other tracer for the halo mass as the central luminosity,
+which is less affected by observational errors. Indeed, the principal
+sources of errors in the computation of the absolute magnitude of a galaxy
+are the photometry, the extinction and K-correction, and the redshift
+through the distance modulus:
+%
+\begin{equation}
+    \Delta M=\Delta m + \frac{5}{\ln{10}}
+    \frac{\Delta d_{\mathrm{lum}} \left(z\right)}{\Delta z}
+    \frac{1}{d_{\mathrm{lum}} \left(z\right)} + \Delta E + \Delta K
+    \left(z\right)
+\end{equation}
+%
+$\Delta m$ is of the order of $10^{-2}$ in the SDSS, the second term is
+between $10^{-4}$ and $10^{-2}$ in the range of redshift used for the
+catalogues. The K-correction, if we follow the method of
+\citet{Chilingarian+10}, is of the order of $10^{-2}$. There is the problem
+of the extinction for which the precision can't be really estimated.
+Moreover, peculiar velocities worst the situation since they contribute to
+the computation of the distance modulus. But for non-nearby galaxies and
+globally, the errors should be small.
+
+Intrinsically, using luminosities instead of stellar masses in the inference
+of group virial masses is expected to be less precise because the relation
+between the luminosity of the central galaxy and the halo mass is more
+saturated for high mass groups. But the gain is in the precision and the
+robustness relatively to the precision.
 
 \section{Application to SDSS}
 \label{sec:application_to_sdss}
