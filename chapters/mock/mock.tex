@@ -23,6 +23,89 @@ place an observer into it, and create a mock survey. But to have a realistic
 mock catalogue, it's necessary to take care of many things which will be
 described in the next section.
 
+\section{Populating dark matter halos}
+\label{sec:populating_dark_matter_halos}
+
+The first step in the construction of a galaxy mock catalogue is to populate
+galaxies inside their dark matter halos, according to the model of the galaxy
+formation and the constraints imposed by the observations. The real large scale
+structure of the Universe is not directly observable and we must be confident
+in the different cosmological simulation code outputs available to get the
+distribution of dark matter halos. For example, there is the Millennium-II run
+\citep{BoylanKolchin+09} of $2160^3$ dark matter particles, with a simulation
+box size of 100 $h^{-1} \mathrm{Mpc}$ allowing a relatively high resolution for
+the particles mass ($6.9\;10^6\;h^{-1} M_\odot$) and a precise determination of
+the halo mass function and the history of each individual halos. A lot of
+cosmological simulation codes exist to follow the dark matter particle
+distribution along the evolution of the Universe \citep{Springel+01,
+Teyssier+02, Springel+05}. With such codes, we aren't dependent of big
+simulations as the Millennium-II, but at the cost of loss in mass resolution
+(this is not too important if don't need a precise estimation of the halo mass
+function for light halos).
+
+From the outputs of this cosmological simulations, informations on dark matter
+halos are extracted using halo finder codes \citep{KK+09, Tweed+09,
+Planelles+10}. Several methods exist to identify such structures: a simple
+Friend-of-Friends approach \citep{Davis+85} that tends to link between them
+different halos by bridges of linked dark matter particles, and doesn't
+identify sub-halos; spherical over-density measuring the density field and
+searching around density peaks iteratively until the desired density threshold
+is reached \citep{PS+74}; \textsc{Subfind} of~\cite{Springel+01} is similar to
+FoF with peaks searched within the extracted FoF halos\ldots With all
+available informations on halos, they can be populated by galaxies with
+prescriptions of the galaxy formation model.
+
+\subsection{Halo occupation distribution}
+\label{sub:halo_occupation_distribution}
+
+In the Halo Occupation Distribution method \citep{MS02,BW02,Zehavi+11}, the
+number of galaxies per halo is drawn from a probability distribution function
+that depends on the halo mass, or better, the galaxy luminosities or stellar
+masses are drawn from conditional luminosity (stellar mass) functions that
+depend on halo mass \citep{YMvdB03}. A relation between the galaxy and matter
+distribution is imposed by three constraints: the probability distribution $P
+\left(N|M\right)$ that an halo of mass $M$ contains $N$ galaxies, the spatial
+relation between the galaxy and dark matter, and the same for the velocity
+distribution. The galaxy distribution is assumed to be spherically symmetric,
+and follows that of the dark matter particles in the halos of $\Lambda$CDM
+cosmological simulations (e.g., NFW), the velocities are drawn from Maxwellian
+distributions (see \citealp{Beraldo+14} for the limitations of this
+assumption), with radial and tangential velocity dispersions derived from the
+Jeans equation of local dynamical equilibrium, assuming some form for the
+radial variation of the velocity anisotropy.
+
+\subsection{Semi-analytical models}
+\label{sub:semi_analytical_models}
+
+In  Semi-Analytical Models (SAMs, e.g., \citealp{RQPR97,KCDW99}), galaxy
+properties (in particular stellar mass and $r$-band luminosity) are painted on
+the halos and subhalos of cosmological $N$ body simulations across cosmic time,
+following well-defined recipes for star formation and galaxy feedback.  This
+procedure produces galaxies that follow relatively well the observed properties
+and scaling relations.
+
+We have chosen this second approach, because the recent SAM by~\cite{Guo+11},
+run on the Millennium-II simulation \citep{BoylanKolchin+09} fits well the
+$z$=0 observations (as shown by \citeauthor{Guo+11}). The Millennium-II
+simulation  involved $2160^3$ particles in a box of comoving size 137 Mpc,
+running with cosmological parameters $\Omega_{\rm m}=0.25$,
+$\Omega_\Lambda=0.75$, $h=0.73$, and $\sigma_8=0.9$. The particle mass was thus
+$9.5\times 10^6 M_\odot$.
+
+We extracted the SAM output of~\cite{Guo+11} from the Guo2010a database on the
+German Astrophysical Virtual Observatory
+website.~\footnote{http://gavo.mpa-garching.mpg.de/Millennium/Help,
+see~\cite{Lemson06}} The real-space groups were extracted by
+\citeauthor{Guo+11} using the FoF technique applied to the particle data, with
+over $10^5$ particles for groups of mass $>10^{12} \rm M_\odot$. The database
+includes the mass within the sphere of radius $r_{200}$, where the mean mass
+density is $\Delta=200$ times the critical density of the Universe, centered on
+the particle in Millennium-II simulation, within the largest sub-halo, with the
+most negative gravitational potential \citep{BoylanKolchin+09}. We slightly
+modified the membership of the true groups by considering only the galaxies
+within $r_{200}$.\footnote{We kept the galaxies outside the sphere of radius
+$r_{200}$ as possible interlopers.}
+
 \section{Mock structure}
 
 In all this section, we will assume that we have already in our possession a
@@ -306,14 +389,28 @@ sub-sample.
 %
 \begin{figure}[htb]
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/mock/subsamples.pdf}
-    \caption{An illustration of the doubly complete galaxy samples used. Black
-        dots represents galaxies in the mock catalogue. Colored rectangles show
-        samples for a threshold magnitude in the $r$ band $M_r$ of -19, -20,
-        -21. Their sizes reflects the corresponding limits of the minimal
-    luminosity. As we can see, in these regions, no need to correct for missing
-galaxies. All galaxies above the given threshold magnitude are visible.
-\label{fig:subsamples}}
+    \begin{minipage}{0.49\linewidth}
+        \includegraphics[width=\linewidth]{figures/mock/subsamples.pdf}
+        \captionof{figure}{An illustration of the doubly complete galaxy
+            samples used. Black dots represents galaxies in the mock catalogue.
+            Colored rectangles show samples for a threshold magnitude in the
+            $r$ band $M_r$ of -19, -20, -21. Their sizes reflects the
+            corresponding limits of the minimal luminosity. As we can see, in
+        these regions, no need to correct for missing galaxies. All galaxies
+    above the given threshold magnitude are visible.\label{fig:subsamples}}
+    \end{minipage}
+    \begin{minipage}{0.49\linewidth}
+        \includegraphics[width=\linewidth]{figures/mock/counts.pdf}
+        \captionof{figure}{Comparison of counts in redshift of galaxies in the
+            mock catalog with the theoretical expectation deduced from the
+            number density of galaxies. In \emph{red} the theory and in
+            \emph{green} counts directly done on the mock catalog. The little
+            discrepancies observed at high redshift are caused by an
+            imprecision in the computation of the integrated luminosity
+            function, since we use an interpolation of the luminosity function,
+            and only few bright galaxies at high redshift are visible making
+        the integration difficult.\label{fig:counts}}
+    \end{minipage}
 \end{figure}
 
 We choose a minimal galaxy luminosity for our sample and the maximal redshift
@@ -347,7 +444,7 @@ catalogue, with statistics on each of them.
     \bottomrule
     \end{tabular}
     \end{center}
-\parbox{\hsize}{Notes: Columns are: sample, maximum $r$-band absolute
+    \parbox{\hsize}{Notes: Columns are: sample, maximum $r$-band absolute
     magnitude, minimum luminosity in units of $L*$ (adopting $M*=-20.44 +
     5\,\log h$ in the SDSS $r$ band from \citealp{Blanton+03}), maximum
     redshift, sample size, mean density $n$, proxy for the mean separation to
@@ -378,5 +475,43 @@ less precise. To avoid the degradation of galaxy group performances, we flag
 selected groups (after the application of a grouping algorithm) if they are
 close to edges (see \bartrefchapter{friends_of_friends_algorithm}) and remove
 them from the statistics in tests.
+
+\section{Validity}
+\label{sec:validity}
+
+Finally, we test the construction of our mock catalogue with a simple
+comparison with the expectation from the theoretical redshift counts. Indeed,
+the redshift count is:
+%
+\begin{equation}
+    \label{eq:counts}
+    \cfrac{\dd N}{\dd z} = \cfrac{\dd N}{\dd V}\times\frac{\dd V}{\dd z}
+\end{equation}
+%
+where $V$ is the comoving volume.
+The first term of the \emph{rhs} of \bartrefequation{counts} is just the integrated luminosity function
+$\Phi$:
+%
+\begin{equation}
+    \cfrac{\dd N}{\dd V} = \int_{L_{\lim} \left(z\right)}^\infty
+    \cfrac{\dd^2 N}{\dd V \dd L}\dd L = \int_{L_{\lim} \left(z\right)}^\infty \Phi \left(L\right)\dd L
+\end{equation}
+%
+The luminosity function is directly deduced from the virtual galaxy catalog of
+\citet{Guo+11}.
+
+The second term of the \emph{rhs} of \bartrefequation{counts} is the variation
+of the comoving volume with redshift (see \citet{Hogg+99}):
+%
+\begin{equation}
+    \cfrac{\dd V}{\dd z} = D_{\rm H} \cfrac{{d_{\rm pm} \left(z\right)}^2}
+    {E\left(z\right)} \dd \Omega
+\end{equation}
+%
+where $\dd\Omega$ is the elemental solid angle, $d_{\rm pm}$ the proper motion
+distance (or comoving distance), $D_H$ the Hubble distance $c/H_0$ and
+$E\left(z\right)$ the evolution of the Hubble constant with the redshift. The
+result of the theory and the comparison with the obtained mock catalog is shown
+in \bartreffigure{counts}.
 
 % vim: set tw=79 :
