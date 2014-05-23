@@ -75,9 +75,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define the geometry of the thesis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\geometry{inner=1.5cm, outer=3.5cm, includefoot=true}
-\geometry{headsep=0cm, headheight=53pt, textheight=650pt}
-\geometry{footskip=-3cm}
+\newlength\thebartinner
+\newlength\thebartouter
+\newlength\thebarttop
+\newlength\thebartbottom
+\setlength\thebartouter{2.75cm}
+\setlength\thebartinner{2cm}
+\setlength\thebarttop{4cm}
+\setlength\thebartbottom{2cm}
+\newcommand\bartinner[1]{\renewcommand*{\thebartinner}{#1}}
+\newcommand\bartouter[1]{\renewcommand*{\thebartouter}{#1}}
+\newcommand\bartbottom[1]{\renewcommand*{\thebartbottom}{#1}}
+\newcommand\barttop[1]{\renewcommand*{\thebarttop}{#1}}
+\geometry{includefoot=true}
+\geometry{headsep=0cm, headheight=53pt}
+\geometry{footskip=0cm}
+\setlength\evensidemargin{\thebartouter - 1in - \hoffset}
+\setlength\oddsidemargin{\thebartinner - 1in - \hoffset}
+\setlength\textwidth{\paperwidth - \thebartouter -\thebartinner}
+\setlength\topmargin{\thebarttop - 1in -\voffset -\headheight - \headsep}
+\setlength\textheight{\paperheight -\footskip -\thebartbottom -\thebarttop}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Put an image at the start of chapter
@@ -262,32 +279,34 @@
 \newcommand{\thefiligranleft}{}
 \newcommand{\thefiligranright}{}
 \newcommand{\thefiligrancolor}{}
+\newcommand\thefiligranfontsize{\fontsize{3.5cm}{3.5cm}\bf}
 \newcommand{\bartfiligranleft}[1]{\renewcommand*{\thefiligranleft}{#1}}
 \newcommand{\bartfiligranright}[1]{\renewcommand*{\thefiligranright}{#1}}
 \newcommand{\bartfiligrancolor}[1]{\renewcommand*{\thefiligrancolor}{#1}}
+\newcommand{\bartfiligranfontsize}[1]{\renewcommand*{\thefiligranfontsize}{#1}}
 \newcommand{\bartfiligran}{%
     % The text for the number to appear
-    \settoheight{\barthhr}{{\fontsize{130}{150}\bf\color{\thefiligrancolor}\thefiligranright}}
-    \settowidth{\bartwwr}{{\fontsize{130}{150}\bf\color{\thefiligrancolor}\thefiligranright}}
-    \settoheight{\barthhl}{{\fontsize{130}{150}\bf\color{\thefiligrancolor}\thefiligranleft}}
-    \settowidth{\bartwwl}{{\fontsize{130}{150}\bf\color{\thefiligrancolor}\thefiligranleft}}
+    \settoheight{\barthhr}{{\thefiligranfontsize\color{\thefiligrancolor}\thefiligranright}}
+    \settowidth{\bartwwr}{{\thefiligranfontsize\color{\thefiligrancolor}\thefiligranright}}
+    \settoheight{\barthhl}{{\thefiligranfontsize\color{\thefiligrancolor}\thefiligranleft}}
+    \settowidth{\bartwwl}{{\thefiligranfontsize\color{\thefiligrancolor}\thefiligranleft}}
     \begin{tikzpicture}[overlay,remember picture]
         \begin{scope}
         \ifodd\c@page{%
             \node[shift={(-0.49\barthhr,0.51\bartwwr)},rotate=90] at
             ($ (current page.south east) $)
-            {{\fontsize{130}{150}\bf\color{black!25}\thefiligranright}};
+            {{\thefiligranfontsize\color{black!25}\thefiligranright}};
             \node[opacity=1,shift={(-0.5\barthhr,0.5\bartwwr)},rotate=90] at
             ($ (current page.south east) $)
-            {{\fontsize{130}{150}\bf\color{\thefiligrancolor!35!white}\thefiligranright}};
+            {{\thefiligranfontsize\color{\thefiligrancolor!35!white}\thefiligranright}};
         }%
         \else{%
             \node[shift={(0.49\barthhl,0.49\bartwwl)},rotate=-90] at
             ($ (current page.south west) $)
-            {{\fontsize{130}{150}\bf\color{black!25}\thefiligranleft}};
+            {{\thefiligranfontsize\color{black!25}\thefiligranleft}};
             \node[opacity=1,shift={(0.5\barthhl,0.5\bartwwl)},rotate=-90] at
             ($ (current page.south west) $)
-            {{\fontsize{130}{150}\bf\color{\thefiligrancolor!35!white}\thefiligranleft}};
+            {{\thefiligranfontsize\color{\thefiligrancolor!35!white}\thefiligranleft}};
         }\fi
         \end{scope}
     \end{tikzpicture}
