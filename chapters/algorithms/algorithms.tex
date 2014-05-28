@@ -268,6 +268,95 @@ should not affect the galaxy grouping.
 \section{Discussion}
 \label{sec:gga_discussion}
 
+We can extract common principles of the different algorithms we described
+above. There are two approaches for the galaxy grouping: a geometrical one
+based only on the positional informations of galaxies and a Bayesian one using
+priors on group properties and galaxies therein. What emerged is that a large
+majority of these algorithms make a harmonious combination of these approaches
+in order to conserve only their strengths. A typical geometrical algorithm is
+the Friends-of-Friends (see \bartrefchapter{friends_of_friends_algorithm}),
+linking galaxies between them if they are closer than a linking length. This
+method has the default of creating bridges between two different galaxy groups
+if two of their members are closer than the linking length. Adding priors to
+such a scheme, the membership can be improved by breaking the problematic
+bridges. This is a good summary for the method of \citet{Marinoni+02} or
+\citet{MunozCuartas+12}. Moreover, the bias in distance introduced by redshift
+can be reduced with same prescriptions ad done in \citet{Liu+08}.
 
+\begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}[line cap=round,line join=round,->=triangle 45,x=1.0cm,y=1.0cm,scale=0.75]
+        \clip(-1.05,-1.06) rectangle (13.19,6.52);
+        \draw (0,6)-- (0,0);
+        \draw (0,0)-- (10,0);
+        \draw [line width=2pt,color=black] (0,0)-- (9.26,5.05);
+        \draw [->] (0,0) -- (10,0);
+        \draw [->] (0,0) -- (0,6);
+        \draw[line width=2pt,color=red, smooth,samples=100,domain=0.00001:10.0] plot (\x, {1.1*\x^(0.5)+1}) ;
+        \draw [->,color=blue] (2.99,1.63) -- (2.99,2.9);
+        \draw [->,color=blue] (2.99,2.9) -- (5.31,2.9);
+        \draw [->,color=blue] (5.31,2.9) -- (5.31,3.54);
+        \draw [->,color=blue] (5.31,3.54) -- (6.48,3.54);
+        \draw [line width=0.5pt,color=blue] (6.48,3.54) -- (6.48,3.8);
+        \draw [->,color=blue] (6.48,3.8) -- (6.96,3.8);
+        \draw [line width=0.5pt,color=blue] (6.96,3.8) -- (6.96,3.9);
+        \draw [->,color=blue] (6.96,3.9) -- (7.26,3.96);
+        \draw [dash pattern=on 3pt off 3pt,color=purple] (7.26,3.96)-- (7.26,0);
+        \draw[color=black] (5.62,2.83) node[below] {$M(R)$};
+        \draw[color=black] (5.37,-0.17) node[below] {$R$};
+        \draw[color=red] (0.23,1.85) node[below right] {$m(R)$};
+        \fill [color=blue] (2.99,1.63) circle (1.5pt);
+        \fill [color=blue] (2.99,2.9) circle (1.5pt);
+        \fill [color=blue] (5.31,2.9) circle (1.5pt);
+        \fill [color=blue] (5.31,3.54) circle (1.5pt);
+        \fill [color=blue] (6.48,3.54) circle (1.5pt);
+        \fill [color=blue] (6.48,3.8) circle (1.5pt);
+        \fill [color=blue] (6.96,3.8) circle (1.5pt);
+        \fill [color=blue] (6.96,3.9) circle (1.5pt);
+        \fill [color=purple] (7.26,3.96) circle (2.5pt);
+        \fill [color=purple] (7.26,0) circle (2.5pt);
+        \draw[color=purple] (7.51,0.18) node[above right] {$r_{\mathrm{vir}}$};
+    \end{tikzpicture}
+    \caption{Graph illustrating the convergence of the group membership by
+    iterations.\label{fig:convergence}}
+\end{figure}
+
+Iteration seems to be a key in a good grouping algorithm. A convergence in the
+galaxy membership is assured by updating group properties along iterations, and
+using it to constrain the selection. The convergence in various scaling
+relations in groups is also assured by iterations, giving a self-consistency of
+the clustering with the data itself: galaxy group algorithms are special kind
+of machine learning algorithm. For example, we suppose an algorithm using a
+relation between the stellar mass of groups and its virial mass (see
+\bartreffigure{convergence}). The stellar mass of the group in red increases
+with the projected radius since the number of galaxies inside it increases.
+There is also a relation between projected radius and virial mass. Starting
+with an initial guess for the virial mass, we can perform a galaxy selection
+and estimate a stellar mass for the group. With the relation, we can make a new
+estimation of the virial mass. This process goes until the convergence
+represented by the virial radius $r_\mathrm{vir}$ in
+\bartreffigure{convergence}.
+
+The Bayesian approach used in the described galaxy group algorithms as also its
+counterparts: if the chosen models are bad, the clustering will be affected
+too. For example, \citet{Yang+05} assumes a flat line-of-sight velocity
+dispersion and a flat distribution of interlopers in the computation of density
+contrast, which clearly depends on the projected radius pointed by the
+observer. Another problem is the way to test such algorithms. Previously
+described algorithms were tested on different galaxy mock catalogues, not
+constructed in the same way, without the same physics applied inside them. In
+consequence the comparison is very difficult because not operated in the same
+conditions. And the definition of an optimal extraction, and the statistics
+used assess their perfomances differ with galaxy group algorithm developers.
+
+To go beyond such limitations that will never be completely avoided,
+a probabilistic approach of galaxy groups seems to be a good compromised (see
+\bartrefchapter{MAGGIE}). Moreover, the tests for algorithms must be well
+defined, with a common galaxy mock catalogue to perform the comparisons and a
+good definition of the statistics to use. How well are recovered galaxy groups?
+How well they are polluted by interlopers? How many selected groups are
+spurious? How virial properties of the parent halo are recovered? How scaling
+relations are recovered? They are the questions to answer in order to
+characterize the quality of a grouping algorithm.
 
 % vim: set tw=79 :
