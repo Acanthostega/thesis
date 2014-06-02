@@ -582,7 +582,7 @@ FoF.
         \subfloat[Catalog 2]
         {%
             \includegraphics[width=\linewidth]{%
-                figures/maggie/result_1_comp-rel.pdf%
+figures/maggie/article_fof_comparison_CDF_completeness_reliability_1_article_C_R.pdf%
             }
         }
     \end{minipage}
@@ -590,7 +590,7 @@ FoF.
         \subfloat[Catalog 6]
         {%
             \includegraphics[width=\linewidth]{%
-                figures/maggie/result_5_comp-rel.pdf%
+figures/maggie/article_fof_comparison_CDF_completeness_reliability_5_article_C_R.pdf%
             }
         }
     \end{minipage}
@@ -623,7 +623,7 @@ to the optimal FoF, except for high masses for the bigger catalog.
             \subfloat[Differences for luminosities]
             {%
                 \includegraphics[width=\linewidth]{%
-                    figures/maggie/result_diff_luminosity_true_luminosity.pdf%
+            figures/maggie/article_fof_comparison_differences_luminosity.pdf%
                 }
             }
         \end{minipage}
@@ -631,7 +631,7 @@ to the optimal FoF, except for high masses for the bigger catalog.
             \subfloat[Bias and dispersion for luminosities]
             {%
                 \includegraphics[width=\linewidth]{%
-                    figures/maggie/result_bias_disp_luminosity_true_luminosity.pdf%
+        figures/maggie/article_fof_comparison_bias_dispersion_luminosity.pdf%
                 }
             }
         \end{minipage}
@@ -645,7 +645,7 @@ dispersion of the luminosity differences.\label{fig:bias_disp_lum}}
             \subfloat[Differences for stellar masses]
             {%
                 \includegraphics[width=\linewidth]{%
-                    figures/maggie/result_diff_stellarmass_true_stellarmass.pdf%
+            figures/maggie/article_fof_comparison_differences_stellarmass.pdf%
                 }
             }
         \end{minipage}
@@ -653,7 +653,7 @@ dispersion of the luminosity differences.\label{fig:bias_disp_lum}}
             \subfloat[Bias and dispersion for stellar masses]
             {%
                 \includegraphics[width=\linewidth]{%
-                    figures/maggie/result_bias_disp_stellarmass_true_stellarmass.pdf%
+    figures/maggie/article_fof_comparison_bias_dispersion_stellarmass_bias.pdf%
                 }
             }
         \end{minipage}
@@ -710,7 +710,7 @@ easier to make a mistake in the selection of the central galaxy of the group.
     \centering
     \begin{minipage}{0.49\linewidth}
         \includegraphics[width=\linewidth]{%
-            figures/maggie/result_fragments.pdf%
+            figures/maggie/article_fof_comparison_frag_fraction_fragments.pdf%
         }
         \captionof{figure}{The fraction of fragments according to the estimated
             halo mass of the group.\label{fig:fragments}}
@@ -720,7 +720,7 @@ easier to make a mistake in the selection of the central galaxy of the group.
             \subfloat[Differences for virial masses]
             {%
                 \includegraphics[width=\linewidth]{%
-                    figures/maggie/result_diff_mvir_true_halo_mass.pdf%
+            figures/maggie/article_fof_comparison_differences_halo_mass.pdf%
                 }
             }
         \end{minipage}
@@ -728,7 +728,7 @@ easier to make a mistake in the selection of the central galaxy of the group.
             \subfloat[Bias and dispersion for virial masses]
             {%
                 \includegraphics[width=\linewidth]{%
-                    figures/maggie/result_bias_disp_mvir_true_halo_mass.pdf%
+        figures/maggie/article_fof_comparison_bias_dispersion_halo_mass.pdf%
                 }
             }
         \end{minipage}
@@ -793,130 +793,152 @@ assumption in our initial guess.
 
 \subsection{Influence of the halo mass function model}
 
-The robustness of MAGGIE against the choice of the halo mass function is
-important because this choice will affect the completeness and reliability
-of our selected groups and their properties too. We used the
-\citet{Warren+06} model. It is a fit for mass of FoF halos but we apply it
-to see the effect of a very bad assumption on the halo mass function.
-%
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Catalog 1]{%
-            \includegraphics[width=\linewidth]{%
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 2]{%
+                \includegraphics[width=\linewidth]{%
 figures/maggie/msii_courtin_warren_CDF_completeness_reliability_1_article_C_R.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Catalog 5]{%
-            \includegraphics[width=\linewidth]{%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 6]{%
+                \includegraphics[width=\linewidth]{%
 figures/maggie/msii_courtin_warren_CDF_completeness_reliability_5_article_C_R.pdf%
+                }
             }
-        }
+        \end{minipage}
+        \captionof{figure}{Errors for the choice of the halo mass
+        function.\label{fig:cdf_hmf}}
     \end{minipage}
-    \caption{Errors for the choice of the halo mass function.\label{fig:cdf_hmf}}
-\end{figure}
-%
-\begin{figure}[htb]
-    \centering
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group halo masses]{%
-            \includegraphics[width=\linewidth]{%
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group halo masses]{%
+                \includegraphics[width=\linewidth]{%
             figures/maggie/msii_courtin_warren_bias_dispersion_halo_mass.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group stellar masses]{%
-            \includegraphics[width=\linewidth]{%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group stellar masses]{%
+                \includegraphics[width=\linewidth]{%
             figures/maggie/msii_courtin_warren_bias_dispersion_stellarmass.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group luminosities]{%
-            \includegraphics[width=\linewidth]{%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group luminosities]{%
+                \includegraphics[width=\linewidth]{%
             figures/maggie/msii_courtin_warren_bias_dispersion_luminosity.pdf%
+                }
             }
-        }
+        \end{minipage}
+        \captionof{figure}{Errors for the choice of the halo mass
+        function.\label{fig:bias_disp_hmf}}
     \end{minipage}
-    \caption{Errors for the choice of the halo mass function.\label{fig:bias_disp_hmf}}
 \end{figure}
+
+The robustness of MAGGIE against the choice of the halo mass function is
+important because this choice will affect the completeness and reliability of
+our selected groups and their properties too in a non obvious way. Indeed, the
+halo mass function is a prior in MAGGIE and doesn't reflect necessary the
+reality. We apply an equivalent of the perturbation method to test the
+stability of MAGGIE under a bad choice of model. We used two halo mass
+functions very different of the true one: \citet{Warren+06} and
+\citet{Courtin+11}. Those models are fits of the FoF halo mass function from
+different cosmological simulations. This is not the same as the virial mass but
+ideal for perturbation test. The result of the application of MAGGIE with the
+these models is shown in \bartreffigure{cdf_hmf} and
+\bartreffigure{bias_disp_hmf}.
+
+Comparisons are performed against the perfect case of MAGGIE (in green) with
+the halo mass function directly fitted on the Millennium-II, perfect stellar
+masses and luminosities for galaxies. In orange, halo mass function of
+\citet{Warren+06} and in red, that one of \citet{Courtin+11}. The influence of
+the halo mass function is very small on the completeness and reliability for
+all catalogues and for group properties.
+\com{What to say more?}
 
 \subsection{Influence of the cosmology}
 
-Our problematic is still the same: as an observer, we don't know the real
-space and its properties. So, we assume a given set of cosmological
-parameters. When applying group finders on our mock catalog, we use the
-cosmology of the simulation from which are constructed our mock. But in
-reality, we know those parameters with a given uncertainty and we want to
-know their effects on the group extraction.
+Our problematic is still the same: as an observer, we don't know the real space
+and its properties. So, we assume a given set of cosmological parameters. When
+applying group finders on our mock catalog, we use the cosmology of the
+simulation from which are constructed our mock. But in reality, we know those
+parameters with a given uncertainty and we want to know their effects on the
+group extraction.
 
 To answer this question, we must know where the cosmology is relevant in the
 algorithm. For example, when computing the projected radius of a galaxy at the
 redshift of the group, we implicitly need to compute the luminosity distance
 which is cosmology dependent. We assume in our case a flat Universe and in this
-case, it is computed using just elliptic integrals \citep{Liu+11},
-\citet{Eisenstein+97}. So cosmological parameters have an influence on this
-distance, and in consequence on the membership of galaxy groups. Moreover, the
-halo mass function is dependent of the cosmology assumed by the observer for
-many models and can affect the virial mass estimations. In our case, the halo
-mass function is fitted on the real space data and its influence can't be
+case, it is computed using just elliptic integrals
+\citep{Liu+11,Eisenstein+97}. So cosmological parameters have an influence on
+this distance, and in consequence on the membership of galaxy groups. Moreover,
+the halo mass function is dependent of the cosmology assumed by the observer
+for many models and can affect the virial mass estimations. In our case, the
+halo mass function is fitted on the real space data and its influence can't be
 really measured. But we expect it has the same influence as a bad choice for
 the halo mass function. We ran MAGGIE with the true cosmology (from
 Millennium-II simulation) and two false cosmology with respect to our mock
 catalog (Planck and WMAP9) to compare results.
 %
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Catalog 1]{%
-            \includegraphics[width=\linewidth]{%
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 2]{%
+                \includegraphics[width=\linewidth]{%
 figures/maggie/planck_wmap9_CDF_completeness_reliability_1_article_C_R.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Catalog 5]{%
-            \includegraphics[width=\linewidth]{%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 6]{%
+                \includegraphics[width=\linewidth]{%
 figures/maggie/planck_wmap9_CDF_completeness_reliability_5_article_C_R.pdf%
+                }
             }
-        }
+        \end{minipage}
+        \captionof{figure}{Errors for the choice of the
+        cosmology.\label{fig:cdf_cosmology}}
     \end{minipage}
-    \caption{Errors for the choice of the cosmology.\label{fig:cdf_cosmology}}
-\end{figure}
-%
-\begin{figure}[htb]
-    \centering
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group halo masses]{%
-            \includegraphics[width=\linewidth]{%
-            figures/maggie/planck_wmap9_bias_dispersion_halo_mass.pdf%
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group halo masses]{%
+                \includegraphics[width=\linewidth]{%
+                figures/maggie/planck_wmap9_bias_dispersion_halo_mass.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group stellar masses]{%
-            \includegraphics[width=\linewidth]{%
-            figures/maggie/planck_wmap9_bias_dispersion_stellarmass.pdf%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group stellar masses]{%
+                \includegraphics[width=\linewidth]{%
+                figures/maggie/planck_wmap9_bias_dispersion_stellarmass.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group luminosities]{%
-            \includegraphics[width=\linewidth]{%
-            figures/maggie/planck_wmap9_bias_dispersion_luminosity.pdf%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group luminosities]{%
+                \includegraphics[width=\linewidth]{%
+                figures/maggie/planck_wmap9_bias_dispersion_luminosity.pdf%
+                }
             }
-        }
+        \end{minipage}
+        \caption{Errors for the choice of the
+        cosmology.\label{fig:bias_disp_cosmology}}
     \end{minipage}
-    \caption{Errors for the choice of the
-    cosmology.\label{fig:bias_disp_cosmology}}
 \end{figure}
 
 \subsection{Influence of observational errors}
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\linewidth]{figures/maggie/stellar_mass_models.pdf}
     \caption{The differences between stellar mass models applied onto galaxies
@@ -927,65 +949,64 @@ solar mass.\label{fig:stellar_mass_models}}
 
 Our way of sorting galaxies by mass uses our prior on the galaxy formation
 scenario. Indeed, the stellar mass of the central galaxy of a dark matter halo
-is correlated to its virial mass. This can be seen in the
-Figure~\ref{fig:stellar_halo_guo}. But the relation is saturated at high halo
+is correlated to its virial mass. But the relation is saturated at high halo
 masses. So the intrinsic precision is affected by this choice.
 
 Moreover, the estimation of stellar masses from the observations and spectrum
 is not very precise and can significantly differ according to the way of
 computing it. We show the differences between some models present in the SDSS
 data base, with the bias and dispersion for each distribution, in
-\bartreffigure{stellar_mass_models}.
+\bartreffigure{stellar_mass_models}. Typically, the errors in the estimation is
+roughly 0.3 dex. We introduce such errors in the stellar masses of the mock
+catalogue to estimate the effect of the bad estimation. We generated Gaussian
+errors without bias and dispersion of 0.3, 0.5, 0.9 dex.
 %
-Typically, the errors in the estimation is roughly 0.3 dex. We introduce such
-errors in the stellar masses of the mock catalogue to estimate the effect of
-the bad estimation. We generated Gaussian errors without bias and dispersion of
-0.3, 0.5, 0.9 dex.
-%
-\begin{figure}[tb]
+\begin{figure}[htbp]
     \centering
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Catalog 1]{%
-            \includegraphics[width=\linewidth]{%
-                figures/maggie/1_comp-rel.pdf%
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 2]{%
+                \includegraphics[width=\linewidth]{%
+figures/maggie/article_stellarmass_CDF_completeness_reliability_1_article_C_R.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Catalog 5]{%
-            \includegraphics[width=\linewidth]{%
-                figures/maggie/5_comp-rel.pdf%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 6]{%
+                \includegraphics[width=\linewidth]{%
+figures/maggie/article_stellarmass_CDF_completeness_reliability_5_article_C_R.pdf%
+                }
             }
-        }
+        \end{minipage}
+        \captionof{figure}{\label{fig:cdf_errors_stellar}}
     \end{minipage}
-    \caption{\label{fig:cdf_errors_stellar}}
-\end{figure}
-%
-\begin{figure}[tb]
-    \centering
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group halo masses]{%
-            \includegraphics[width=\linewidth]{%
-                figures/maggie/bias_disp_mvir_true_halo_mass.pdf%
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group halo masses]{%
+                \includegraphics[width=\linewidth]{%
+            figures/maggie/article_stellarmass_bias_dispersion_halo_mass.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group stellar masses]{%
-            \includegraphics[width=\linewidth]{%
-                figures/maggie/bias_disp_stellarmass_true_stellarmass.pdf%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group stellar masses]{%
+                \includegraphics[width=\linewidth]{%
+            figures/maggie/article_stellarmass_bias_dispersion_stellarmass.pdf%
+                }
             }
-        }
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \subfloat[Group luminosities]{%
-            \includegraphics[width=\linewidth]{%
-                figures/maggie/bias_disp_luminosity_true_luminosity.pdf%
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group luminosities]{%
+                \includegraphics[width=\linewidth]{%
+            figures/maggie/article_stellarmass_bias_dispersion_luminosity.pdf%
+                }
             }
-        }
+        \end{minipage}
+        \captionof{figure}{Errors due to bad estimations of stellar
+        masses.\label{fig:bias_disp_errors_stellar}}
     \end{minipage}
-    \caption{Errors due to choice of the
-    cosmology.\label{fig:bias_disp_cosmology}}
 \end{figure}
 %
 The effect of an error on stellar masses is quite catastrophic in the
@@ -1000,9 +1021,8 @@ through the distance modulus:
 %
 \begin{equation}
     \Delta M=\Delta m + \frac{5}{\ln{10}}
-    \frac{\Delta d_{\mathrm{lum}} \left(z\right)}{\Delta z}
-    \frac{1}{d_{\mathrm{lum}} \left(z\right)} + \Delta E + \Delta K
-    \left(z\right)
+    \frac{\Delta d_\mathrm{lum} \left(z\right)}{\Delta z}
+    \frac{1}{d_\mathrm{lum} \left(z\right)} + \Delta E + \Delta K\left(z\right)
 \end{equation}
 %
 $\Delta m$ is of the order of $10^{-2}$ in the SDSS, the second term is
@@ -1019,9 +1039,56 @@ of group virial masses is expected to be less precise because the relation
 between the luminosity of the central galaxy and the halo mass is more
 saturated for high mass groups. But the gain is in the precision and the
 robustness relatively to the precision.
+%
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 2]{%
+                \includegraphics[width=\linewidth]{%
+figures/maggie/article_luminosity_CDF_completeness_reliability_1_article_C_R.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Catalogue 6]{%
+                \includegraphics[width=\linewidth]{%
+figures/maggie/article_luminosity_CDF_completeness_reliability_5_article_C_R.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{\label{fig:cdf_errors_luminosity}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group halo masses]{%
+                \includegraphics[width=\linewidth]{%
+            figures/maggie/article_luminosity_bias_dispersion_halo_mass.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group stellar masses]{%
+                \includegraphics[width=\linewidth]{%
+            figures/maggie/article_luminosity_bias_dispersion_stellarmass.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{0.49\linewidth}
+            \subfloat[Group luminosities]{%
+                \includegraphics[width=\linewidth]{%
+            figures/maggie/article_luminosity_bias_dispersion_luminosity.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Errors due to bad estimations of
+        luminosities\label{fig:bias_disp_errors_luminosity}}
+    \end{minipage}
+\end{figure}
 
 \section{Application to SDSS}
 \label{sec:application_to_sdss}
-
 
 % vim: set tw=79 ft=tex:
