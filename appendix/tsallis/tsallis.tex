@@ -1,0 +1,458 @@
+\chapter{$q$-Gaussians (or Tsallis) distributions}
+\label{cha:q_gaussians_or_tsallis_distributions}
+\minitoc%
+
+First computations of the probability to belong in a group for MAGGIE where
+not satisfying when compared to the probability estimated directly from the
+cosmological simulation. Probability contours let us think in a stronger
+truncation in the velocity distribution for high velocities in the
+simulation than that of the assumed Gaussian distribution, creating
+discrepancies between our expectations and data. A natural distribution with
+this property is the $q$-Gaussian or Tsallis distribution, with an
+additional free parameter, which one adjusted, allows to get a stronger
+truncation in the velocity distribution. But the resulting distribution
+function of the particle system becomes quite complex and the analytical
+computations difficult in some cases, resumed in the following sections.
+
+\section{$q$-Gaussian (or Tsallis) distributions}
+\label{sec:q_gaussian_or_tsallis_distributions}
+
+\citet{Tsallis+88} developed a generalization of the entropy, non extensive,
+in terms of an additional parameter $q$ leading to systems that are not at
+the equilibrium. According to \citet{Hansen+06}, radial and tangential
+velocity distributions of dark matter particles in halos in cosmological
+simulations doesn't exactly follow a Gaussian distribution, but are more
+accurately adjusted by a Tsallis distribution. A possible explanation is
+that halos are not fully at the equilibrium at our epoch.
+
+Radial $v_r$ and tangential $v_t$ velocity distributions at a given point of
+coordinates $\textbf{r}$ are of the following forms:
+%
+\begin{equation}
+    \frac{\dd N}{\dd v_r} =
+    A_r{\left(1-B_r{\left(\frac{v_r}{\sigma_r}\right)} ^2\right)}^{\alpha_r}
+\end{equation}
+%
+\begin{equation}
+    \frac{\dd N}{\dd v_t}=
+    A_t v_t
+    {\left(1-B_t{\left(\frac{v_t}{\sigma_t}\right)}^2\right)}^{\alpha_t}
+\end{equation}
+%
+In the two above equations, integrating over the corresponding velocities
+gives us the number of particles at a given coordinates by unit of volumes,
+in other words the density profile $\nu\left(\textbf{r}\right)$. Integrating
+over the second moment, we have the velocity dispersion, an other constraint
+to determine the normalization factor.
+%
+\begin{equation}
+    \label{eq:mom0}
+    \int f \left(\textbf{r},\textbf{v}\right)\dd\textbf{v}=
+    \int\frac{\dd N}{\dd v_i}\dd v_i=
+    \nu\left(\textbf{r}\right)
+\end{equation}
+%
+\begin{equation}
+    \int{v_i}^2 f \left(\textbf{r},\textbf{v}\right)\dd\textbf{v}=
+    \int{v_i}^2\frac{\dd N}{\dd v_i}\dd v_i=
+    {\sigma_i}^2\nu\left(\textbf{r}\right)
+\end{equation}
+%
+In the case of the tangential velocity $v_t^2=v_\theta^2+v_\phi^2$, the
+dispersion is simply $\sigma_t^2=\sigma_\theta^2+\sigma_\phi^2$. In the
+following sections, we will assume isotropy and so
+$\sigma_\theta=\sigma_\phi$.
+
+For the integration over $v_r$, we need to take into account the two cases
+$B_r>0$ and $B_r<0$.
+%
+\begin{equation}
+    \int_{-\infty}^\infty{\left(1+x^2\right)}^\alpha\dd x=
+    \frac{\sqrt\pi\Gamma\left(-\undemi-\alpha\right)}
+    {\Gamma\left(-\alpha\right)}\hspace{0.5cm}\alpha<-\undemi
+\end{equation}
+%
+\begin{equation}
+    \label{eq:ref1}
+    \int_{-1}^1{\left(1-x^2\right)}^\alpha\dd x=
+    \frac{\sqrt\pi\Gamma\left(1+\alpha\right)}
+    {\Gamma\left(\frac{3}{2}+\alpha\right)}\hspace{0.5cm}\alpha>-1
+\end{equation}
+%
+\bartrefequation{mom0} gives us normalizations by substitution to have the
+equations \bartrefequation{ref1}:
+%
+\begin{equation}
+    \frac{A_r\sqrt\pi\sigma_r\Gamma\left(-\undemi-\alpha_r\right)}
+    {\sqrt{-B_r}\Gamma\left(-\alpha_r\right)}=
+    \nu\left(\textbf{r}\right)\hspace{0.5cm}\alpha_r<-\undemi
+\end{equation}
+%
+\begin{equation}
+    \frac{A_r\sqrt\pi\sigma_r\Gamma\left(1+\alpha_r\right)}
+    {\sqrt{B_r}\Gamma\left(\frac{3}{2}+\alpha_r\right)}=
+    \nu\left(\textbf{r}\right)\hspace{0.5cm}\alpha_r>-1
+\end{equation}
+%
+For second moment equations, we use the following equations:
+%
+\begin{equation}
+    \int_{-\infty}^\infty x^2{\left(1+x^2\right)}^\alpha\dd x=
+    \frac{\sqrt\pi\Gamma\left(-\frac{3}{2}-\alpha\right)}
+    {2\Gamma\left(-\alpha\right)}\hspace{0.5cm}\alpha<-\frac{3}{2}
+\end{equation}
+%
+\begin{equation}
+    \label{eq:ref2}
+    \int_{-1}^1 x^2{\left(1-x^2\right)}^\alpha\dd x=
+    \frac{\sqrt\pi\Gamma\left(1+\alpha\right)}
+    {\Gamma\left(\frac{5}{2}+\alpha\right)}\hspace{0.5cm}\alpha>-1
+\end{equation}
+%
+giving us:
+%
+\begin{equation}
+    \frac{A_r\sqrt\pi{\sigma_r}^3\Gamma\left(-\frac{3}{2}-\alpha\right)}
+    {2{\left(-B_r\right)}^{3/2}\Gamma\left(-\alpha\right)}=
+    {\sigma_r}^2\nu\left(\textbf{r}\right)\hspace{0.5cm}\alpha_r<-\frac{3}{2}
+\end{equation}
+%
+\begin{equation}
+    \frac{A_r\sqrt\pi{\sigma_r}^3\Gamma\left(1+\alpha_r\right)}
+    {2{B_r}^{3/2}\Gamma\left(\frac{5}{2}+\alpha_r\right)}=
+    {\sigma_r}^2\nu\left(\textbf{r}\right)\hspace{0.5cm}\alpha_r>-1
+\end{equation}
+%
+Finally, normalizations are:
+%
+\begin{equation}
+    B_r=\frac{1}{3+2\alpha_r}
+\end{equation}
+%
+\begin{equation}
+    A_r=\frac{\nu\left(\textbf{r}\right)\Gamma\left(-\alpha_r\right)}
+    {\Gamma\left(-\undemi-\alpha_r\right)}
+    \frac{1}{\sqrt{-\left(3+2\alpha_r\right)\pi}\sigma_r}
+    \hspace{0.5cm}\alpha_r<-\frac{3}{2}
+\end{equation}
+%
+\begin{equation}
+    A_r=
+    \frac{\nu\left(\textbf{r}\right)\Gamma\left(\frac{3}{2}+\alpha_r\right)}
+    {\Gamma\left(1+\alpha_r\right)}
+    \frac{1}{\sqrt{\left(3+2\alpha_r\right)\pi}\sigma_r}
+    \hspace{0.5cm}\alpha_r>-1
+\end{equation}
+
+Integrating other tangential velocities, we use following results:
+%
+\begin{equation}
+    \int_0^\infty x{\left(1+x^2\right)}^\alpha\dd x=
+    -\frac{1}{2\left(1+\alpha\right)}\hspace{0.5cm}\alpha<-1
+\end{equation}
+%
+\begin{equation}
+    \int_0^1 x{\left(1-x^2\right)}^\alpha\dd x=
+    \frac{1}{2\left(1+\alpha\right)}\hspace{0.5cm}\alpha>-1
+\end{equation}
+%
+\begin{equation}
+    \int_0^{1\,\mbox{or}\,\infty} x^3{\left(1\pm x^2\right)}^\alpha\dd x=
+    \frac{1}{2\left(1+\alpha\right)\left(2+\alpha\right)}
+    \hspace{0.5cm}\alpha>-1\,\mbox{or}\,\alpha<-2
+\end{equation}
+%
+giving:
+%
+\begin{equation}
+    B_t=\frac{1}{\left(2+\alpha_t\right)}
+\end{equation}
+%
+\begin{equation}
+    A_t=\frac{\nu\left(\textbf{r}\right)\left(1+\alpha_t\right)}
+    {\sigma_t\left(2+\alpha_t\right)}
+\end{equation}
+
+\section{Choice of a distribution function}
+\label{sec:choice_of_a_distribution_function}
+
+The global velocity distribution is the combination of the radial and
+tangential distributions, not as easy as wanted.
+
+\subsection{Similar to Gaussian case}
+\label{sub:similar_to_gaussian_case}
+
+We choose a form similar ot the Gaussian case, but not identical in the
+sense of a strict product of independent variables. We have:
+%
+\begin{equation}
+    f\left(\textbf{r},\textbf{v}\right)=
+    A\left(\alpha\right)
+    {\left(1-B\left(\alpha\right)\left(
+                {\left(\frac{v_r}{\sigma_r}\right)}^2+
+                {\left(\frac{v_{\theta}}{\sigma_{\theta}}\right)}^2+
+                {\left(\frac{v_{\phi}}{\sigma_{\phi}}\right)}^2
+    \right)\right)}^\alpha
+\end{equation}
+%
+
+We find normalizations in the same way as previously. We can doubt in the
+choice of the limit velocity for the integration in the case where
+$B\left(\alpha\right)>0$. But if we choose to impose a limit on one
+velocity, the constraints on the two others becomes the consideration of the
+three velocities as a single one with the good substitution in the
+integration. We just to consider the triplet of velocities following the
+constraint ${\left(\frac{v_r}{\sigma_r}\right)}^2+
+{\left(\frac{v_\theta}{\sigma_\theta}\right)}^2+
+{\left(\frac{v_\phi}{\sigma_\phi}\right)}^2<1$. In consequence, we find for
+the normalizations:
+%
+\begin{equation}
+    A\left(\alpha\right)=
+    \frac{\nu\left(\textbf{r}\right)}
+    {{\left|5/2+\alpha\right|}^{3/2}{\left(2\pi\right)}^{3/2}
+        \sigma_r{\sigma_\theta}^2}
+    \frac{\Gamma\left(-\alpha\right)}
+        {\Gamma\left(-3/2-\alpha\right)}\hspace{0.5cm}\alpha<-\frac{5}{2}
+\end{equation}
+%
+\begin{equation}
+    A\left(\alpha\right)=
+    \frac{\nu\left(\textbf{r}\right)}
+    {{\left|5/2+\alpha\right|}^{3/2}{\left(2\pi\right)}^{3/2}
+    \sigma_r{\sigma_\theta}^2}
+    \frac{\Gamma\left(5/2+\alpha\right)}{\Gamma\left(1+\alpha\right)}
+    \hspace{0.5cm}\alpha>-1
+\end{equation}
+%
+\begin{equation}
+    B\left(\alpha\right)=\frac{1}{5+2\alpha}
+\end{equation}
+%
+Integrating over $v_t$ we get the radial distribution and the tangential
+distribution if integrating over $v_r$. The definitions of the $q$-Gaussian
+distributions imply $\alpha_r=1+\alpha$ et $\alpha_t=1/2+\alpha$. But
+fitting these distributions to the data of the cosmological simulation gives
+different values of $\alpha$ for the radial and tangential distribution,
+hence the model of the global velocity distribution is not adapted and we
+need to find an other expression.
+
+\remark{%
+    However, if we want to obtain the velocity distribution along the
+    line-of-sight we need to integrate this form on the two velocities
+    perpendicular to the line-of-sight. Computations are simple if the
+    quadratic form is transformed into a canonical one, useful with the
+    previous integral definitions.
+}
+
+\subsection{Different $\alpha$ forms}
+\label{sub:different_alpha_forms}
+
+We treat the case:
+%
+\begin{equation}
+    f\left(\textbf{r},\textbf{v}\right)=
+    A{\left(1-B_r{\left(\frac{v_r}{\sigma_r}\right)}^2\right)}^{\alpha_r}
+    v_t{\left(1-B_t{\left(\frac{v_t}{\sigma_t}\right)}^2\right)}^{\alpha_t}
+\end{equation}
+%
+Constraints give:
+%
+\begin{equation}
+    B_t=
+    \frac{1}{2\left(2+\alpha_t\right)}
+\end{equation}
+%
+\begin{equation}
+    B_r=
+    \frac{1}{\left(3+2\alpha_r\right)}
+\end{equation}
+%
+and following cases, we obtain for $A$ in the \bartreftable{tsallis} the
+different normalizations.
+%
+\begin{table}[htb]
+    \centering
+    \caption{Table of coefficient for the normalization in different
+        cases.\label{tab:tsallis}}
+    \resizebox{\columnwidth}{!}{%
+	\begin{tabular}{ccc}
+        \toprule
+        & $\alpha_r<-3/2$ & $\alpha_r>-1$ \\
+        \midrule%
+        & & \\
+		$\alpha_t$ $<$ $-2$ &
+        $\cfrac{\left(1+\alpha_t\right)\nu\left(\textbf{r}\right)
+            \Gamma\left(-\alpha_r\right)}{\sqrt{-\pi\left(3+2\alpha_r\right)}
+            \sigma_r{\sigma_t}^2\left(2+\alpha_t\right)
+            \Gamma\left(-1/2-\alpha_r\right)}$ &
+        $\cfrac{\left(1+\alpha_t\right)\nu\left(\textbf{r}\right)
+            \Gamma{\left(3/2+\alpha_r\right)}^{3/2}}
+            {\sqrt{-\pi\left(3+2\alpha_r\right)}\sigma_r{\sigma_t}^2
+            \left(2+\alpha_t\right)\Gamma\left(1+\alpha_r\right)
+            \Gamma{\left(5/2+\alpha_r\right)}^{1/2}}$ \\
+        & & \\
+        \midrule%
+        & & \\
+		$\alpha_t$ $>$ $-2$ &
+            $\cfrac{\left(1+\alpha_t\right)\nu\left(\textbf{r}\right)
+            \Gamma\left(-\alpha_r\right)}{\sqrt{-\pi\left(3+2\alpha_r\right)}
+            \sigma_r{\sigma_t}^2\left(2+\alpha_t\right)
+            \Gamma\left(-1/2-\alpha_r\right)}$ &
+        $\cfrac{\left(1+\alpha_t\right)\nu\left(\textbf{r}\right)
+            \Gamma{\left(3/2+\alpha_r\right)}^{3/2}}
+            {\sqrt{-\pi\left(3+2\alpha_r\right)}\sigma_r{\sigma_t}^2
+            \left(2+\alpha_t\right)\Gamma\left(1+\alpha_r\right)
+            \Gamma{\left(5/2+\alpha_r\right)}^{1/2}}$ \\
+        & & \\
+        \bottomrule
+	\end{tabular}
+    }
+\end{table}
+
+Integrating to obtain the radial and tangential distribution, we see that we
+have two different values of $\alpha$, each one equal to the tangential and
+radial $\alpha$. This seems to correspond with what observed in the
+cosmological simulation. The problem is that to obtain the line-of-sight
+velocity distribution, the equation doesn't have an analytical expression,
+and in consequence not useful in the computation of the probability of
+MAGGIE\@. So we choose to abandon this model.
+
+\section{Generate $q$-Gaussian distributions}
+\label{sec:generate_q_gaussian_distributions}
+
+\subsection{One dimension}
+\label{sub:one_dimension}
+
+The distribution function is expressed as:
+%
+\begin{equation}
+    f\left(\textbf{r},\textbf{v}\right)=
+    A{\left(
+        1-B\left(\frac{{\left(v-\mu\right)}^2}{\sigma^2}\right)
+    \right)}^{\frac{q}{1-q}}
+\end{equation}
+%
+where we replaced $\alpha$ with its equivalent $q$ which is
+$q/\left(1-q\right)$, making the modeling easier since there is no cut in
+values of the $q$ parameter. The distribution is centered in $\mu$ with
+dispersion $\sigma$. According to \citet{Thistleton+06}, random numbers
+following the $q$-Gaussian distribution are expressed as:
+%
+\begin{equation}
+    Z_1=\sqrt{-2\left(\cfrac{3-q}{1+q}\right)\ln_{\frac{3q-1}{q+1}}U_1}
+    \cos\left(2\pi U_2\right)
+\end{equation}
+%
+\begin{equation}
+    Z_2=\sqrt{-2\left(\cfrac{3-q}{1+q}\right)\ln_{\frac{3q-1}{q+1}}U_1}
+    \sin\left(2\pi U_2\right)
+\end{equation}
+%
+with:
+%
+\begin{equation}
+    \ln_q x=\frac{x^{1-q}-1}{1-q}
+\end{equation}
+%
+where $U_1$ and $U_2$ are two random variables following a uniform
+distribution, with their values between 0 and 1. To generate a one
+dimensional Tsallis with dispersion $\sigma$ and mean $\mu$, the following
+random variables are sufficient:
+%
+\begin{equation}
+    Z = \sigma Z_i + \mu
+\end{equation}
+%
+where $i\in \{1,2 \}$.
+
+\subsection{Two dimensions case}
+\label{sub:two_dimensions_case}
+
+In the case of the tangential distribution:
+%
+\begin{equation}
+    f\left(\textbf{r},\textbf{v}\right)=A v
+    {\left(
+        1-B\left(\frac{{\left({v-\mu}\right)}^2}{\sigma^2}\right)
+    \right)}^{\frac{q}{1-q}}
+\end{equation}
+%
+We force $\mu=0$ for an easier computation. The cumulative distribution
+function is:
+%
+\begin{equation}
+    F_X\left(x\right)=\int_0^x A v
+    {\left(1-B{\left(\frac{v}{\sigma}\right)}^2\right)}^{\frac{q}{1-q}}\dd v
+\end{equation}
+%
+If $U$ is an uniform random variable between 0 and 1, hence
+$U=F_X\left({X}\right)$. Inverting the relation, we find $X$ following the
+distribution. In all cases where $q<1$ and $1<q<2$, we can find:
+%
+\begin{equation}
+    X=\sigma\sqrt{2\left(\frac{2-q}{1-q}\right)\left(1-U^{1-q}\right)}
+\end{equation}
+%
+With the mean of the distribution:
+%
+\begin{equation}
+    X=\mu+\sigma\sqrt{2\left(\frac{2-q}{1-q}\right)\left(1-U^{1-q}\right)}
+\end{equation}
+
+\section{Cumulative distribution functions}
+\label{sec:cumulative_distribution_functions}
+
+The cumulative distribution function can be useful in the situation where we
+search parameters fitting an unknown distribution by the Kolmogorov-Smirnov
+method for example.
+
+\subsection{One dimension case}
+\label{sub:one_dimension_case}
+
+By definition of the cumulative distribution function:
+%
+\begin{equation}
+    F_X\left(x\right)=\int_{-\infty}^x f\left(x\right)\dd x
+\end{equation}
+%
+with $f\left(x\right)$ the distribution function. With the dispersion
+$\sigma$ and the bias $\mu$:
+%
+\begin{equation}
+    F_X\left(x\right)=
+    \frac{A_r\sigma}{\sqrt{\left|B_r\right|}}
+    \left(
+        \frac{\sqrt\pi}{2} f^1\left(\alpha\right)+
+        \frac{\sqrt{\left|B_r\right|}}{\sigma}\left(x-\mu\right)
+        \HGG{\undemi}{-\alpha}{\frac{3}{2}}
+        {-B_r{\left(\frac{x-\mu}{\sigma}\right)}^2}\right)
+\end{equation}
+%
+where $A_r$ and $B_r$ are the same coefficients found previously,
+$\mathcal{H}{2{\rm{F}}1}$ the hyper-geometric function 2F1 and $f^1$ a
+function such:
+%
+\begin{eqnarray}
+    f^1\left(\alpha\right)&=&
+        \frac{\Gamma\left(-\undemi-\alpha\right)}{\Gamma\left(-\alpha\right)}
+        \;\;\;\alpha<-\undemi\\\nonumber
+    &=&\frac{\Gamma\left(1+\alpha\right)}{\Gamma\left(-\alpha\right)}
+        \;\;\;\alpha>-1\\
+\end{eqnarray}
+
+\subsection{Two dimensions case}
+\label{sub:cdf_two_dimensions_case}
+
+In this case the computation is easier:
+%
+\begin{equation}
+    F_X\left(x\right)=
+        \frac{A_t\sigma^2}{B_t}
+        \frac{1}{2\left(1+\alpha\right)}
+            \left(1-{\left(
+                1-B_t{\left(\frac{x-\mu}{\sigma}\right)}^2
+            \right)}^{1+\alpha}\right)
+\end{equation}
+%
+with $A_t$ and $B_t$ identical to the coefficients determined previously.
