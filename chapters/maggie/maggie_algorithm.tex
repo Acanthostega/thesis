@@ -565,14 +565,11 @@ particles in their halos. The influence of this assumptions will be developed
 in \bartrefsection{maggie_discussions}.
 
 We compare MAGGIE with the most popular galaxy group algorithm that is the
-percolation algorithm (see \bartrefchapter{friends_of_friends_algorithm}). Two
-sets of linking lengths for the FoF are used: one from \citet{Berlind+06} which
-is a popular implementation of this algorithm and the other set is from
-\citet{Robotham+11}, where as described in
-\bartrefchapter{friends_of_friends_algorithm} is close two the optimal linking
-length we determined. This will let us see if the introduction of Bayesian
-model improves the galaxy grouping compared to a simple geometrical approach as
-FoF.
+percolation algorithm (see \bartrefchapter{friends_of_friends_algorithm}). The
+set of linking lengths used for the FoF is the one defined in~\cite{Duarte+14}
+for an optimal FoF, close to the parameters used by~\cite{Robotham+11}. This
+will let us see if the introduction of Bayesian model improves the galaxy
+grouping compared to a simple geometrical approach as FoF.
 
 \subsubsection{Completeness and reliability}
 
@@ -582,7 +579,7 @@ FoF.
         \subfloat[Catalog 2]
         {%
             \includegraphics[width=\linewidth]{%
-figures/maggie/article_fof_comparison_CDF_completeness_reliability_1_article_C_R.pdf%
+figures/maggie/article_fof_comparison_errors_CDF_completeness_reliability_1_article_C_R.pdf%
             }
         }
     \end{minipage}
@@ -590,7 +587,7 @@ figures/maggie/article_fof_comparison_CDF_completeness_reliability_1_article_C_R
         \subfloat[Catalog 6]
         {%
             \includegraphics[width=\linewidth]{%
-figures/maggie/article_fof_comparison_CDF_completeness_reliability_5_article_C_R.pdf%
+figures/maggie/article_fof_comparison_errors_CDF_completeness_reliability_5_article_C_R.pdf%
             }
         }
     \end{minipage}
@@ -604,34 +601,37 @@ groups that are not fragments of real space halos).\label{fig:comp_rel}}
 
 \bartreffigure{comp_rel} shows the cumulative distribution function of the
 completeness $C$ and reliability $R$ as defined in
-\bartrefsubsection{maggie_tests_description} for MAGGIE and the two sets of
-linking lengths of FoF algorithm. Results are shown only for two doubly
+\bartrefsubsection{maggie_tests_description} for MAGGIE and the FoF algorithm.
+Results are shown only for two doubly
 complete sub-samples (see \bartrefchapter{mock}), the same as in
 \bartrefchapter{friends_of_friends_algorithm}. Only two bins in halo mass are
 used, and we use the true halo mass, i.e.\ the virial mass of the true halo
 associated to the extracted group. MAGGIE (in green) shows a better behaviour
 in completeness for all masses in the two catalogue than \citet{Robotham+11}
-(in red) and \citet{Berlind+06} (in blue), while the reliability is equivalent
+(in blue), while the reliability is equivalent
 to the optimal FoF, except for high masses for the bigger catalog.
 
 \subsubsection{Group properties}
 
-\begin{figure}[t]
+\begin{figure}[htb]
     \centering
-    \begin{minipage}{0.49\linewidth}
+    \begin{minipage}{\linewidth}
+        \centering
         \begin{minipage}{\linewidth}
+            \centering
             \subfloat[Differences for luminosities]
             {%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_fof_comparison_differences_luminosity.pdf%
+                \includegraphics[width=0.8\linewidth]{%
+    figures/maggie/article_fof_comparison_errors_differences_luminosity.pdf%
                 }
             }
         \end{minipage}
         \begin{minipage}{\linewidth}
-            \subfloat[Bias and dispersion for luminosities]
+            \centering
+            \subfloat[Differences for stellar masses]
             {%
-                \includegraphics[width=\linewidth]{%
-        figures/maggie/article_fof_comparison_bias_dispersion_luminosity.pdf%
+                \includegraphics[width=0.8\linewidth]{%
+    figures/maggie/article_fof_comparison_errors_differences_stellarmass.pdf%
                 }
             }
         \end{minipage}
@@ -640,20 +640,21 @@ to the optimal FoF, except for high masses for the bigger catalog.
     on luminosities $L$ in the $r$ band. In the bottom panel, the bias and the
 dispersion of the luminosity differences.\label{fig:bias_disp_lum}}
     \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \begin{minipage}{\linewidth}
-            \subfloat[Differences for stellar masses]
+    \begin{minipage}{\linewidth}
+        \begin{minipage}{0.49\linewidth}
+            \centering
+            \subfloat[Bias and dispersion for luminosities]
             {%
                 \includegraphics[width=\linewidth]{%
-            figures/maggie/article_fof_comparison_differences_stellarmass.pdf%
+figures/maggie/article_fof_comparison_errors_bias_dispersion_luminosity.pdf%
                 }
             }
         \end{minipage}
-        \begin{minipage}{\linewidth}
+        \begin{minipage}{0.49\linewidth}
             \subfloat[Bias and dispersion for stellar masses]
             {%
                 \includegraphics[width=\linewidth]{%
-    figures/maggie/article_fof_comparison_bias_dispersion_stellarmass_bias.pdf%
+figures/maggie/article_fof_comparison_errors_bias_dispersion_stellarmass_bias.pdf%
                 }
             }
         \end{minipage}
@@ -698,8 +699,8 @@ estimated halo mass.
 
 MAGGIE shows a very better behaviour in the case of the fragmentation. The
 observer can be always certain that a big halo isn't the result of the
-fragmentation of a true halo. This due to the combination of the abundance
-matching which gives good estimations of virial masses and the ordered search
+fragmentation of a true halo. This is due to the combination of the abundance
+matching that gives good estimations of virial masses and the ordered search
 of groups from galaxy stellar masses. But the fragmentation increases with the
 decreasing estimated virial mass, since with groups of few members, it is
 easier to make a mistake in the selection of the central galaxy of the group.
@@ -710,7 +711,7 @@ easier to make a mistake in the selection of the central galaxy of the group.
     \centering
     \begin{minipage}{0.49\linewidth}
         \includegraphics[width=\linewidth]{%
-            figures/maggie/article_fof_comparison_frag_fraction_fragments.pdf%
+    figures/maggie/article_fof_comparison_errors_frag_fraction_fragments.pdf%
         }
         \captionof{figure}{The fraction of fragments according to the estimated
             halo mass of the group.\label{fig:fragments}}
@@ -720,7 +721,7 @@ easier to make a mistake in the selection of the central galaxy of the group.
             \subfloat[Differences for virial masses]
             {%
                 \includegraphics[width=\linewidth]{%
-            figures/maggie/article_fof_comparison_differences_halo_mass.pdf%
+        figures/maggie/article_fof_comparison_errors_differences_halo_mass.pdf%
                 }
             }
         \end{minipage}
@@ -728,7 +729,7 @@ easier to make a mistake in the selection of the central galaxy of the group.
             \subfloat[Bias and dispersion for virial masses]
             {%
                 \includegraphics[width=\linewidth]{%
-        figures/maggie/article_fof_comparison_bias_dispersion_halo_mass.pdf%
+    figures/maggie/article_fof_comparison_errors_bias_dispersion_halo_mass.pdf%
                 }
             }
         \end{minipage}
@@ -736,17 +737,55 @@ easier to make a mistake in the selection of the central galaxy of the group.
     \end{minipage}
 \end{figure}
 
-In \bartreffigure{bias_disp_virial_mass}, we compare the estimation of
-the virial mass by application of the virial theorem for FoF algorithms and by
-abundance matching.
+In \bartreffigure{bias_disp_virial_mass}, we compare the estimation of the
+virial mass by application of the virial theorem for FoF algorithm and by
+abundance matching for MAGGIE\@. As we already discussed, the virial theorem
+isn't very suitable in recovering the virial masses of groups when they have a
+small mass (between $10^{12}$ and $10^{13}M_\odot$). We can't really see it in
+the bias of the estimation between the two algorithms, but the difference is
+pronounced in the dispersion where MAGGIE has a very good behaviour except for
+high virial masses (around $10^{15}M_\odot$) as we expected because of the
+choice of the relation for the abundance matching (see
+\bartrefsection{hmf_test}). At this mass regime, the virial theorem
+improves the estimation by the presence of more numerous galaxies putting less
+uncertainties in the velocity dispersion of the group. Hence, a relative good
+completeness in the group leads to a more precise virial mass.
 
 \section{Discussions}
 \label{sec:maggie_discussions}
 
+A simple comparison of MAGGIE with the most popular and geometrical grouping
+algorithm shows that MAGGIE is well adapted in recovering galaxy groups from
+redshift space catalogues. Extracted global properties of groups are less
+biased and catastrophic cases avoided by using probabilities as weights to
+smooth the estimation. The membership inside these groups is better too since
+the completeness shows that MAGGIE selects a large part of galaxies from the
+real group, without polluting it by interlopers (as shown by the reliability).
+Moreover, the importance of interlopers is reduced still by using
+probabilities. The abundance matching technique is also a very good way to
+contribute to this galaxy group extraction, since the virial mass estimation
+relies only on group or galaxy properties, which are observables certainly
+biased and uncertain, but with less importance than biased geometrical
+informations (velocity dispersion, richness\ldots). On the contrary geometrical
+informations perform well when the number of galaxies is important because
+interlopers act as a small noise in the group membership, even with their
+relative important presence at high halo masses for the FoF algorithm. Hence,
+velocity dispersion and harmonic radius are not very biased and the virial
+theorem becomes good.
+
+This comparison is done in the case where the data on galaxies is perfect, in
+the sense that there are no observational errors and we perfectly know the
+various scaling relations used in our models. But the behaviour of MAGGIE is
+unknown in the real situation of an observer, with a limited knowledge in these
+models. In the following sections, we study the robustness of the performance
+of MAGGIE under pertubations, i.e.\ in cases where we make some modifications
+in the halo mass function, the galaxy luminosities and stellar masses\ldots, as
+in studies of equilibriums.
+
 \subsection{Halo mass estimations}
 \label{sec:hmf_test}
 
-The estimation of the virial mass of the groups is an important aspect. Halo
+The estimation of the virial mass is an important aspect. Halo
 masses are linked to the global environment of galaxies and a biased
 estimation will affect observed trends of galaxy properties with the
 environment.
@@ -959,59 +998,9 @@ data base, with the bias and dispersion for each distribution, in
 \bartreffigure{stellar_mass_models}. Typically, the errors in the estimation is
 roughly 0.3 dex. We introduce such errors in the stellar masses of the mock
 catalogue to estimate the effect of the bad estimation. We generated Gaussian
-errors without bias and dispersion of 0.3, 0.5, 0.9 dex.
-%
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}{\linewidth}
-        \centering
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Catalogue 2]{%
-                \includegraphics[width=\linewidth]{%
-figures/maggie/article_stellarmass_CDF_completeness_reliability_1_article_C_R.pdf%
-                }
-            }
-        \end{minipage}
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Catalogue 6]{%
-                \includegraphics[width=\linewidth]{%
-figures/maggie/article_stellarmass_CDF_completeness_reliability_5_article_C_R.pdf%
-                }
-            }
-        \end{minipage}
-        \captionof{figure}{\label{fig:cdf_errors_stellar}}
-    \end{minipage}
-    \begin{minipage}{\linewidth}
-        \centering
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Group halo masses]{%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_stellarmass_bias_dispersion_halo_mass.pdf%
-                }
-            }
-        \end{minipage}
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Group stellar masses]{%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_stellarmass_bias_dispersion_stellarmass.pdf%
-                }
-            }
-        \end{minipage}
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Group luminosities]{%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_stellarmass_bias_dispersion_luminosity.pdf%
-                }
-            }
-        \end{minipage}
-        \captionof{figure}{Errors due to bad estimations of stellar
-        masses.\label{fig:bias_disp_errors_stellar}}
-    \end{minipage}
-\end{figure}
-%
-The effect of an error on stellar masses is quite catastrophic in the
-completeness and the dispersion of group properties, while bias is
-unaffected since we didn't introduced one.
+errors without bias and dispersion of 0.3, 0.5, 0.9 dex. The effect of an error
+on stellar masses is quite catastrophic in the completeness and the dispersion
+of group properties, while bias is unaffected since we didn't introduced one.
 
 We should use an other tracer for the halo mass as the central luminosity,
 which is less affected by observational errors. Indeed, the principal
@@ -1039,54 +1028,6 @@ of group virial masses is expected to be less precise because the relation
 between the luminosity of the central galaxy and the halo mass is more
 saturated for high mass groups. But the gain is in the precision and the
 robustness relatively to the precision.
-%
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}{\linewidth}
-        \centering
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Catalogue 2]{%
-                \includegraphics[width=\linewidth]{%
-figures/maggie/article_luminosity_CDF_completeness_reliability_1_article_C_R.pdf%
-                }
-            }
-        \end{minipage}
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Catalogue 6]{%
-                \includegraphics[width=\linewidth]{%
-figures/maggie/article_luminosity_CDF_completeness_reliability_5_article_C_R.pdf%
-                }
-            }
-        \end{minipage}
-        \captionof{figure}{\label{fig:cdf_errors_luminosity}}
-    \end{minipage}
-    \begin{minipage}{\linewidth}
-        \centering
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Group halo masses]{%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_luminosity_bias_dispersion_halo_mass.pdf%
-                }
-            }
-        \end{minipage}
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Group stellar masses]{%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_luminosity_bias_dispersion_stellarmass.pdf%
-                }
-            }
-        \end{minipage}
-        \begin{minipage}{0.49\linewidth}
-            \subfloat[Group luminosities]{%
-                \includegraphics[width=\linewidth]{%
-            figures/maggie/article_luminosity_bias_dispersion_luminosity.pdf%
-                }
-            }
-        \end{minipage}
-        \captionof{figure}{Errors due to bad estimations of
-        luminosities\label{fig:bias_disp_errors_luminosity}}
-    \end{minipage}
-\end{figure}
 
 \section{Application to SDSS}
 \label{sec:application_to_sdss}
