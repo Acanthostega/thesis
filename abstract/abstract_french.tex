@@ -1,0 +1,95 @@
+\bartchapterimage{rampressure}
+\chapter*{Résumé}
+\label{cha:resume}
+\bartthumb{thumb_rampressure}
+
+Les galaxies reposent dans un large éventail d'environnements allant des
+galaxies isolées, aux paires, aux groupes ou amas. Il est donc légitime de
+penser que cet environnement peut influer sur les différentes propriétés des
+galaxies comme la morphologie, la formation stellaire, la métallicité, etc. Des
+études ont déjà tenté de quantifier les rôles de l'environnement global (lié à
+la masse du halo de matière noire du groupe) et de l'environnement local (la
+position de la galaxie dans le groupe). Elles ont montré que l'environnement
+joue un rôle mineur dans leurs propriétés excepté pour les galaxies de faible
+masse. Mais la quantification de l'environnement est difficile car les groupes
+détectés dans l'espace des redshifts (seul accessible à l'observateur) sont
+très allongés et ne facilitent donc pas la recherche de l'appartenance d'une
+galaxie à un groupe donné. Si ces erreurs de quantification sont trop
+importantes, les effets de l'environnement seront alors mal mesurés.
+
+De plus, d'autres processus physiques sont à l'œuvre dans les groupes dont
+l'importance n'est pas tout à fait comprise. Par exemple les fusions majeures
+ou mineures des galaxies (riches ou pauvres en gaz, entre galaxies non
+centrales, ou entre une centrale et une non centrale par "descente" de son
+orbite après friction dynamique), les survols rapides qui arrachent du gaz aux
+galaxies, le dépouillement du gaz interstellaire par la pression du gaz
+intra-groupe ou intra-amas, ou de celui du réservoir de gaz qui forme les
+disques des galaxies par des effets de marées. Bien que les modèles
+semi-analytiques de formation des galaxies à partir de conditions initiales
+d'un Univers $\Lambda${CDM} représentent assez bien les observations faîtes sur
+les galaxies, il y a toujours des écarts qui peuvent être sûrement liés à un
+manque de prise en compte des effets d'environnement dans ces modèles.
+
+On vise donc avec cette thèse à avoir une compréhension détaillée du rôle de
+l'environnement sur les propriétés des galaxies et finalement connaître le ou
+les processus physiques qui ont une importance prépondérante dans la modulation
+de ces propriétés avec l'environnement local et global. Pour cela, il est
+nécessaire de réaliser une extraction optimale des groupes de galaxies depuis
+l'espace des phases projeté.
+
+Une étude et ré-implémentation de certains algorithmes de regroupement de
+galaxies déjà existants a été réalisée pour déterminer leur efficacité et leurs
+faiblesses dans la détection des groupes de galaxies.
+
+Un catalogue de galaxies test (mock catalogue) a été réalisé pour appliquer nos
+divers algorithmes de regroupement sur un échantillon de galaxies certes
+fictif, mais avec des propriétés physiques semblables (fonction de luminosité,
+profil de densité des galaxies dans les groupes, biais liés au décalage vers le
+rouge comme indicateur de distance,...). L'avantage est que l'appartenance
+d'une galaxie à un groupe donné est connue à l'avance et que l'on peut donc
+comparer les sélections faîtes par les algorithmes à cette "réalité". Les
+sorties de codes semi-analytiques de formation de galaxies fournissent de tels
+catalogues que nous avons transformés pour convenir au point de vue d'un
+observateur.
+
+Avec des mocks catalogues à notre disposition, nous avons pu tester et comparer
+divers algorithmes de regroupement à un même échantillon de galaxies et avoir
+une idée de leurs performances de manière quantitative et non seulement
+qualitative. Nous nous sommes intéressés au plus populaire algorithme de
+regroupement qu'est la méthode de la percolation ou algorithme amis d'amis
+(Friends-of-Friends, FoF ci-après). Nous avons déterminé le jeu de paramètres
+de liens optimums pour la sélection de groupes de galaxies avec un ensemble de
+tests et de critères optimaux, que nous avons développé, pour juger de
+l'efficacité d'un algorithme de groupes de galaxies. Il est également apparu
+que le choix des paramètres de liens à considérer pour un FoF dépend beaucoup
+de la science que l'on souhaite réaliser avec notre catalogue de groupes.
+
+Une partie de la thèse a consisté à réaliser un tout nouvel algorithme de
+regroupement nommé MAGGIE (Models and Algorithm for Galaxy Groups, Interlopers
+and Environment), bayésien et probabiliste. MAGGIE utilise les a priori acquis
+à l'aide des analyses des simulations cosmologiques sur les structures à
+grandes échelles et les observations obtenues à partir des larges surveys sur
+les galaxies pour mieux contraindre la sélection des groupes de galaxies à
+partir de l'espace des phases projeté (biaisé par la distorsion des groupes
+liée au décalage vers le rouge). Les résultats de la comparaison de MAGGIE avec
+l'algorithme de FoF ont montré que, bien qu'équivalent dans la capacité à
+retrouver les galaxies membres des groupes (complétude et fiabilité), MAGGIE
+est bien meilleur dans l'estimation des propriétés des groupes (masses
+stellaires, luminosités...) grâce à la probabilité d'appartenance qui réduit
+l'importance des galaxies non réellement membres du groupe (interlopers).
+MAGGIE réduit significativement la fraction de fausses détections de groupes de
+galaxies, c'est-à-dire de groupes sporadiques, issus de la fragmentation par
+les algorithmes d'un groupe réel en plusieurs sous-groupes. L'estimation de
+l'environnement global est également améliorée grâce à la méthode de
+correspondance d'abondance (abundance matching) qui compare et lie les
+distributions des masses stellaires des galaxies centrales des groupes aux
+propriétés physiques des halos de matière noire pour une meilleure précision
+dans l'estimation de la masse virielle des groupes de galaxies.
+
+Une future application de MAGGIE sur des surveys de galaxies tels que le Sloan
+Digital Sky Survey ou le Galaxy and Mass Assembly, en tenant compte de tous les
+problèmes liés aux observations de chacun d'eux, devrait nous permettre par la
+suite d'améliorer notre compréhension des processus physiques dans les groupes
+de galaxies.
+
+% vim: set tw=79 :
