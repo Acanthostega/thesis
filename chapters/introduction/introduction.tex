@@ -55,7 +55,7 @@ action of the dark energy and structures appear through the gravitational
 interactions of cold dark matter, in opposition to hot dark matter where the
 intrinsic velocities of dark matter avoid the formation of early small
 structures. Inside these dark matter halos, the visible and non-dominant
-fraction of the matter (baryons) follows the dark matter in its collapse, form
+fraction of the matter (baryons) follows the dark matter in its collapse, forms
 a rotating disc, cooling and forming stars.
 
 If this process goes without nothing to stop it, the mass of galaxies should
@@ -73,8 +73,16 @@ high masses halos, the cooling is less efficient but a large quantity of gas
 can still cool to form very massive galaxies. Material ejected by active
 galactic nuclei (AGN) is possibly an explanation for heating gas
 \citep{Silk+98}, although the mechanism through which AGN operates is not well
-understand. This a consequence of the effect of the global environment of
+understand. This is a consequence of the effect of the global environment of
 galaxies onto their physical properties.
+%
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\linewidth]{chapters/images/rampressure.jpg}
+    \caption{An illustration of the ram pressure stripping experienced on a
+    galaxy, whose interstellar gas in moved, quenching the star formation since
+the ``fuel'' of this process is dropped out.\label{fig:rampressure}}
+\end{figure}
 
 The local environment plays also an important role. Several physical processes
 are at work inside galaxy groups because of the galaxy over-density relatively
@@ -154,7 +162,7 @@ mass embedded in the parent halo of the galaxy.
 %
 An example is shown in \bartreffigure{overdensity} where we plot the
 over-density as defined in \citet{Peng+10} for two different halo masses with a
-density profile from \citet{NFW+97} (see \bartrefappendix{profiles}) with a
+density profile from \citet{NFW+97} (see \bartrefappendix{profiles}), a
 concentration from \citet{Maccio+08}, in function of the position relatively to
 the halo center in units of virial radius. We chose two extremes masses
 ($10^{12}$ and $10^{15} h^{-1} M_\odot$) to have two very distinct halos. The
@@ -184,7 +192,9 @@ regulating the star formation.
     \end{equation}
     %
     with $\Delta$ the value of the density in units of the critical density
-    used to defined a halo relatively to the background.
+    used to defined a halo relatively to the background, and $\overline\rho$
+    the normalized density profile as defined in
+    \bartrefappendix{profiles}.
 }
 
 Moreover, a clean characterization of the environment from the redshift space
@@ -192,8 +202,8 @@ is difficult since the redshift distortions \citep{Jackson+72}, called also
 Fingers-of-God \citep{Tully+78}, caused by the velocity dispersion of the
 galaxy group can create overlapping between galaxies of foreground or
 background groups. But the over-density used in \citet{Peng+10} is computed
-from the nearest neighbors of each galaxies, clearly affected by interlopers by
-projection effects.
+from the nearest neighbors of each galaxies, clearly affected by interlopers
+because of projection effects.
 
 \subsection{Galaxy groups as tests}
 \label{sub:galaxy_groups_as_tests}
@@ -212,14 +222,14 @@ with them \citep{Wojtak+11}. \com{and so many other examples\ldots}
 
 Many galaxy group catalogs were already published, usually following the first
 publications of data from galaxy surveys. First attempts were done with human
-selections \citep{Abell+58,Zwicky+61,Rose+76}. The selection was done based on
-non physical assumptions on galaxy groups, with certain criteria for a visual
+selections \citep{Abell+58,Zwicky+61,Rose+76}. The selection was based on non
+physical assumptions on galaxy groups, with certain criteria for a visual
 over-density of galaxies.
 
 Then the percolation or Friends-of-Friends (FoF) algorithm followed, based on
 the knowledge of galaxy physics at this epoch \citep{Huchra+82,Nolthenius+87}.
 One of its advantages is that it is based on a physical choice for the way to
-link galaxies between them in groups. A linking length is used to relate
+link galaxies between them in groups. A linking length is used to relate to
 galaxies that are closer than this distance in redshift space. This needs the
 use of two different linking lengths in the line-of-sight and perpendicular
 directions to avoid the redshift distortions effect. But as argued in
@@ -246,7 +256,7 @@ which uses assumptions based on cosmological simulation results for the density
 profile of groups.
 
 Galaxy surveys have limitations that are difficult to overcome in galaxy group
-algorithms. In the case of surveys of photometric redshifts, probabilistic
+algorithms. In the case of photometric redshifts surveys, probabilistic
 Friends-of-Friends were developed to attempt avoiding the large (and sometimes
 catastrophic) uncertainties in redshift measures \citep{Liu+08}. Then,
 probability was used to improve the membership of galaxies inside their groups,
