@@ -1,3 +1,16 @@
+\bartchapterimage{rampressure}
+\chapter[MAGGIE's adventures]{MAGGIE's adventures}
+\label{cha:MAGGIE_adventures}
+\bartthumb{maggie.jpg}
+
+While developing MAGGIE, we tried a lot of methods with the goal to improve the
+extraction of galaxy groups. A large part of those methods weren't viable
+because of bad performances when applied on the galaxy mock catalogue we
+constructed, or because their implementation were too complex by technical
+imperatives or some physical knowledges not easily accessible. We describe some
+of these methods in the following sections. We describe also what we think are
+possible future improvements of MAGGIE\@.
+
 \section{Flux-limited algorithm}
 
 \subsection{Problem}
@@ -26,17 +39,25 @@ $m_{\lim}$ of the survey, in the used wavelength range:
     {\left(\frac{d_\mathrm{lum}\left(z\right)}{10\mathrm{pc}}\right)}^2
     10^{0.4\left(M_{\odot}-m_{\lim}\right)}
 \end{equation}
+%
+with $M_\odot$ the absolute magnitude of the Sun in the same band as the limit
+magnitude $m_{\lim}$ and $d_\mathrm{lum} \left(z\right)$ the luminosity
+distance at the redshift $z$.
 
 We expect the galaxy environment to modulate galaxy properties such as their
 luminosity. Correcting for missing galaxies in all groups in the same way is in
-consequence ideal. We can modulate the luminosity function with the host halo
-of the galaxy by transforming the luminosity function into a conditional
+consequence not ideal. We can modulate the luminosity function with the host
+halo of the galaxy by transforming the luminosity function into a conditional
 luminosity function. Since our estimations of the virial mass $M$ of the host
-halo is good, we can use it as modulation parameter an so:
+halo is good, we can use it as modulation parameter and so:
 %
 \begin{equation}
     \phi\left(L\right)\rightarrow\phi\left(L|M\right)
 \end{equation}
+
+In this way, the previous missing fraction correction should be accurate enough
+for the correction. But for this to work, we must be able to determine properly
+this modulation with the halo mass.
 
 \subsection{Environment modulation}
 
@@ -45,12 +66,11 @@ Centrals are expected to be the most massive galaxies in groups, and
 consequently, it's probable that the central is the brighter galaxy. A
 consequence is that if we can't see the central galaxy, we can't see other
 galaxies in the group and the correction is not needed because we don't know
-how to correct for incompleteness. So for the correction we just need to
-constrain the distribution of luminosities in satellite galaxies.
-
-In practice, we have to choose a functional for this conditional luminosity
-function (CLF) which can be easily fitted and integrated to determine the
-correction factor in our group luminosities.
+how to correct for incompleteness. So for the correction, we need just to
+constrain the distribution of luminosities in satellite galaxies. In practice,
+we have to choose a functional for this conditional luminosity function (CLF)
+which can be easily fitted and integrated to determine the correction factor in
+our group luminosities.
 
 There are two kind of luminosity function widely used. The Schechter function
 can be written as:
@@ -75,10 +95,10 @@ written:
 \end{equation}
 %
 This model uses the fact that it seems to exist two galaxy population in
-luminosity a brighter one and a low one.
+luminosity: a brighter one and a faint one.
 
-Now we assume that the CLF have the same form that \bartrefequation{dblsch}.
-The dependence on the halo mass $M$ is done with the parameters of the double
+Now we assume that the CLF have the same form of \bartrefequation{dblsch}. The
+dependence on the halo mass $M$ is done with the parameters of the double
 Schechter (DS). For example $\alpha_1\rightarrow\alpha_1\left(M|\theta\right)$,
 where the functional form of this dependence is not given explicitly here, and
 $\theta$ is a set of parameters relative to the function used to describe the
@@ -92,8 +112,8 @@ the DS with the virial mass. For testing the viability of this method, we have
 to select a functional that describes correctly the modulation of the
 parameters with the halo, and samples of galaxies that can give us these
 informations are present in outputs of semi-analytical models (SAM). To
-validate this method of correction for incompleteness, we test it in mock
-galaxy catalogues.
+validate this method of correction for incompleteness, we test it in galaxy
+mock catalogues.
 
 \subsection{Estimating parameters}
 
@@ -150,20 +170,19 @@ sign in front of it:
 %
 }
 %
-
 We define $p_i\left(L_i|\theta\right)$ as the probability to get the luminosity
 $L_i$ given the parameters $\theta$, so it's the probability density. To
-determine this density, we need to calculate the number of galaxies in the
-sample which are between $L_i$ and $L_i+\dd L_i$ compare to the total number of
-points in the set:
+determine it, we calculate the number of galaxies in the sample which are
+between $L_i$ and $L_i+\dd L_i$, compared to the total number of points in the
+set:
 %
 \begin{equation}
     p_i\left(L_i|\theta\right)\dd L_i\dd V =
     \cfrac{\dd^2 N_i}{N_\mathrm{tot}}
 \end{equation}
 
-By definition of the CLF, which is the number of galaxies in the sample
-comprised between $L$ and $L+\dd L$ at a given halo mass $M$, we can write:
+By definition of the CLF, which is the number of galaxies in the sample between
+$L$ and $L+\dd L$ at a given halo mass $M$, we can write:
 %
 \begin{equation}
     \dd^2 N=\phi\left(L|M\right)\dd L
@@ -176,7 +195,7 @@ So we can write:
     \cfrac{\phi\left(L_i|M\right)}{N_\mathrm{tot}}\dd L_i\dd V
 \end{equation}
 %
-and the total number of galaxies is just:
+and the total number of galaxies in this kind of halo (with mass $M$) is just:
 %
 \begin{equation}
     N_\mathrm{tot}=\int_\mathcal{V}\int_{L_\mathrm{thres}}^\infty
@@ -184,9 +203,9 @@ and the total number of galaxies is just:
 \end{equation}
 %
 where $\mathcal{V}$ is the volume of the galaxy sample, and $L_\mathrm{thres}$
-is the minimal luminosity used for the sample. If superior physically exists,
-it should replace the infinity in the integration to not allow a probability to
-have luminosities superior to this limit.
+is the minimal luminosity used for the sample. If a physical superior limit of
+luminosity exists, it should replace the infinity in the integration to not
+allow a probability to have luminosities superior to this limit.
 
 In the case of the simple Schechter, the total number is:
 %
@@ -203,12 +222,12 @@ and for the double Schechter:
     \Gamma\left(1+\alpha, \cfrac{L_\mathrm{thres}}{L_*}\right)\right)
 \end{equation}
 %
-where $\Gamma\left(a,x\right)=\int_x^\infty \exp{-t} t^{a-1}\dd t$ is the
-incomplete gamma function (see \bartrefappendix{gamma} for its computation with
-negative values of $a$). Then the computation of the density function $p$ is
-easy in each case and we can do the minimization of the likelihood to estimate
-the best fit parameters $\hat{\theta}$.
-
+where $\Gamma\left(a,x\right)=\int_x^\infty \exp \left(-t\right) t^{a-1}\dd t$
+is the incomplete gamma function (see \bartrefappendix{gamma} for its
+computation with negative values of $a$). Then the computation of the density
+function $p$ is easy in each case and we can do the minimization of the
+likelihood to estimate the best fit parameters $\hat{\theta}$.
+%
 \remark{%
     There are many ways of doing such a minimization. When the probability
     density isn't too complex, $\hat{\theta}$ can be determined analytically.
@@ -255,7 +274,7 @@ We use a complete sample of galaxies taken from the outputs of the SAM of
 \citet{Guo+11} applied on dark matter halos from the Millennium II run. We
 limit our sample of galaxies from this catalogue to galaxies with a luminosity
 such that the absolute magnitude in the $r$ band is $M_r<-15$. For each galaxy,
-we have the virial mass of the halo which contains this galaxy.
+we have the virial mass of the halo containing this galaxy.
 
 First, we determine what is the best model for the luminosity function. We
 tried to adjust a simple Schechter and a double Schechter. Results are
@@ -271,12 +290,9 @@ shown on \bartreffigure{guo_all}.
     parameters for each model, as described in the text.\label{fig:guo_all}}
 \end{figure}
 %
-\com{Can't understand why the DS and SS give $M_*$ so different (two orders of
-magnitude).}
-%
 The double Schechter fits better the data than the simple Schechter because we
-can constrain the two populations of galaxies. We see that there is a low
-population with high slope and a brighter population with a slope more little.
+can constrain the two populations of galaxies. We see that there is a faint
+population with high slope and a brighter population with a more little slope.
 Differences with data for bright galaxies is due to the fact that the number of
 galaxies with $M_r<-24$ is very low, in some bins there is just one galaxy. As
 expected, a Schechter and double Schechter functionals for the luminosity
@@ -407,12 +423,13 @@ of halo mass.
     \end{tabular}
 \end{table}
 
-To verify this assumption, and not incriminate a bad implementation of the MLE
-for flux-limited samples, we applied the method on perfect samples of galaxies.
-We generated an Universe with a given luminosity function and applied the flux
-limit to galaxies in this region.
+To verify this assumption, and not to incriminate a bad implementation of the
+MLE for flux-limited samples, we applied the method on perfect samples of
+galaxies. We generated an Universe with a given luminosity function and applied
+the flux limit to galaxies in this region.
 %
 \newcommand{\mygamma}[2]{\Gamma\left(#1, \cfrac{#2}{L_*}\right)}
+\newcommand{\mytildegamma}[2]{\gamma_{#1} \left[#2\right]}
 \remark{%
     Generating galaxies following a given luminosity function is done by the
     inverse transform sampling method. Let suppose that $F$ is a cumulative
@@ -438,14 +455,18 @@ limit to galaxies in this region.
     %
     \begin{equation}
         F\left(L\right)=\cfrac{%
-            \mygamma{\alpha_1+1}{L_{\min}} - \mygamma{\alpha_1+1}{L} +
-            \cfrac{\phi_2^*}{\phi_1^*}\left(\mygamma{\alpha_2+1}{L_{\min}} -
-            \mygamma{\alpha_2+1}{L}\right)
+            \mytildegamma{\alpha_1}{L} +
+            \cfrac{\phi_2^*}{\phi_1^*}\;\mytildegamma{\alpha_2}{L}
         }{%
-            \mygamma{\alpha_1+1}{L_{\min}} - \mygamma{\alpha_1+1}{L_{\max}}+
-            \cfrac{\phi_2^*}{\phi_1^*}\left(\mygamma{\alpha_2+1}{L_{\min}} -
-            \mygamma{\alpha_2+1}{L_{\max}}\right)
+            \mytildegamma{\alpha_1}{L_{\max}} +
+            \cfrac{\phi_2^*}{\phi_1^*}\;\mytildegamma{\alpha_2}{L_{\max}}
         }
+    \end{equation}
+    %
+    with:
+    \begin{equation}
+        \mytildegamma{\alpha}{X} = \mygamma{\alpha+1}{L_{\min}} -
+            \mygamma{\alpha+1}{X}
     \end{equation}
 
     Clearly, we can't inverse such cumulative distribution functions
@@ -460,8 +481,9 @@ limit to galaxies in this region.
     %
     \begin{equation}
         \cfrac{N_2}{N_1} =
-        \cfrac{\phi_2^*}{\phi_1^*}\times\cfrac{\mygamma{\alpha_2+1}{L_{\min}} -
-        \mygamma{\alpha_2+1}{L_{\max}}}{\mygamma{\alpha_1+1}{L_{\min}} - \mygamma{\alpha_1+1}{L_{\max}}}
+        \cfrac{\phi_2^*}{\phi_1^*}\times
+        \cfrac{\mytildegamma{\alpha_2}{L_{\max}}}
+            {\mytildegamma{\alpha_1}{L_{\max}}}
     \end{equation}
     %
     with $N_\mathrm{tot}=N_1+N_2$. But its easier to take the cumulative
@@ -510,14 +532,14 @@ of blue or red galaxies in halos. We have:
 %
 where $h\left(v_z|R,r\right)$ is the line of sight velocity distribution and
 $f_i\left(r\right)$ is the fraction of $i$ galaxies, with
-$i\in\left\{\mbox{red, blue}\right\}$. The fraction is model whose parameters
+$i\in\left\{\mbox{red, blue}\right\}$. The fraction is a model whose parameters
 must be fitted to the data for each iteration with the set of extracted groups.
-Since its a distribution function, this implies the use of MLE with numerical
+Since its a distribution function, it implies the use of MLE with numerical
 computation of the integral, and a double integral for the normalization of the
 density since:
 %
 \begin{equation}
-    g_\mathrm{halo}^i\left(R, v_z\right) = \cfrac{\dd^2N}{2\pi\dd R\dd v_z}
+    g_\mathrm{halo}^i\left(R, v_z\right) = \cfrac{\dd^2N}{2\pi R\dd R\dd v_z}
 \end{equation}
 
 Supposing this computation can be easily done, there is still two problems.
@@ -525,12 +547,13 @@ Supposing this computation can be easily done, there is still two problems.
 \begin{itemize}
     \item The NFW profile is dependent of the concentration. Many studies shows
         that the concentration of blue and red galaxies inside halos is
-        different. \note{Ask Gary for the articles.}.
+        different. \note{Ask Gary for the articles.}
     \item The probability needs to be normalized with the projected phase space
         density of interlopers. But we have no idea of their distribution when
         red and blue galaxies are separated. This needs to be extracted from
         mock catalogues, leading to densities not universal and dependent of
-        the semi-analytical code used.
+        the semi-analytical code used, the chosen cut-off in magnitude for the
+        complete sample used, \ldots
 \end{itemize}
 
 % vim: set tw=79 ft=tex:

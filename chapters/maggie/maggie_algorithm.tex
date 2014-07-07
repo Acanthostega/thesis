@@ -4,33 +4,31 @@
 \newcommand\rvir{r_{\rm vir}}
 \newcommand\vvir{v_{\rm vir}}
 
-We show in the last chapter that the most used galaxy group algorithm that
-is the FoF should be optimized against its linking lengths, and that it
-depends on the scientific goal of the group catalog obtained. With these
-limitations, it is clear why Bayesian methods appeared. Indeed, with our
-knowledge of the galaxy formation and evolution processes, it is possible to
-constrain better the galaxy grouping. With the FoF algorithm, galaxies are
-selected in a pure geometrical way, and their formation history doesn't
-matter in this selection, since only the over-density is relevant. With
-Bayesian algorithms, it is possible to combine geometrical and physical
-approaches. The history of galaxies is available by their observable
-properties such as luminosity, stellar mass, morphology and is used to
-assign galaxies to a group, in complement of the geometrical information
-from the density. In particular, a galaxy can be rejected of a group
-selected by density criterion if its properties don't reflect the history it
-would have inside this group.
+We show in the last chapter that the most used galaxy group algorithm that is
+the FoF should be optimized against its linking lengths, and that it depends on
+the scientific goal of the group catalog obtained. With these limitations, it
+is clear why Bayesian methods appeared. Indeed, with our knowledge of the
+galaxy formation and evolution processes, it is possible to constrain better
+the galaxy grouping. With the FoF algorithm, galaxies are selected in a pure
+geometrical way, and their formation history doesn't matter in this selection,
+since only the over-density is relevant. With Bayesian algorithms, it is
+possible to combine geometrical and physical approaches. The history of
+galaxies is available by their observable properties such as luminosity,
+stellar mass, morphology and is used to assign galaxies to a group, in
+complement of the geometrical information from the density. In particular, a
+galaxy can be rejected of a group selected by density criterion if its
+properties don't reflect the history it would have inside this group.
 
 We already described Bayesian algorithms in
 \bartrefchapter{galaxy_group_algorithms}, for example \citet{Yang+07} or
-\citet{MunozCuartas+12}, where similar spatial methods to the FoF are
-adopted, with priors as the density profile of galaxies inside halos to
-constrain the assignation. But because of observational uncertainties, model
-divergences, various incompletenesses\ldots, the extraction of groups from
-observational data will always be affected these problems, and the galaxy
-environment polluted by interlopers, creating biases in group
-characteristics. This leads to bad modulation of galaxy properties with
-their environment and a falsification of our understanding of intra-groups
-physical processes.
+\citet{MunozCuartas+12}, where similar spatial methods to the FoF are adopted,
+with priors as the density profile of galaxies inside halos to constrain the
+assignation. But because of observational uncertainties, model divergences,
+various incompletenesses\ldots, the extraction of groups from observational
+data will always be affected by these problems, and the galaxy environment
+polluted by interlopers, creating biases in group characteristics. This leads
+to bad modulation of galaxy properties with their environment and a
+falsification of our understanding of intra-groups physical processes.
 
 Recently, with the improvement of computer capacities in terms of memory and
 power, it becomes possible to include many priors in the computation, and to
@@ -38,31 +36,31 @@ use the most computation intensive applications of statistics. Since
 interlopers will still be problematic, the new powerful computer era allowed
 probabilities to describe the membership of galaxies in groups. Systematic
 errors in galaxy surveys can be reduced or integrated in the grouping by
-probabilities. For example, \citet{Liu+08} used a probabilistic FoF in
-galaxy survey with photometric redshifts to avoid the uncertainties
-inherent to this method. \citet{DominguezRomero+12} also used
-responsibilities to improve the assignation of galaxies to groups and
-reduce interlopers effect on their observable properties. In
-\citet{Rykoff+14}, galaxies have their probabilities based on the group
-richness estimations.
+probabilities. For example, \citet{Liu+08} used a probabilistic FoF in galaxy
+survey with photometric redshifts to avoid the uncertainties inherent to this
+method. \citet{DominguezRomero+12} also used responsibilities to improve the
+assignation of galaxies to groups and reduce interlopers effect on their
+observable properties. In \citet{Rykoff+14}, galaxies have their probabilities
+based on the group richness estimations.
 
 It seems that using probabilities to describe the membership inside galaxy
-groups will inevitable, because of the systematic errors and biases presents
-in the actual and future galaxy surveys. In particular, the modulation of
-the galaxy properties with their environment that we want to extract from
-galaxy group catalogues should be less biased by interlopers if we use
-probabilities as a weight. Indeed, interlopers, even if they are still
-present in the group membership, will have a low probability to pertain to
-the group.
+groups will be inevitable, because of the systematic errors and biases presents
+in the actual and future galaxy surveys. In particular, the modulation of the
+galaxy properties with their environment that we want to extract from galaxy
+group catalogues should be less biased by interlopers if we use probabilities
+as a weight. Indeed, interlopers, even if they are still present in the group
+membership, will have a low probability to pertain to the group, and their
+contribution to galaxy group properties reduced.
 
 Here is the starting point of our galaxy group algorithm called MAGGIE\@:
-Models and Algorithm for Galaxy Group, Interloper and Environment. We
-combine our understanding from the galaxy formation, using various models,
-to compute a probability for galaxies to belong to a peculiar group, and use
-it in the algorithm for the group extraction. Then interloper effects should
-be reduced in the characterization of the environment.
+Models and Algorithm for Galaxy Group, Interloper and Environment. We combine
+our understanding from the galaxy formation, using various models, to compute a
+probability for galaxies to belong to a peculiar group, and use it in the
+algorithm for the group extraction. Then interloper effects should be reduced
+in the characterization of the environment.
 
 In the following sections, we will describe the algorithm and its
+implementation, the application to the SDSS and show its limitations.
 
 \section{Algorithm}
 \label{sec:algorithm}
@@ -70,15 +68,15 @@ In the following sections, we will describe the algorithm and its
 \subsection{Description}
 \label{sub:maggie_description}
 
-MAGGIE doesn't affect a galaxy to an
-unique group, but it affects a probability for this galaxy to be in a group.
-With this principle, a galaxy is assigned to more than one group. It's the
-goal of MAGGIE\@: to obtain the properties of galaxy groups in statistical
-and probabilistic senses. This allows users of catalogues generated by
-MAGGIE to compute some properties of groups taking into account the fact
-that a galaxy could not be assigned arbitrarily to one group with some
-criteria of affectation. But the most important, it's that this probability
-contains the information of being an interloper or not.
+MAGGIE doesn't affect a galaxy to an unique group, but it affects a probability
+for this galaxy to be in a group. With this principle, a galaxy is possibly
+assigned to more than one group. It's the goal of MAGGIE\@: to obtain the
+properties of galaxy groups in statistical and probabilistic senses. This
+allows users of catalogues generated by MAGGIE to compute some properties of
+groups taking into account the fact that a galaxy could not be assigned
+arbitrarily to one group with some criteria of affectation. But the most
+important, it's that this probability contains the information of being an
+interloper or not.
 
 MAGGIE is organized in an iterative way in order to be self-consistent with
 the data being analysed, as for learning algorithms. For this reason, we
@@ -89,30 +87,31 @@ apparent magnitudes in a given band and absolute magnitudes. It's the
 minimum set of data necessary.
 %
 \begin{enumerate}
-    \item We first get some potentials groups in order to have a \emph{seed}
-        in the iterative process. For this, we make an assumption: the most
-        massive galaxies (in stellar mass) are potential group centers. In
-        an other implementation, we use the luminosity of the central (the
-        reason is explained in \note{Add the reference to section}). But,
-        some intra-group physical process can lead to a false detection of
-        the brightest galaxy as the central one \citep{Ebeling+13}. From the
-        galaxy sample, we sort by decreasing stellar mass (or luminosity)
-        all galaxies and we start with the most massive as centre of a
+    \item We first get some potentials groups in order to have a \emph{seed} in
+        the iterative process. For this, we make an assumption: the most
+        massive galaxies (in stellar mass) are potential group centers. In an
+        other implementation, we use the luminosity of the central (the reason
+        is explained in \bartrefsubsection{observational_errors}). But, some
+        intra-group physical process can lead to a false detection of the
+        brightest galaxy as the central one \citep{Ebeling+13}. From the galaxy
+        sample, we sort by decreasing stellar mass (or luminosity) all galaxies
+        and we start with the most massive (most luminous) as centre of a
         potential group.
 
     \item\label{step:2} For all our potential groups, we need to get our
         potential members. We are just interested in the virial sphere of
         groups. Since the unique information on groups at this step is the
-        central galaxy, we use its stellar mass. At first iteration, we use
-        the relation between halo mass and central stellar mass from
-        \citet{BCW+10}, we used other models later to see the influence of
-        this choice (\note{Add reference to section}). For next iterations,
-        we use the same relation, but learned from our previous iterations.
-        We can estimate the virial radius of the group assuming
-        that the halo mass corresponds to the virial mass. Then, we select
-        all galaxies in a cone generated by an angular separation
-        corresponding to the virial radius physical size at the group's
-        redshift (the redshift of the central galaxy).
+        central galaxy, we use its stellar mass (or luminosity). At first
+        iteration, we use the relation between halo mass and central stellar
+        mass from \citet{BCW+10} (and a simple ratio relation for luminosity).
+        We used other models later to see the influence of this choice (see
+        \bartrefsubsection{prior_relation}). For next iterations, we use the
+        same relation, but learned from our previous iterations. We can
+        estimate the virial radius of the group assuming that the halo mass
+        corresponds to the virial mass. Then, we select all galaxies in a cone
+        generated by an angular separation corresponding to the virial radius
+        physical size at the group's redshift (the redshift of the central
+        galaxy).
 
     \item With group membership, we compute galaxy probabilities to belong
         to it. The probability is computed assuming a density profile of
@@ -123,26 +122,26 @@ minimum set of data necessary.
         $\rm \Lambda$CDM simulations. The detailed computation of the
         probability is provided in \bartrefsection{probability}.
 
-    \item We compute the weighted (by probability) stellar mass and
-        luminosity of groups. For this we use a probability threshold to
-        decide if a galaxy is associated to a group, i.e.\ if we take the
-        galaxy for the estimation of the group stellar mass and luminosity.
-        This parameter will be optimized by tests. The way of computing this
-        properties for a group is the following: we sum, using the
-        probability weights, luminosities and stellar masses of galaxies
-        that have an absolute magnitude less than the limit magnitude
-        defined by the sample, in order to be complete.
+    \item We compute the weighted (by probability) stellar mass and luminosity
+        of groups. For this we use a probability threshold $p_{\min}$ to decide
+        if a galaxy is associated to a group, i.e.\ if we take the galaxy for
+        the estimation of the group stellar mass and luminosity. This parameter
+        will be optimized by tests. The way of computing this properties for a
+        group is the following: we sum, using the probability weights,
+        luminosities and stellar masses of galaxies that have an absolute
+        magnitude less than the limit magnitude defined by the sample, in order
+        to be complete.
 
     \item Using the stellar mass of the central galaxy, we can estimate the
-        halo mass of the group. We use the abundance matching technique
-        which assumes that there is a one-to-one relation between the
-        central stellar mass of the group and its halo mass. It allows to
-        compare the cumulative distribution function (CDF) of the two
-        masses. Indeed, with this assumption, the number of groups above a
-        given central stellar mass is the same than the number of groups
-        above the corresponding halo mass. If we consider a certain halo
-        mass function, we can predict the halo mass of a group with a given
-        central stellar mass by comparing the CDF of the data with that
+        halo mass of the group. We use the abundance matching technique which
+        assumes that there is a one-to-one relation between the central stellar
+        mass of the group and its halo mass. It allows to compare the
+        cumulative distribution function (CDF) of the two quantities. Indeed,
+        with this assumption, the number of groups above a given central
+        stellar mass (or luminosity) is the same than the number of groups
+        above the corresponding halo mass. If we consider a certain halo mass
+        function, we can predict the halo mass of a group with a given central
+        stellar mass (or luminosity) by comparing the CDF of the data with that
         predicted by the halo mass function.
 
     \item With the halo mass found for group by this abundance matching, we
@@ -150,6 +149,16 @@ minimum set of data necessary.
         mass-central stellar mass relation previously obtained. This process
         goes until there is a convergence in the number of groups.
 \end{enumerate}
+
+If we follow this schema, there will be as many groups as galaxies. To avoid
+the inherent fragmentation introduced by this method, we used an other
+threshold probability to reduce the number of groups. We allow a galaxy to be a
+central galaxy only if its probability to belong to an other group (already
+determined in the loop for potential galaxy groups) is smaller than the
+threshold $p_{\max}$. For this comparison, we consider the probability that is
+maximal in all groups the galaxy is in. In this way, we exclude while iterating
+over potential groups a large number of central galaxies, and avoid the
+fragmentation.
 
 \section{Probability}
 \label{sec:probability}
@@ -229,7 +238,7 @@ over the line of sight and angles:
 We need to integrate on the velocities too in order to get the line-of-sight
 component, and retrieve the pps. For velocities, we make a transformation of
 coordinates: we pass to spherical coordinates to the coordinates defined in
-XX\@. The rotation matrix between two coordinates system is:
+XX\@. The rotation matrix between both coordinates system is:
 \begin{equation}
     \begin{pmatrix}
         v_r \\
@@ -264,7 +273,7 @@ so the Jacobian of the transformation is unity:
 where $\tilde{h} \left(v_z\right) = \int_{-\infty}^\infty\int_{-\infty}^\infty
 h \left(\textbf{v}\right)\dd v_1 \dd v_\Phi$
 
-For simplifying the equations later, we used a normalization as in:
+For simplifying the equations later, we use a normalization as in:
 %
 \begin{eqnarray}
     M(r)= &\int_0^r 4\pi x^2\rho \left(x\right)\dd x
@@ -278,7 +287,7 @@ For simplifying the equations later, we used a normalization as in:
 \end{eqnarray}
 %
 where $a$ is the radius of slope -2 for the density profile in logarithm
-scales, in other the radius where:
+scales, in other words the radius where:
 %
 \begin{equation}
     {\left.\cfrac{\dd \log \rho \left(r\right)}{\dd \log r}\right|}_{r=a} = -2
@@ -374,7 +383,7 @@ density is:
 \begin{equation}
     \label{eq:gi_over_gh}
     \frac{g_i}{g_h}\left(R,v_z\right)=
-    \frac{{\left(2\pi\right)}^{3/2}\hat{g}_i{(R/r_v,|v_z|/v_v)}}
+    \frac{{\left(2\pi\right)}^{3/2}\hat{g}_i{(x_R,|\hat{v}_z|)}}
         {\int_0^{\rm{acosh}\left(\frac{c}{x_R}\right)}
             \cfrac{\left(x_R\cosh{u}\right)\tilde\rho\left(x_R\cosh{u}\right)}
             {{\tilde\sigma}_z\left(x_R,x_R\cosh{u}\right)}
@@ -421,15 +430,15 @@ values of the line-of-sight velocity.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\linewidth]{figures/maggie/probabilities.pdf}
-    \caption{The probability contours from the simulation of Borgani (put a
-        reference) and our model. In \emph{gray} the contours obtained with
-        particles from the cosmological simulation, and in \emph{black} the
-        theoretical expectation from \bartrefequation{gi_over_gh}. The color
-        scale reflects the probability from the simulation. The theoretical
-        probability agree with the cosmological simulation except for high
-        velocities along the line-of-sight, in part explained by the lack of
-        particles with such velocities, giving a bad constraint for the
-        probability to be in the halo from the simulation.
+    \caption{The probability contours from the simulation of \citet{Borgani+01}
+        and our model. In \emph{gray} the contours obtained with particles from
+        the cosmological simulation, and in \emph{black} the theoretical
+        expectation from \bartrefequation{gi_over_gh}. The color scale reflects
+        the probability from the simulation. The theoretical probability agree
+        with the cosmological simulation except for high velocities along the
+        line-of-sight, in part explained by the lack of particles with such
+        velocities, giving a bad constraint for the probability to be in the
+        halo from the simulation.
 \label{fig:probabilities}}
 \end{figure}
 
@@ -449,6 +458,7 @@ values of the line-of-sight velocity.
     doesn't solve the problem. It seems that the number of particles with high
     velocities is too low to correctly define the probability to be in the
     virial sphere of the halo, and to compare it to theoretical expectations.
+    The velocity distribution isn't involved.
 }
 
 Here we assume that the density profile follow a NFW, since the dark matter
@@ -456,13 +466,13 @@ particles of the \citet{Borgani+04} simulation follow this distribution. But we
 are interested in groups of galaxies and they must follow the same distribution
 to apply our model. We used the galaxies from the output of the \citet{Guo+11}
 semi-analytical code and checked that they follow a NFW density profile too.
-But as expected \note{Add reference for bias}, there is a bias between the
-galaxies and dark matter particles. Indeed, if we fit the concentration of the
-NFW profile in \citet{Guo+11} and compare it to the model of \citet{Maccio+08}
-obtained from dark matter particles, we can see that the two functional are
-different. A consequence is that the link between halo mass and concentration
-must be adjusted for galaxies in our model. The difference between the two
-model of concentration is shown in \bartreffigure{concentration_bias}.
+But as expected, there is a bias between the galaxies and dark matter
+particles. Indeed, if we fit the concentration of the NFW profile in
+\citet{Guo+11} and compare it to the model of \citet{Maccio+08} obtained from
+dark matter particles, we can see that the two functional are different. A
+consequence is that the link between halo mass and concentration must be
+adjusted for galaxies in our model. The difference between the two model of
+concentration is shown in \bartreffigure{concentration_bias}.
 %
 \begin{figure}[ht]
     \centering
@@ -488,19 +498,21 @@ on stellar masses and luminosities of groups but without being significant.
 \subsection{Description}
 \label{sub:maggie_tests_description}
 
-For tests we proceed as described in \citet{Yang+07} and \citet{DM+14a}. To
-link a selected group by the algorithm in redshift space to the true halo in
-real space, we use the most massive galaxy of the group. The true halo of a
-group is the true halo to which the most massive galaxy in the selected group
-(referred as the central galaxy) belongs to. With this link, we compute the
-completeness and reliability of groups relatively to this halo in real space.
-We define statistics used to quantify the performance of MAGGIE\@. The
-completeness $C$ is the fraction of galaxies in the real space group recovered
-in the selected group. The reliability $R$ is the fraction of galaxies in the
-selected group present in the real space group. A primary group is defined as a
-selected group whose the central galaxy match the central galaxy of the real
-space associated halo, remaining groups are fragments. A complete and detailed
-description of the statistics can be found in \citet{DM+14a}.
+For tests we proceed as described in \citet{Yang+07, Duarte+14} and
+\bartrefchapter{friends_of_friends_algorithm}. To link a selected group by the
+algorithm in redshift space to the true halo in real space, we use the most
+massive galaxy of the group. The true halo of a group is the true halo to which
+the most massive galaxy in the selected group (referred as the central galaxy)
+belongs to. With this link, we compute the completeness and reliability of
+groups relatively to this halo in real space. We define statistics used to
+quantify the performance of MAGGIE\@. The completeness $C$ is the fraction of
+galaxies in the real space group recovered in the selected group. The
+reliability $R$ is the fraction of galaxies in the selected group present in
+the real space group. A primary group is defined as a selected group whose the
+central galaxy match the central galaxy of the real space associated halo,
+remaining groups are fragments. A complete and detailed description of the
+statistics can be found in \citet{Duarte+14} and
+\bartrefchapter{friends_of_friends_algorithm}.
 
 The reliability in the case of MAGGIE is more complex since we use
 probabilities for galaxies in groups. We let, with our definition, many
@@ -538,30 +550,13 @@ belonging to several extracted group in the redshift space.
 
 \subsection{Optimization}
 
-MAGGIE has a free parameter which is the probability threshold used to
-decide if a galaxy can be a potential central galaxy of a group. We ran
-MAGGIE with different values of this threshold to see if improvements can be
-done. It seems that the choice is not well important if we keep this
-threshold to low values. If we increasing it too (around values of 0.3) the
-fragmentation starts to affect high halo mass groups. But for the other
-range of mass, results are not significant. Keeping this threshold probability
-low, we don't allow groups to fragment on other groups improving in this way
-the completeness of select galaxy groups. The bias in mass computation is
-not affected but the dispersion vary a little for big probability threshold
-but it is not significant.
-
-So extracted groups are relatively robust against the free parameter for low
-values, but we can see its effect for higher values in the fragmentation
-which doesn't correspond to the optimized values. In consequence, MAGGIE
-doesn't really have a free parameter. We fixed its value to 0.001.
-
 \subsection{Results}
 
 The following tests result from the application of MAGGIE on the perfect mock
 catalogue whose construction is described in \bartrefchapter{mock}. In this
 case, we assume the halo mass function extracted from the Millennium-II
 outputs, with a NFW density profile for galaxies identical to dark matter
-particles in their halos. The influence of this assumptions will be developed
+particles in their halos. The influence of these assumptions will be developed
 in \bartrefsection{maggie_discussions}.
 
 We compare MAGGIE with the most popular galaxy group algorithm that is the
@@ -746,8 +741,8 @@ the bias of the estimation between the two algorithms, but the difference is
 pronounced in the dispersion where MAGGIE has a very good behaviour except for
 high virial masses (around $10^{15}M_\odot$) as we expected because of the
 choice of the relation for the abundance matching (see
-\bartrefsection{hmf_test}). At this mass regime, the virial theorem
-improves the estimation by the presence of more numerous galaxies putting less
+\bartrefsubsection{hmf_test}). At this mass regime, the virial theorem improves
+the estimation by the presence of more numerous galaxies putting less
 uncertainties in the velocity dispersion of the group. Hence, a relative good
 completeness in the group leads to a more precise virial mass.
 
@@ -782,20 +777,29 @@ of MAGGIE under pertubations, i.e.\ in cases where we make some modifications
 in the halo mass function, the galaxy luminosities and stellar masses\ldots, as
 in studies of equilibriums.
 
-\subsection{Halo mass estimations}
-\label{sec:hmf_test}
+\subsection{Prior halo mass --- central stellar mass relation}
+\label{sub:prior_relation}
 
-The estimation of the virial mass is an important aspect. Halo
-masses are linked to the global environment of galaxies and a biased
-estimation will affect observed trends of galaxy properties with the
-environment.
+We tested the choice for the initial relation between the halo mass and the
+central stellar mass of groups to see its effects on MAGGIE\@. We used the
+relation from \citet{BCW+10} against a simple ratio relation with different
+values for the ratio. Extracted groups are insensitive to this choice, if we
+keep this choice with physical values. The iterative process corrects a bad
+assumption in our initial guess.
 
-Our mass computation needs to be precise in the larger mass range possible,
-and independent of polluted environment of groups by some interlopers. The
-abundance matching technique seems to be a good way to estimate the virial
-mass of galaxy group halos. In principle, it seems more biased than using
-the luminosities or stellar masses of groups, but since the central galaxy
-in a selected group is well recovered, this is a quantity less affected by
+\subsection{Influence of the halo mass function model}
+\label{sub:hmf_test}
+
+The estimation of the virial mass is an important aspect. Halo masses are
+linked to the global environment of galaxies and a biased estimation will
+affect observed trends of galaxy properties with the environment.
+
+Our mass computation needs to be precise in the larger mass range possible, and
+independent of polluted environment of groups by some interlopers. The
+abundance matching technique seems to be a good way to estimate the virial mass
+of galaxy group halos. In principle, it seems more biased than using the
+luminosities or stellar masses of groups, but since the central galaxy in a
+selected group is well recovered, this is a quantity less affected by
 interlopers and so the halo mass estimation will be good enough. But since
 there is a saturation of the relation between the halo mass and the central
 stellar mass at high halo mass, we expect that the estimation will be poorer
@@ -804,8 +808,8 @@ for high masses than other methods.
 The majority of the halo mass function described in the literature fit the FoF
 mass of the halos instead of the spherical over-density mass, which is related
 to the virial mass of the halo. Since we used the galaxy catalogue from
-\citet{Guo+11} whose the semi-analytical code was applied onto the
-Millennium-II run, we fit the virial halo mass function directly on its output.
+\citet{Guo+11} whose semi-analytical code was applied onto the Millennium-II
+run, we fit the virial halo mass function directly on its output.
 %
 \begin{figure}[t]
     \centering
@@ -820,17 +824,8 @@ We show it in \bartreffigure{hmf} where we plot the FoF mass function (in red)
 and the virial mass function (in black) for halos in the Millennium-II
 simulations at redshift zero. Virial masses are lower than FoF masses so we
 don't use existing models of halo mass functions displayed too on the figure.
-
-\subsection{Prior halo mass --- central stellar mass relation}
-
-We tested the choice for the initial relation between the halo mass and the
-central stellar mass of groups to see its effects on MAGGIE\@. We used the
-relation from \citet{BCW+10} against a simple ratio relation with different
-values for the ratio. Extracted groups are insensitive to this choice, if we
-keep this choice with physical values. The iterative process corrects a bad
-assumption in our initial guess.
-
-\subsection{Influence of the halo mass function model}
+The way of computing such halo mass function is described in
+\bartrefappendix{halo_mass_functions}.
 
 \begin{figure}[htbp]
     \centering
@@ -917,14 +912,16 @@ redshift of the group, we implicitly need to compute the luminosity distance
 which is cosmology dependent. We assume in our case a flat Universe and in this
 case, it is computed using just elliptic integrals
 \citep{Liu+11,Eisenstein+97}. So cosmological parameters have an influence on
-this distance, and in consequence on the membership of galaxy groups. Moreover,
-the halo mass function is dependent of the cosmology assumed by the observer
-for many models and can affect the virial mass estimations. In our case, the
-halo mass function is fitted on the real space data and its influence can't be
-really measured. But we expect it has the same influence as a bad choice for
-the halo mass function. We ran MAGGIE with the true cosmology (from
+this distance, and in consequence, on the membership of galaxy groups.
+Moreover, the halo mass function is dependent of the cosmology assumed by the
+observer for many models and can affect the virial mass estimations. In our
+case, the halo mass function is fitted on the real space data and its influence
+can't be really measured. But we expect it has the same influence as a bad
+choice for the halo mass function. We ran MAGGIE with the true cosmology (from
 Millennium-II simulation) and two false cosmology with respect to our mock
-catalog (Planck and WMAP9) to compare results.
+catalog (Planck and WMAP9) to compare results. As expected, the importance of
+the cosmology is low, of the order of statistical errors, as seen in
+\bartreffigure{cdf_cosmology} and \bartreffigure{bias_disp_cosmology}.
 %
 \begin{figure}[htbp]
     \centering
@@ -976,6 +973,7 @@ figures/maggie/planck_wmap9_CDF_completeness_reliability_5_article_C_R.pdf%
 \end{figure}
 
 \subsection{Influence of observational errors}
+\label{sub:observational_errors}
 
 \begin{figure}[htbp]
     \centering
@@ -995,12 +993,12 @@ Moreover, the estimation of stellar masses from the observations and spectrum
 is not very precise and can significantly differ according to the way of
 computing it. We show the differences between some models present in the SDSS
 data base, with the bias and dispersion for each distribution, in
-\bartreffigure{stellar_mass_models}. Typically, the errors in the estimation is
-roughly 0.3 dex. We introduce such errors in the stellar masses of the mock
-catalogue to estimate the effect of the bad estimation. We generated Gaussian
-errors without bias and dispersion of 0.3, 0.5, 0.9 dex. The effect of an error
-on stellar masses is quite catastrophic in the completeness and the dispersion
-of group properties, while bias is unaffected since we didn't introduced one.
+\bartrefchapter{sdss}. Typically, the errors in the estimation is roughly 0.3
+dex. We introduce such errors in the stellar masses of the mock catalogue to
+estimate the effect of the bad estimation. We generated Gaussian errors without
+bias and dispersion of 0.3, 0.5, 0.9 dex. The effect of an error on stellar
+masses is quite catastrophic in the completeness and the dispersion of group
+properties, while bias is unaffected since we didn't introduced one.
 
 We should use an other tracer for the halo mass as the central luminosity,
 which is less affected by observational errors. Indeed, the principal
