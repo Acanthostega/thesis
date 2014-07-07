@@ -3,22 +3,22 @@
 \label{cha:sdss}
 \bartthumb{thumb_sdss}
 \minitoc%
-%
+
 \section{Introduction}
-%
-%
+
+
 \section{Analysis}
-%
+
 \subsection{Definitions}
-%
+
 Strips are bands of observations along great circles of the survey. Each of
 them is composed of six parallel scanlines (of 13 arcmin wide) with gaps of
-approximately the same width between the between them. Two strips make a
-single stripe of 2.5°. Each scanline include all the data (in $ugriz$), and
-is divided in fields (which can overlap). So when accessing to an
-observation at a given position in the sky, we access a specific field. A
-given observation is completely defined by its run number, the number of the
-camcol of the scanline and by the field number.
+approximately the same width between them. Two strips make a single stripe
+of 2.5°. Each scanline include all the data (in $ugriz$), and is divided in
+fields (that can overlap). So when accessing to an observation at a given
+position in the sky, we access a specific field. A given observation is
+completely defined by its run number, the number of the camcol of the
+scanline and by the field number.
 
 On each field, the pipeline of the SDSS is applied for the objects
 extraction. They are detected as pixels over-densities relatively to the
@@ -65,48 +65,57 @@ We will work only with survey coordinates as they allow us to easily define
 a mask for the SDSS\@. The celestial coordinates and survey coordinates are
 the same system of coordinates, except that one is a particular rotation of
 the other. The relation between the two systems can be computed and are:
-%
+
 \subsubsection{Survey coordinates to celestial coordinates}
-%
+
 \begin{eqnarray}
-    \delta &=& \arcsin\left(\cos\lambda\sin\left(\eta+\delta_0\right)\right)\nonumber\\
+    \delta &=&
+        \arcsin\left(\cos\lambda\sin\left(\eta+\delta_0\right)\right)
+        \nonumber\\
     \alpha &=&
-    \mathrm{atan2}\left(\sin\lambda,\cos\lambda\cos\left(\eta+\delta_0\right)\right)+\lambda_0\nonumber\\
+        \mathrm{atan2}
+        \left(\sin\lambda,\cos\lambda\cos\left(\eta+\delta_0\right)\right)+
+        \lambda_0\nonumber\\
 \end{eqnarray}
 %
-with
-${(\alpha_0,\delta_0)}_{(\alpha,\delta)}={(185°,32.5°)}_{(\alpha,\delta)}={(0,0)}_{(\lambda),
-\eta}$.
-%
+with ${\left(\alpha_0,\delta_0\right)}_{\left(\alpha,\delta\right)}=
+{\left(185°,32.5°\right)}_{\left(\alpha,\delta\right)}=
+{\left(0,0\right)}_{\left(\lambda, \eta\right)}$.
+
 \subsubsection{Celestial coordinates to survey coordinates}
-%
+
 The inverse transformation is:
 %
 \begin{eqnarray}
-    \eta &=& \mathrm{atan2}\left(\sin\delta,\cos\delta\cos\left(\alpha-\alpha_0\right)\right)-\delta_0\nonumber\\
-    \lambda &=& \arcsin\left(\cos\delta\sin\left(\alpha-\alpha_0\right)\right)\nonumber\\
+    \eta &=&
+        \mathrm{atan2}
+        \left(\sin\delta,\cos\delta\cos\left(\alpha-\alpha_0\right)\right)-
+            \delta_0\nonumber\\
+    \lambda &=&
+        \arcsin\left(\cos\delta\sin\left(\alpha-\alpha_0\right)\right)
+            \nonumber\\
 \end{eqnarray}
 %
-with
-${(\alpha_0,\delta_0)}_{(\alpha,\delta)}={(185°,32.5°)}_{(\alpha,\delta)}={(0,0)}_{(\lambda),
-\eta}$. Periodic conditions must be applied to angles found by the latter
-equation:
+with ${\left(\alpha_0,\delta_0\right)}_{\left(\alpha,\delta\right)}=
+{\left(185°,32.5°\right)}_{\left(\alpha,\delta\right)}=
+{\left(0,0\right)}_{\left(\lambda,\eta\right)}$. Periodic conditions must be
+applied to angles found by the latter equation:
 %
 \begin{equation}
     \begin{cases}
         \eta\rightarrow\eta+180° \; \lambda\rightarrow180°-\lambda&
-        \mbox{if} \eta<-90°\;\mbox{or}\; \eta>90°\\
+        \mbox{if}\;\eta<-90°\;\mbox{or}\; \eta>90°\\
         \eta\rightarrow\eta-360° &
-        \mbox{if} \eta>180°\\
+        \mbox{if}\;\eta>180°\\
         \lambda\rightarrow\lambda-360° &
-        \mbox{if} \lambda>180°\\
+        \mbox{if}\;\lambda>180°\\
     \end{cases}
 \end{equation}
 %
 \subsubsection{Stripe number}
 %
-Stripes have a constant width of 2.5° along the $\eta$ coordinate, with a
-width of 2.5°. So, stripe number $n$ of a galaxy with $\eta$ coordinate is:
+Stripes have a constant width of 2.5° along the $\eta$ coordinate. So,
+stripe number $n$ of a galaxy with $\eta$ coordinate is:
 %
 \begin{equation}
     n = \mathrm{floor}\left(\cfrac{\left(\eta+58.75°\right)}{2.5°}\right)
@@ -167,105 +176,91 @@ AND GG.ra>100 AND GG.dec>-10 AND GG.dec<75
 Stripe limits are given in the table \texttt{StripeDefs} but this
 limits aren't actual, they were planned at the beginning of the survey.
 
-Some planned regions aren't still observed, so we need to define other
-limits in $\lambda$ coordinates for not complete stripes. We find by hand
-the new limits of stripes which contains spectroscoped galaxies. Now, the
-survey mask is like in figure (\ref{fig:sdss}). We will
-consider just galaxies in this mask in order to find groups in the SDSS\@.
+Some planned regions aren't still observed, so we need to define other limits
+in $\lambda$ coordinates for not complete stripes. We find by hand the new
+limits of stripes which contains spectroscoped galaxies. Now, the survey mask
+is like in \bartreffigure{sdss}. We will consider just galaxies in this mask in
+order to find groups in the SDSS\@.
 %
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{figures/sdss/sdss.png}
-    \caption{Galaxies in the SDSS DR10 with stripes limits defined by hand.
-    The red lines limits of the stripes make the SDSS mask used to identify
-edges.\label{fig:sdss}}
+\begin{figure}[ht] \centering
+    \includegraphics[width=\linewidth]{figures/sdss/sdss.png} \caption{Galaxies
+    in the SDSS DR10 with stripes limits defined by hand. The red lines limits
+of the stripes make the SDSS mask used to identify edges.\label{fig:sdss}}
 \end{figure}
-%
-\subsubsection{Flags in the SDSS}
-%
-Galaxy photometry can have some troubles in the SDSS\@. In the general case,
-those objects are flagged with the \texttt{clean} property which indicates
-by 1 that the photometry is OK and by 0 when there is a problem. Details of
-the problems are in the bit flag. But for groups, we need to select all
-galaxies, even if they are not clean, or our groups will suffer
-incompleteness in their members and their physical properties such as
-luminosity, stellar mass\ldots will be biased.
 
-\texttt{Galaxy} table is a selection from \texttt{PhotoPrimary} view for
-objects with $\mathrm{\texttt{type}}=3$ (galaxy).
-\com{%
-    I think that we don't have to care of the ``good'' photometry of
-    galaxies in the \texttt{Galaxy} view, but we can leave a flag in the
-    group finder algorithm to say if a galaxy is in this case.
-}
+\subsubsection{Flags in the SDSS}
+
+Galaxy photometry can have some troubles in the SDSS\@. In the general case,
+those objects are flagged with the \texttt{clean} property which indicates by 1
+that the photometry is OK and by 0 when there is a problem. Details of the
+problems are in the bit flag. But for groups, we need to select all galaxies,
+even if they are not clean, or our groups will suffer incompleteness in their
+membership and their physical properties such as luminosity, stellar mass\ldots
+will be biased. \texttt{Galaxy} table is a selection from \texttt{PhotoPrimary}
+view for objects with $\mathrm{\texttt{type}}=3$ (galaxy).
 
 However, we have to take into account the error on the redshift estimation
-using the \texttt{zErr}. For photometric redshift, if the \texttt{zErr} is
-too high, we can use the \texttt{nnAvgZ} which is the average redshift of
-galaxies in the neighbourhood of the considered galaxy. It can be better too
-if the photometric redshift is too different from it.
+using the \texttt{zErr}. For photometric redshift, if the \texttt{zErr} is too
+high, we can use the \texttt{nnAvgZ} which is the average redshift of galaxies
+in the neighbourhood of the considered galaxy. It can be better too if the
+photometric redshift is too different from it.
 
 The \texttt{SpecObjAll} contains duplicates and bad datas. But the
-\texttt{SpecObj} contains just clean spectras. The field \texttt{zWarning}
-can be used to decide if we keep a redshift or not.
-%
+\texttt{SpecObj} contains just clean spectras. The field \texttt{zWarning} can
+be used to decide if we keep a redshift or not.
+
 \subsection{Fibre collision estimation}
-%
-We need a sample of galaxies for which we can easily characterize borders
-and where all galaxies, given the flux limit of the survey, are presents.
-But there is the problem of fibre collisions galaxies But our algorithm is
-tested on a ``perfect'' mock catalogue. In order to know the behaviour of
-the algorithm with these problematic galaxies, we need to implement this in
-our mock catalogue.
+
+We need a sample of galaxies for which we can easily characterize borders and
+where all galaxies, given the flux limit of the survey, are presents. But there
+is the problem of fibre collisions galaxies But our algorithm is tested on a
+``perfect'' mock catalogue. In order to know the behaviour of the algorithm
+with these problematic galaxies, we need to implement this in our mock
+catalogue.
 
 In the SDSS, obtaining spectroscopic redshifts of galaxies is done using a
-plate of 1.5° diameter, in which there is a certain number of fibres in
-order to get spectrum of the galaxy. But in the plate, the number of fibres
-is limited. Moreover, each portion of the sky can't be respectroscoped
-multiple times, because spectrum are acquired slowly. Although runs may
-overlap, there are galaxies that can't be spectroscoped. Indeed, fibres have
-a dimension of 55''. When galaxies are closer than this distance, one (or
-more) of those galaxies aren't spectroscoped. We can see that in the figure
-(\ref{fig:plane}) where we have taken the nearest neighbour of a galaxy
-on the celestial sphere, and determined the differences in angular size and
-redshift between the two galaxies. As expected, the number of galaxies which
-are closer than 55'' decreases dramatically. There are still some galaxies
-because the overlapping of runs can permit to get redshifts for galaxies
-behind this limit.
+plate of 1.5° diameter, in which there is a certain number of fibres in order
+to get spectrum of the galaxy. But in the plate, the number of fibres is
+limited. Moreover, each portion of the sky can't be respectroscoped multiple
+times, because spectrum are acquired slowly. Although runs may overlap, there
+are galaxies that can't be spectroscoped. Indeed, fibres have a dimension of
+55''. When galaxies are closer than this distance, one (or more) of those
+galaxies aren't spectroscoped. We can see that in the \bartreffigure{plane}
+where we have taken the nearest neighbour of a galaxy on the celestial sphere,
+and determined the differences in angular size and redshift between the two
+galaxies. As expected, the number of galaxies which are closer than 55''
+decreases dramatically. There are still some galaxies because the overlapping
+of runs can permit to get redshifts for galaxies behind this limit.
 %
-\begin{figure}[ht]
-    \centering
+\begin{figure}[ht] \centering
     \includegraphics[width=0.6\linewidth]{figures/sdss/plane.pdf}
-    \caption{\footnotesize{}Distribution of spectroscoped galaxies in the
-    SDSS DR8 in angular size and redshift differences with the nearest
-neighbour galaxy.\label{fig:plane}}
-\end{figure}
+    \caption{\footnotesize{}Distribution of spectroscoped galaxies in the SDSS
+    DR8 in angular size and redshift differences with the nearest neighbour
+galaxy.\label{fig:plane}} \end{figure}
 %
 A consequence is that in denser regions, the number of fibre collision
 increases, affecting more our groups analysis.
 
-We tried to implement this selection effect in our mock catalogue. For that
-we computed the local density in the field, taking all galaxies
-(spectroscoped or not) in the neighbourhood of 1.5° of each galaxy, and in
-the same time, we determine the fraction of galaxies that don't have a
-spectroscopic redshift. We expected to deduce a relation between the density
-field and the fraction of fibre collisions. In the mock catalogue, we will
-compute the same density field and we apply the relation estimated in the
-SDSS sample to the mock. We need for each galaxy to count the fraction of
-non spectroscoped galaxies in a region of 1.5° radius around. We have to
-remove galaxies that are close to survey edges, because if we don't, there
-are missing galaxies and the fraction will be affected. The way of selecting
-those galaxies is to compute a circle of 1.5° around a galaxy, and if a
-generated point is out of the survey, the galaxy is defined as to be closer
-to the limits.
+We tried to implement this selection effect in our mock catalogue. For that we
+computed the local density in the field, taking all galaxies (spectroscoped or
+not) in the neighbourhood of 1.5° of each galaxy, and in the same time, we
+determine the fraction of galaxies that don't have a spectroscopic redshift. We
+expected to deduce a relation between the density field and the fraction of
+fibre collisions. In the mock catalogue, we will compute the same density field
+and we apply the relation estimated in the SDSS sample to the mock. We need for
+each galaxy to count the fraction of non spectroscoped galaxies in a region of
+1.5° radius around. We have to remove galaxies that are close to survey edges,
+because if we don't, there are missing galaxies and the fraction will be
+affected. The way of selecting those galaxies is to compute a circle of 1.5°
+around a galaxy, and if a generated point is out of the survey, the galaxy is
+defined as to be closer to the limits.
 
 \remark{%
-    We can generate samples of points at an angular distance $d$ to a point
-    of coordinate $(\alpha_0,\delta_0)$ using formulas of the spherical
-    triangle. If we define a triangle by the pole, the point
-    $(\alpha_0,\delta_0)$ and the point whose we want coordinates
-    $(\alpha,\delta)$, we can write the following relations using the
-    spherical triangle and its dual:
+    We can generate samples of points at an angular distance $d$ to a point of
+    coordinate $(\alpha_0,\delta_0)$ using formulas of the spherical triangle.
+    If we define a triangle by the pole, the point $(\alpha_0,\delta_0)$ and
+    the point whose we want coordinates $(\alpha,\delta)$, we can write the
+    following relations using the spherical triangle and its dual:
     %
     \begin{eqnarray}
         \sin\delta&=&\sin\delta_0\cos d + \cos\delta_0\sin d
@@ -282,8 +277,8 @@ to the limits.
         \alpha-\alpha_0 &=& \arctan\left(\cfrac{\sin\gamma}{\cos\delta_0\cot{d}-\sin\delta_0\cos\gamma}\right)\nonumber\\
     \end{eqnarray}
     %
-    There are problems at poles. For a $\gamma_0$ limit, angles can't be recovered
-    with above formulas. Indeed, the problem appears when
+    There are problems at poles. For a $\gamma_0$ limit, angles can't be
+    recovered with above formulas. Indeed, the problem appears when
     $\tan\Delta\alpha\rightarrow\infty$. So:
     %
     \begin{equation}
@@ -291,6 +286,7 @@ to the limits.
     \end{equation}
     %
     implying:
+    %
     \begin{equation}
         \cos\gamma_0=\cfrac{1}{\tan d\tan\delta_0}
     \end{equation}
@@ -303,59 +299,56 @@ to the limits.
         \mathrm{sign}\left(\delta_0\right)\cos\gamma \geqslant
         \mathrm{sign}\left(\delta_0\right)\cos\gamma_0\nonumber\\
     \end{eqnarray}
-    %
 
     An other way to draw circles in the sphere is to consider the point for
-    which we want to know celestial coordinates around a given angular
-    distance as the pole of a new coordinate system. In this system, points
-    at given distance of our central point are just points with
-    $\pi/2-\delta$ and $\alpha$ running between 0 and $2\pi$. We now can
-    determine cartesian coordinates of those points in this system and apply
-    a rotation to go from the ``real'' system and the system where the
-    central point is the pole. This can be easily done if we know the axis
-    of rotation and the angle using quaternions, numerically better than
-    Euler angles.
+    which we want to know celestial coordinates around a given angular distance
+    as the pole of a new coordinate system. In this system, points at given
+    distance of our central point are just points with $\pi/2-\delta$ and
+    $\alpha$ running between 0 and $2\pi$. We now can determine cartesian
+    coordinates of those points in this system and apply a rotation to go from
+    the ``real'' system to the system where the central point is the pole.
+    This can be easily done if we know the axis of rotation and the angle using
+    quaternions, numerically better than Euler angles.
 }
 %
-We didn't see the trend we expected with the density field, so we thought
-that it can be due to the large area in which we compute the fraction of
-spectroscoped galaxies and we ran the same with a radius of 0.3°, but
-without success too.
+We didn't see the trend we expected with the density field, so we thought that
+it can be due to the large area in which we compute the fraction of
+spectroscoped galaxies and we ran the same with a radius of 0.3°, but without
+success too.
 
-Moreover, including photometric redshifts in the mock catalogue and in
-MAGGIE is very complex. For example, we measured the bias and dispersion of
-the distribution of differences between spectrocoped and photometric
-redshifts in the SDSS\@. While the dispersion remains roughly constant, the
-bias increases with the spectroscoped redshift. So some effects are not
-still under control when computing photometric redshifts, and we should
-avoid their utilization in any galaxy group algorithm.
+Moreover, including photometric redshifts in the mock catalogue and in MAGGIE
+is very complex. For example, we measured the bias and dispersion of the
+distribution of differences between spectrocoped and photometric redshifts in
+the SDSS\@. While the dispersion remains roughly constant, the bias increases
+with the spectroscoped redshift. So some effects are not still under control
+when computing photometric redshifts, and we should avoid their utilization in
+galaxy group algorithms when possible. In the case of surveys were
+spectroscopic redshifts are not accessible, the photometric redshifts should be
+as clean as possible.
 %
-\begin{figure}[htb]
-    \centering
+\begin{figure}[htb] \centering
     \includegraphics[width=0.8\linewidth]{figures/sdss/redshift_difference.pdf}
     \caption{Parameters of a normal distribution for photometric redshifts
-    versus spectroscopic redshifts in the SDSS\@.}
-\label{fig:redshift_difference}
+    versus spectroscopic redshifts in the
+SDSS\@.\label{fig:redshift_difference}}
 \end{figure}
-%
-\note{Redo this graph}
-%
+
 \section{Coverage of the SDSS}
-%
+
 For many computations in this thesis, we need to determine the surface covered
 on the sky by the galaxy sample used. In the SDSS, the mask we constructed
 allows us to do it easily by a Monte Carlo process.
 
 First, we generate a number $N$ of points around a point of coordinates
-$(\alpha_0, \delta_0)$ with a maximal angular separation $\theta_{\max}$
-which is larger than the maximal angular separation in our sample. The
-fraction of points falling inside the mask gives us the fraction of the
-generated area corresponding to the mask. This area is just
+$(\alpha_0, \delta_0)$ with a maximal angular separation $\theta_{\max}$ which
+is larger than the maximal angular separation in our sample. The fraction of
+points falling inside the mask gives us the fraction of the generated area
+corresponding to the mask. This area is just
 $\mathcal{S}=\int_0^{\theta_{\max}}\int_0^{2\pi}\sin\theta\dd{\theta}\dd{\phi}=
-2\pi\left(1-\cos\theta_{\max}\right)$. We made this calculation for
-different cone angles $\theta_{\max}$ and for different number of points to
-see if we have a convergence in the value of the area. Results are shown on
-figure (\ref{fig:sdss_area}).
+2\pi\left(1-\cos\theta_{\max}\right)$. We made this calculation for different
+cone angles $\theta_{\max}$ and for different number of points to see if we
+have a convergence in the value of the area. Results are shown on
+\bartreffigure{sdss_area}.
 %
 \begin{figure}[htb]
     \centering
@@ -373,12 +366,25 @@ steradians (roughly $7220°^2$).\label{fig:sdss_area}}
     and $0\leqslant\phi\leqslant2\pi$, assuming spherical coordinates and
     not celestial one. $\phi$ coordinates are generated between the previous
     range. For $\theta$ coordinates, since their distribution isn't uniform
-    $\left(f\left(\theta\right)=\cfrac{1}{2}\sin\theta\right)$, they are generated by
-    $\theta=\arccos(2U-1)$, where $U$ is a variable following an uniform
-    distribution with values between 0 and 1.
+    $\left(f\left(\theta\right)=\cfrac{1}{2}\sin\theta\right)$, they are
+    generated by $\theta=\arccos(2U-1)$, where $U$ is a variable following
+    an uniform distribution with values between 0 and 1.
 
     Then, points are rotated by quaternions to $(\alpha_0, \delta_0)$. The
     rotation axis is just the cross product between the pole vector and the
     vector defined by $(\alpha_0, \delta_0)$, and the rotation angle is
     $\cfrac{\pi}{2}-\delta_0$.
 }
+
+\section{Galaxy stellar masses}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/sdss/stellar_mass_models.pdf}
+    \caption{The differences between stellar mass models applied onto galaxies
+    from the SDSS\@. Contours are showing levels in unit of $\sigma$. Ordinates
+and abscissas are the stellar masses of galaxies in decimal logarithm of the
+solar mass.\label{fig:stellar_mass_models}}
+\end{figure}
+
+% vim: set tw=79 :
