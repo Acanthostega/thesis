@@ -1,11 +1,16 @@
 \bartchapterimage{sdss}
-\chapter{Analysing SDSS-DR8}
+\chapter{SDSS-DR10 analysis}
 \label{cha:sdss}
 \bartthumb{thumb_sdss}
 \minitoc%
 
 \section{Introduction}
 
+An application of MAGGIE, our optimal probabilistic galaxy group algorithm, on
+a real galaxy survey implies an analysis of the galaxy sample. We must
+understand the various incompletenesses it suffers in order to be able to
+correct them. Here we show an analysis we performed on the Sloan Digital Sky
+Survey, with the various problems we encountered.
 
 \section{Analysis}
 
@@ -378,13 +383,92 @@ steradians (roughly $7220°^2$).\label{fig:sdss_area}}
 
 \section{Galaxy stellar masses}
 
-\begin{figure}[htbp]
+Galaxy stellar masses available in the SDSS database are not really an
+information from the survey. Indeed, contrary to coordinates, magnitudes or
+redshifts, the stellar mass is not a direct observable. Its estimation is based
+on the application of various models of stellar population on the galaxy
+spectrum obtained by the SDSS\@. Several models exist, but they don't provide
+the same estimation for a given galaxy. In \bartreffigure{stellar_mass_models},
+we compare eight models to have an order of the inaccuracy of the stellar mass:
+FSPSGranWideDust, FSPSGranWideNoDust, FSPSGranEarlyDust and FSPSGranEarlyNoDust
+from~\cite{Conroy+09}, PassivePort and StarFormingPort from~\cite{Maraston+09},
+PCAWiscM11 and PCAWiscBC03 from~\cite{Chen+12} and MPA-JHU~\cite{Brinchmann+04,
+Kauffmann+03, Tremonti+04}.
+
+Principal discrepancies between models are coming essentially from the various
+stellar population synthesis (SPS) models involved in the fit of the galaxy
+spectrum necessary for the stellar mass estimation. But each model has also
+some internal variations. For example,~\cite{Conroy+09} assumes an early star
+formation in galaxies for its FSPSGranEarlyNoDust (without dust extinction
+correction) and FSPSGranEarlyDust (with dust extinction correction), while
+FSPSGranWideDust and FSPSGranWideNoDust assume an extended star formation
+history. As we can see, differences are relatively important: models using
+different SPS have large dispersion in their estimation, while when using the
+same SPS, stellar masses are coherent. Some models are also biased between each
+other, but bias can be corrected and not considered in our analysis. Generally,
+models agree to better than 0.3 dex, i.e.\ errors on individual masses are of
+$0.3 / \sqrt{2} = 0.2$ dex. In particular, the MPA-JHU masses agree with all
+others to typically better than 0.2 dex in $\sigma$.
+
+\begin{figure}[htb]
     \centering
     \includegraphics[width=\linewidth]{figures/sdss/stellar_mass_models.pdf}
-    \caption{The differences between stellar mass models applied onto galaxies
-    from the SDSS\@. Contours are showing levels in unit of $\sigma$. Ordinates
-and abscissas are the stellar masses of galaxies in decimal logarithm of the
-solar mass.\label{fig:stellar_mass_models}}
+    \caption{Comparison between stellar mass models applied onto galaxies from
+        SDSS\@. Contours are showing number levels in unit of $\sigma$.
+        Ordinates and abscissas are the stellar masses of galaxies in decimal
+        logarithm of the solar mass. The upper left box shows the bias and
+        dispersion of the logarithmic difference between both models. Models
+        are: FSPSGranWideDust, FSPSGranWideNoDust, FSPSGranEarlyDust and
+        FSPSGranEarlyNoDust from~\cite{Conroy+09}, PassivePort and
+        StarFormingPort from~\cite{Maraston+09}, PCAWiscM11 and PCAWiscBC03
+    from~\cite{Chen+12} and MPA-JHU~\cite{Brinchmann+04, Kauffmann+03,
+Tremonti+04}\label{fig:stellar_mass_models}}
 \end{figure}
+
+\section{Final galaxy sample}
+\label{sec:final_galaxy_sample}
+
+All previous sections are showing something important in the SDSS data:
+observational errors are important, and the automatic processing of this data
+sometimes leads to false detections, artefacts\ldots, making analysis and
+corrections complex.
+
+Fortunately, recently~\cite{Tempel+14} in its FoF analysis of galaxy groups in
+the SDSS-DR10 had to deal too with such problems and the contamination they
+introduce. Major problems are stars classified as galaxies, nearby large
+galaxies resolved on several galaxies or poor photometry of some galaxies due
+to bright stars or bad sky level estimation in the neighbourhood. They
+performed an incredible filtering on the sample by visually checking 30000
+galaxies that were potential problematic galaxies. They checked (extracted from
+\cite{Tempel+14}):
+%
+\begin{itemize}
+    \item $10000$ apparently brightest galaxies (in r-band). For galaxies
+        brighter than m r < 13.5 about 10\% of the objects were spurious. For
+        galaxies 13.5 < M r < 14.5, about 1\% were spurious entries; this
+        fraction decreases with luminosity;
+    \item $5000$ intrinsically brightest galaxies in the sample (< 1\% were
+        spurious);
+    \item $3000$ intrinsically faintest galaxies in the sample (to ensure the
+        correctness of the faint-end of the luminosity function);
+    \item all the sources with the spectroscopic class QSO\@;
+    \item all the objects with bestobjid missing or not GALAXY\@. For these
+        objects, we used fluxobjid if the matched photometric object was
+        classified as a galaxy;
+    \item all the objects for which the difference between r-band point spread
+        function (PSF) magnitude and model magnitude was smaller than 0.25
+        (thus further excluding some of the stellar sources in the catalogue);
+    \item all the galaxies with the difference between r-band Petrosian and
+        model magnitudes greater than 0.4;
+    \item all the galaxy pairs that were closer than 5' (in order to remove
+        double/multiple entries);
+    \item the entries where the colour indices g−r, r−i, and g−i had extreme
+        values.
+\end{itemize}
+
+Finally, the sample was cleaned for around $600$ galaxies and $1400$ of
+galaxies were flagged as having a bad photometry. We decided to use directly
+the galaxy sample they obtained since it covers exactly the same area we use
+and their conscientious clean up of the SDSS-DR10 is amazing and very helpful.
 
 % vim: set tw=79 :
