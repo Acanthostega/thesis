@@ -1,0 +1,87 @@
+\chapter{Conclusions and perspectives}
+\label{cha:conclusions_and_perspectives}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+An optimal extraction of galaxy groups from the redshift space is not an easy
+task. The observer has to deal with a lot of observational errors, projection
+effects and bias to perform such an optimal grouping. We shown that all
+previously created galaxy group algorithms are imperfect in the sense that with
+their assumptions, there are some lacks in extracted groups, explaining the
+apparition of two different kind of algorithms: Bayesian and geometrical.
+
+We constructed a galaxy mock catalogue to test several galaxy group algorithms,
+whose Friends-of-Friends algorithm to understand what is the optimal set of
+linking length to use for galaxy group extraction. We conclude that the values
+to use depends on the science to do with these groups.
+
+We developed MAGGIE, a Bayesian galaxy group finder, using probabilities to
+constrain the membership in groups. We show by tests on mock catalogues that
+MAGGIE performs better than the purely geometrical approach of the percolation
+algorithm, even in the case where the galaxy data is polluted by observational
+errors. By this way, we also show that Bayesian algorithms are more sensible to
+the quality of observational data than geometrical ones as FoF, but that they
+allow to recover groups properties and their membership better than FoF.
+
+The application of MAGGIE on real galaxy surveys implies a full understanding
+of the possible incompletenesses whose surveys are suffering. The analysis of
+the SDSS-DR10 indicates that correcting for luminous and spectroscopic
+incompletenesses is very important but also very difficult, since the
+extraction of galaxy groups implies no missing galaxies. Lacks in the
+membership can affect the grouping, but also the informations obtained from
+their analysis. Indeed, environmental effects we want to observe from these
+galaxy groups (essentially through the SSFR on which we can't apply any
+correction) can be very different if not taking them into account. MAGGIE is
+very powerful tool for galaxy group analysis, but we have to apply it carefully
+on the analysed data or the interpretation of results can be biased.
+
+\section{Perspectives}
+\label{sec:perspectives}
+
+We plan to run MAGGIE on the SDSS-DR10 and publish optimized galaxy groups in
+different doubly complete subsamples in redshift and luminosity, and to
+re-assess the modulation of sSFR, etc\ldots with local and global environments.
+If a modulation of galaxy properties is observed, we will model it and apply it
+in semi-analytical codes to see if it reduces discrepancies between
+observations and outputs of such codes. It will be a new measure of quenching
+with global and local environments. We also wish to run MAGGIE on the deeper
+GAMA redshift survey to be able to extract the evolution in time of
+environmental effects on galaxies.
+
+Still for MAGGIE, we plan to improve the galaxy grouping by the use of the
+red-blue segregation of galaxies. We can use some priors for the modulation of
+the fraction of blue galaxies in groups to adapt the probability computation
+according to the class of the galaxy. Then, we can iteratively reduce the
+impact of our initial model for the blue fraction by using the informations
+obtained by MAGGIE to de-project the red-blue segregation observed in groups.
+For next iterations, we can re-use our new real space model in the probability
+computation, and do it until the convergence of memberships.
+
+In parallel, we plan to launch a collaborative project with other galaxy group
+algorithms developers. We will propose to each developer (and myself) to apply
+algorithms on a set of mock catalogs constructed in the same way to avoid
+cosmic variance on the results, for blind tests. Then, we run the same tests on
+each algorithm in order to have a clear understanding of the strengths and
+weaknesses of each of them. It will be the first time that galaxy grouping
+algorithms will be compared in the same conditions.
+
+It is also interesting to know if there is a limit to recover the real space
+modulation of galaxy properties (such as specific star formation rate) with
+environment when trying to extract it from projected redshift space. This can
+be easily done by imposing ourselves a modulation in the outputs of galaxy
+formation codes, and then construct galaxy mock catalogues in redshift space.
+Then, using real space information, we can see if the imposed modulation is
+recovered, and if galaxy group algorithms introduce biases in some cases.
+
+In continuation with the thesis work, try to theoretically explain the observed
+dependency of galaxy properties with their environments. Using hydrodynamical
+simulations of galaxies in groups, we wish to understand and model
+intra-cluster physical processes (ram pressure stripping, tidal
+stripping\ldots). This will imply running academic simulations independently
+for each physical process, then model as a function of the different input
+parameters (local and global environment essentially). And by trying to switch
+them on-off in semi-analytical codes of galaxy formation, determine their
+relative importance on galaxy properties (sSFR, bulge to disk ratios\ldots).
+
+% vim: set tw=79 :
