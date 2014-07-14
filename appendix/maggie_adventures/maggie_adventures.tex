@@ -556,4 +556,46 @@ Supposing this computation can be easily done, there is still two problems.
         complete sample used, \ldots
 \end{itemize}
 
+\section{Abundance matching}
+\label{sec:abundance_matching}
+
+In MAGGIE, the virial mass estimation by abundance matching is done between the
+central stellar mass or luminosity and the halo mass function. But the relation
+between the stellar mass and the halo mass is saturated for high masses, making
+the relation relatively flat, and so the estimation of the halo mass is
+inaccurate given a stellar mass. However, the relation between the total
+stellar mass of the group and the halo mass is less saturated and should be
+more precise. We didn't use this relation since we need to know the membership
+of the group in advance in order to compute the total stellar mass. A possible
+solution would be to conserve among iterations the total stellar mass. But
+while iterating, new groups appear and we don't know their membership and we
+rely in a ``central'' relation to estimate the virial radius. The fact is that
+using this methods, we cannot merge galaxy groups while iterating. The first
+step will cast in stone the groups created, allowing only the apparition of new
+groups, increasing the fragmentation. We tried this implementation of MAGGIE
+but as expected, results were worst than the imprecise ``central abundance
+matching''.
+
+\section{Redshift uncertainties}
+\label{sec:redshift_uncertainties}
+
+MAGGIE is based on the computation of a probability to belong to a group
+according to its position in the projected phase space, through the redshift
+space. But redshifts measurements are uncertain since spectrum are not perfect,
+and especially when working with photometric redshifts where uncertainties can
+be catastrophic in some cases. It would be nice to take into account these
+dispersion in the probability computation.
+
+Our analysis of the differences between photometric and spectroscopic redshifts
+in the SDSS shows that the distribution is roughly Gaussian. So the expected
+errors are following this distribution too. By weighting the velocity
+distribution with the error distribution, the integration of the velocity
+distribution is similar to a convolution product. In the case of a Gaussian
+velocity distribution, the result is also a Gaussian with a dispersion that is
+the sum of the dispersion of each distribution.
+
+But in the case of photometric redshifts, this dispersion is dependent of the
+spectroscopic redshift and cannot be easily fitted. But in the case of the
+uncertainties of spectroscopic redshifts, it can be done relatively easily.
+
 % vim: set tw=79 ft=tex:
