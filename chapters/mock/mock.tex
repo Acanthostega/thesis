@@ -246,15 +246,20 @@ the observer and $H_0$ the Hubble constant, in the case of a simple computation
 of the redshift. We can also make a more precise computation by searching the
 solution of $D=d_\mathrm{pm} \left(z_{\cos}\right)$ with $d_\mathrm{pm}
 \left(z\right)$ the proper motion distance at the redshift $z$.
-%
-\comments{I think we need to add the velocity of the Local Group in the
-redshift, because in our case the observer has a null velocity. Maybe
-corrected in SDSS data?}
 
 Applying this method to mock catalogue, we can have galaxies whose ``distance''
 is biased by peculiar velocities in redshift space. With such a treatment, the
 velocity dispersion of galaxies in groups leads to the apparition of ``fingers
 of God'' as seen in observations in redshift space.
+
+We don't have to add the wavelength shift due to the translation of the
+observer relatively to the Cosmological Microwave Background (CMB). Velocities
+in the simulation are relative to an ``absolute'' frame, but our Galaxy has a
+movement in relation to the CMB creating an additional shift in wavelength
+depending on the observed region of the celestial sphere, and we should include
+it in our mock catalogue. But frequently, redshift accessible in galaxy surveys
+are already corrected for the CMB relative motion, or can be easily
+pre-corrected to avoid this component. In consequence, we don't integrate it.
 
 \subsubsection{Survey mask}
 
