@@ -1,0 +1,91 @@
+\onecolumn%
+%
+\makeatletter
+\newcommand*{\clearevenpage}{%
+  \clearpage
+    \if@twoside
+    \ifodd\c@page
+      \hbox{}\newpage
+      \if@twocolumn
+        \hbox{}\newpage
+      \fi
+    \fi
+  \fi
+}
+\makeatother
+%
+\clearevenpage\thispagestyle{empty}
+%
+\barttitlebackground{black}{1cm}
+\bartbackground%
+%
+\begin{bartabstract}
+    \small
+    Galaxies lie in a large panel of environments from isolated galaxies, to
+    pairs, groups or clusters. It is right to think that the environment has an
+    impact on galaxy properties such as the morphology, stellar formation,
+    metallicity\ldots Some studies already tried to quantify the importance of
+    the global environment (linked to the dark matter halo mass) and the local
+    environment (galaxy position in the group). These studies have shown that
+    the environment play a minor role except for low mass galaxies. But the
+    quantification of the environment is difficult since detected groups in
+    redshift space (only one accessible by the observer) are very elongated and
+    don't facilitate the assignment of a galaxy to a given group. If these
+    quantification errors are too important, environment effects will not be
+    measured correctly.
+
+    Moreover, other physical processes are at work inside groups whose
+    importance is not well understood. For example, major or minor mergers
+    (rich or poor in gas, between non-central galaxies, or a central and a
+    non-central by ``descent'' of its orbit by dynamical friction), rapid
+    flybys harassing gas to galaxies, stripping of the interstellar gas by ram
+    pressure or of gaseous reservoir by tidal forces. Although semi-analytical
+    codes of galaxy formation from initial conditions of a $\Lambda$CDM
+    Universe fit well observations, there are still some discrepancies possibly
+    explained by a lack of environmental effects in these models.
+
+    Our goal with these thesis is to have a detailed comprehension of the role
+    of environment on galaxy properties, and finally determine the major
+    physical processes in the modulation of these properties with both local
+    and global environment. For this, an optimal extraction of galaxy groups
+    from the projected phase space is necessary.
+
+    We performed a study and re-implementation of some existing group finder to
+    estimate their strengths and weaknesses in the detection of galaxy groups.
+
+    A galaxy mock catalogue was created to apply several galaxy group algorithm
+    on a fake galaxy sample, but with known physical properties similar to
+    observations (luminosity function, density profile of galaxies in groups,
+    bias in distance due to redshift). The advantage is that we know the real
+    membership and we can compare the galaxy group selection to this
+    ``reality''. Semi-analytical codes of galaxy formation outputs give us such
+    catalogues we transformed to be coherent with the vision of an observer.
+
+    With these mock catalogues, we tested the most popular grouping algorithm
+    that is the Friends-of-Friends algorithm or percolation method. We
+    determined the optimal linking lengths against the set of tests and optimal
+    criterion we developed to judge the efficiency of an algorithm. It appears
+    that this choice of linking lengths depends on the scientific goal to do
+    with the group catalogue.
+
+    A large part of the thesis consisted on the realization of a new grouping
+    algorithm called MAGGIE (Models and Algorithm for Galaxy Groups,
+    Interlopers and Environment), Bayesian and probabilistic. MAGGIE uses our
+    priors acquired with analysis of cosmological simulations for large scale
+    structure and of observations obtained from large galaxy surveys, to better
+    constrain the selection of galaxy groups from redshift space. Comparison of
+    MAGGIE with the FoF algorithm shows that MAGGIE is better in the membership
+    selection (completeness, reliability), in the group properties (stellar
+    mass, luminosity) with help of probabilities. The fragmentation of galaxy
+    groups is also less important than FoF. Global environment estimation is
+    improved by the abundance matching technique comparing and linking central
+    galaxy distributions (stellar mass or luminosity) to physical properties of
+    dark matter halos.
+
+    A future application of MAGGIE on galaxy surveys such as the Sloan Digital
+    Sky Survey or the Galaxy and Mass Assembly, taking care of their own
+    observational problems, should improve our understanding of physical
+    processes inside galaxy groups.
+\end{bartabstract}
+\nopagebreak%
+% vim: set tw=79 :

@@ -12,13 +12,15 @@
 \begin{document}
 %
 % load the titlepage
-\include{titlepage/titlepage}
+\input{titlepage/titlepage}
+\frontmatter%
 %
 \begin{sloppypar}
 %
 \input{abstract/abstract}
 %
 \tableofcontents%
+\mainmatter%
 %
 \input{chapters/chapters}
 %
@@ -28,6 +30,10 @@
 %
 % include the bibliography
 \include{bibliography}
+%
+% include the back cover
+\backmatter%
+\input{backcover}
 %
 \end{document}%
 %###########################################################################################
