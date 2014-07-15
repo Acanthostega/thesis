@@ -8,14 +8,15 @@ includeall, onecolumn,columnsep=0pt,bindingoffset=0pt}
 {%
     \thispagestyle{empty}
     \barttitlebackground{black}{1cm}
-    \bartbackground{50}{4004}
+    \bartbackground{}
     \barttitleimage%
     \tikzset{barttitleright/.style={rounded corners=0.25cm}}
     \barttitleright{THESIS}{1cm}%
     \bartrbox{\thebartthesistitle}{\thebartthesistitlewidth}{\thebartthesistitlegapy}{bartthesistitle}%
     \bartlbox{\thebartadministration}{\thebartadministrationwidth}{\thebartadministrationgapy}{bartadministration}%
     \bartlbox{\bartschoolboxtext}{\thebartschoolwidth}{\thebartschoolgapy}{bartschool}%
+    \setlength\thebartpeoplewidth{10cm}
     \bartlbox{\bartpeopleboxtext}{\thebartpeoplewidth}{\thebartpeoplegapy}{bartpeople}
 }
-\end{titlepage}
+\end{titlepage}\thispagestyle{empty}
 \restoregeometry%

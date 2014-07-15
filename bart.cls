@@ -419,7 +419,7 @@ text=orange, opacity=0.5, text opacity=1]
 \newlength\thebartpeoplegapy
 \newlength\thebartpeoplewidth
 \setlength\thebartpeoplegapy{20cm}
-\setlength\thebartpeoplewidth{14cm}
+% \setlength\thebartpeoplewidth{14cm}
 \tikzstyle{bartpeople}=[]
 \newcommand{\bartpeopletikzstyle}[1]{\tikzstyle{bartpeople}=[#1]}
 \newcommand{\bartpeopleboxtext}{%
@@ -428,10 +428,12 @@ text=orange, opacity=0.5, text opacity=1]
     \textbf{Director:}\\
     \thebartdirector\\
     \noindent\rule{\linewidth}{1pt}\\
-    \textbf{Jury:}
-    \begin{flushright}
-        \thebartjury%
-    \end{flushright}
+    \textbf{Jury:}\\
+    \thebartjury%
+    \\
+    \\
+    \small
+    Last modified: \today
 }
 \newcommand{\bartpeopleboxfont}[1]{\renewcommand*{\thebartlboxfont}{#1}}
 
@@ -748,7 +750,7 @@ text=orange, opacity=0.5, text opacity=1]
 }
 %
 % Define some useful boxes
-\bartenvbox{black}{bartabstract}{Abstract}{true}{false}
+\bartenvbox{black}{bartabstract}{Abstract}{false}{false}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % To put a note with a note style
