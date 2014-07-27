@@ -1,9 +1,12 @@
 % commands relative to the bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù
-\bartchapterimage{library}%
-\bartthumb{thumb_library.jpg}%
+\cleardoublepage%
+\bartchapterimage{library.jpg}%
+\bartthumb{library.png}%
 % add the bibliography to the toc
 \addcontentsline{toc}{chapter}{\color{\thebartchaptercolor}\bibname}
 \bibliographystyle{mn2e}%
 \twocolumn%
+\renewcommand\leftmark{\bibname}
+\renewcommand\rightmark{\bibname}
 \bibliography{references}
