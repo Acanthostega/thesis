@@ -1,26 +1,25 @@
 \bartchapterimage{heic9910b.jpg}
-\chapter{Galaxy group algorithms}
+\chapter{Grouping algorithms}
 \label{cha:galaxy_group_algorithms}
 \bartthumb{heic9910b.png}
 \minitoc%
 
-As said previously, a good characterization of the galaxy environment implies a
-good selection of galaxy groups. But galaxy observations are made in redshift
-space, where the velocity dispersion of galaxies inside clusters stretch the
-line-of-sight distribution of galaxies. Galaxies in a structure are not seen in
-a local region of the space, but the structure is extended in larger range of
-redshifts from the projected phase space, which is the only one accessible by
-an observer. In consequence, the extraction of a galaxy group from the redshift
-space is complex since a galaxy in the field can be associated to a group if it
-pertains to the range of redshift of the group, and is inside the observational
-cone formed by the virial radius. Such a galaxy is called an interloper (inside
-the group by selection, but not pertaining to it in reality). \note{Add the
-schema of the stage for it. Better, do it with LISA!}
+As previously discussed, a good characterization of the galaxy environment
+implies a good selection of galaxy groups. But galaxy observations are made in
+redshift space, where the velocity dispersion of galaxies inside clusters
+stretch the line-of-sight distribution of galaxies. Galaxies in a structure are
+not seen in a local region of the space, but the structure is extended in
+larger range of redshifts from the projected phase space, which is the only one
+accessible by an observer. In consequence, the extraction of a galaxy group
+from the redshift space is complex since a galaxy in the field can be
+associated to a group if it lies in a similar position on the sky but up to
+10--20 virial radii in front or behind. Such a galaxy is called an
+\emph{interloper} (inside the group by selection, but not pertaining to it in
+reality).
 
 A large number of group catalogues were constructed with a large panel of
-method for selecting in order to go past the difficulties introduced by the
-redshift distortions. A summary of some of such galaxy group algorithm follows,
-with a description of their strengths and weaknesses.
+methods for handling redshift distortions. A summary of some of such galaxy
+group algorithms follows, with a description of their strengths and weaknesses.
 
 \section{Some algorithms}
 \label{sec:some_algorithms}
@@ -31,8 +30,8 @@ with a description of their strengths and weaknesses.
 \subsubsection{Description}
 \label{ssub:description}
 
-This algorithm is a kind of modified version of the Friends-of-Friends
-algorithm. The idea is to use over-densities of galaxies in the three
+\cite{Marinoni+02} have introduced a group finder based on Delaunay-Voronoi
+tesselation. The idea is to use over-densities of galaxies in the three
 dimensional space (reconstructed simply from the redshift space), and use them
 as potential centers for groups. Over-densities are estimated by use of a
 Voronoi partition of space. The set of Voronoi cells forms a complete partition
@@ -59,34 +58,31 @@ densities in order to use them as potential galaxy groups.
     \includegraphics[width=\linewidth]{figures/algorithms/voronoi.pdf}
     }
     \end{minipage}
-    \caption{Illustration of the tessellation of the space in a sub-sample of
+    \caption{Illustration of the tessellation of space in a sub-sample of
         randomly positioned points. In \emph{black} the real point distribution
         (reflecting the real galaxy distribution) and in \emph{blue} the
         sub-sample used for the tessellation (reflecting the volume limited
         galaxy survey). (a) The convex hull is the set of points forming the
         hull of the sample. (b) The Delaunay mesh is represented by the lines
-        interconnecting points. Each triangle of the mesh has his
+        interconnecting points. Each triangle of the mesh has its
         circumscribing circle without a point inside it by definition. (c) The
         Voronoi partition is the dual of the Delaunay mesh. Each node is the
-        result of crossing median of the Delaunay mesh. Working on a sub-sample
-        of galaxies shows that the Delaunay mesh is not well constrained at
-    edges, and the Voronoi cells are affected too. A consequence is that their
-volumes are biased and not corresponding to the real galaxy density around
-them when too close to borders.\label{fig:convex_delaunay_voronoi}}
+        result of the crossing median of the Delaunay mesh. Working on a
+        sub-sample of galaxies shows that the Delaunay mesh is not well
+        constrained at the edges, and the Voronoi cells are affected too. A
+        consequence is that their volumes are biased and do not correspond to
+        the real galaxy density around them when one gets too close to
+    borders.\label{fig:convex_delaunay_voronoi}}
 \end{figure}
 
 The procedure for selecting galaxy groups is divided in three principal steps,
 with an additional phase of initialization. The latter consists on the creation
 of the Voronoi-Delaunay tessellation of the galaxy sample in three dimensional
-space. For its construction, the idea is to generate a sample of coordinates in
-a superior dimension by adding the distance to the origin of each points in it.
-Then, the convex hull in this space is computed. It is the set of points
-forming the hull of the sample. Projecting the convex hull to the initial space
-returns the Delaunay mesh with the links between points. The Voronoi partition
-is the dual of the Delaunay mesh and be can deduced from it. An illustration of
-each set of points is given in \bartreffigure{convex_delaunay_voronoi}.
+space. The Voronoi partition is the dual of the Delaunay mesh and be can
+deduced from it. An illustration of each set of points is given in
+\bartreffigure{convex_delaunay_voronoi}.
 
-The first step is too search for potential groups by using the Voronoi
+The first step is to search for potential groups by using the Voronoi
 partition. Voronoi cells have the property that their volume is inversely
 proportional to the density of points around each point. In case of galaxies,
 this allows to access to local density around them. The detected high densities
@@ -104,28 +100,28 @@ inside this region, not already linked as first-order galaxies, are
 second-order galaxies. The size of the cylinder is chosen to take into account
 the redshift elongation introduced in a typical group.
 
-The third step uses the informations created from the two previous steps, which
+The third step uses the information created from the two previous steps, which
 are only a selection of potential groups. From the richness of those potential
 groups, a relation between the richness and the cylinder lengths is deduced
 since the number of galaxies inside a group and its virial mass are correlated.
-This implies that the group sample isn't affected by some incompleteness, as
-the luminous one. From a constructed complete sub-sample, the relation between
-the richness and the characteristics sizes of the cylinder are deduced and
-modeled. Then, the second step is reapplied, the cylindrical region inferred
-from the previous relations with the richness of the group.
+This implies that the group sample isn't affected by some incompleteness, such
+as luminosity incompleteness. From a constructed complete sub-sample, the
+relation between the richness and the characteristics sizes of the cylinder are
+deduced and modeled. Then, the second step is reapplied, the cylindrical region
+inferred from the previous relations with the richness of the group.
 
 \subsubsection{Advantages and weaknesses}
 \label{ssub:advantages}
 
-The group extraction doesn't rely too much on physical assumptions as for the
-FoF algorithm, but uses a geometrical approach, based directly on the galaxy
-sample at disposition. Moreover, there is no free parameters, since the
-cylindrical region is then adjusted, based on a relation between the virial
-radius and the group richness. This relation is adjusted in a complete
-sub-sample of galaxies to avoid incompleteness corrections, the algorithm
-should be robust under different galaxy surveys.
+The group extraction doesn't rely on physical assumptions, but uses a
+geometrical approach, based directly on the available galaxy sample. Moreover,
+there are no free parameters, since the cylindrical region is then adjusted,
+based on a relation between the virial radius and the group richness. This
+relation is adjusted in a complete sub-sample of galaxies to avoid
+incompleteness corrections, the algorithm should be robust under different
+galaxy surveys.
 
-But the Delaunay-Voronoi tessellation has some counterparts. The computation of
+But the Delaunay-Voronoi tessellation has some drawbacks. The computation of
 the Delaunay mesh is very difficult in non-Euclidean spaces, as the redshift
 space, from the point of view of an observer. Moreover, the computation of the
 volume of the Voronoi cell is complex too, especially with non-Euclidean
@@ -136,12 +132,12 @@ same). Neglecting the celestial distortions limits the application of the
 algorithm to a small portion of the sky of a few degrees of side.
 
 In addition, border effects can't be neglected with the Voronoi partition of
-space. Since Voronoi cells form a complete partition, cells at edges of the
+space. Since Voronoi cells form a complete partition, cells at the edges of the
 galaxy sample have an infinite volume size. Also, the volume of cells close to
 borders is biased because the distribution of galaxies is unknown beyond the
 sample, and the Delaunay mesh can't be fully constrained to reflect the real
 density of galaxies at edges. In other words, the volume of Voronoi cells near
-edges doesn't really reflects the local density around galaxies, since the
+edges doesn't really reflect the local density around galaxies, since the
 galaxy distribution is unknown beyond the limit of the sample.
 
 Finally, the tessellation is computed for a flux-limited sample of galaxies,
@@ -157,18 +153,18 @@ really applied to recent galaxy surveys covering a large area of the sky.
 \subsection{\citet{Yang+07}}
 \label{sub:yang07}
 
-This algorithm takes into account our knowledge on the large scale structure
-extracted from the cosmological simulations to improve the grouping of
-galaxies. In particular, an assumption is made on the galaxy density profile
-inside halos to follow \citet{NFW+97} to define a parameter used to assign
-galaxies to groups. A density contrast parameter is defined as the ratio
-between the projected density of galaxies inside an halo and the density of
-field galaxies (which are the interlopers). Higher is this ratio, higher the
-galaxy is likely to belong to the group. The density of galaxies in the halo is
-simply the integration of the distribution function along the line-of-sight,
-and for interlopers, it is the integration of the mean density of the Universe
-along the line-of-sight over the Hubble distance. This results in the following
-definition for the density contrast:
+\cite{Yang+05, Yang+07} devised a Bayesian grouping algorithm based upon
+cosmological simulations. In particular, they assume that the galaxy density
+profile inside groups follows the \citet{NFW+97} model that reproduces well the
+density profiles of halos in cosmological dark matter only simulations. A
+density contrast parameter is defined as the ratio between the projected
+density of galaxies inside an halo and the density of field galaxies (which are
+the interlopers). The higher is this ratio, the more likely the galaxy belongs
+to the group. The density of galaxies in the halo is simply the integration of
+the distribution function along the line-of-sight, and for interlopers, it is
+the integration of the mean density of the Universe along the line-of-sight
+over the Hubble distance. This leads them to the following definition for the
+density contrast:
 %
 \begin{equation}
     P_M \left(R, \Delta z\right)=\cfrac{H_0}{c} \cfrac{\Sigma
@@ -182,18 +178,18 @@ projected radius $R$, $\overline{\rho}$ the mean density of the Universe and $p
 redshift differences $\Delta z$ with the group redshift. This definition is
 problematic: the density of interlopers is assumed to be constant and the same
 for all halos. But as described in \citet{MBM+10}, the density of interlopers
-is related to the position in the halo, and their velocity distribution isn't
-flat.
+is related to the position in the halo, and their line-of-sight velocity
+distribution isn't flat.
 
 Using this density contrast criterion implies to have potential groups on which
 to apply it. For this, initially, a FoF algorithm is done on the galaxy sample
-but with very small linking lengths. This potential groups are seed whose
+but with very small linking lengths. These potential groups are whose
 membership must be updated using the density contrast, as described below.
 
-For each group, its virial mass is estimated from a relation between the group
+For each group, the virial mass is estimated from a relation between the group
 luminosity and its mass. Initially, this is a constant ratio, then adjusted on
 the group sample itself. From it, the density contrast can be computed for each
-galaxy on each group. A galaxy is assigned to a group if $P_M>B$ were $B$ is a
+galaxy on each group. A galaxy is assigned to a group if $P_M>B$ where $B$ is a
 threshold. If this condition is satisfied for multiple groups, it is assigned
 to the group with the highest $P_M$.
 
@@ -202,13 +198,13 @@ iterating over the previous step until a convergence in the membership is
 observed.
 
 Once the convergence is reached, the relation between the virial mass and the
-luminosities of groups is recomputed by abundance matching between the
-distribution of group luminosities obtained from the sample and the expected
-distribution of virial masses assuming an halo mass function. Then the previous
-iterative process is done again, and this goes until a convergence is reached
-for the relation.
+luminosities of groups is recomputed by abundance matching (see
+\bartrefchapter{MAGGIE}) between the distribution of group luminosities
+obtained from the sample and the expected distribution of virial masses
+assuming an halo mass function. Then the previous iterative process is done
+again, and this goes until a convergence is reached for the relation.
 
-The algorithm have some lacks that should be technically and physically
+The algorithm have some drawbacks that should be technically and physically
 corrected to be good enough in the group extraction. Indeed, some incoherences
 are present in the implementation of the grouping algorithm. For example, the
 given formula for the computation of the virial radius is done for halos being
@@ -221,44 +217,44 @@ and should be taken into account in the grouping process.
 \subsection{\citet{DominguezRomero+12}}
 \label{sub:dominguezromero12}
 
-This algorithm is an adaptation of \citet{Yang+07}, based on a better Bayesian
-approach, noting that the grouping method of \citet{Yang+07} is simply a
-learning algorithm called K-means. Instead of assigning in an hard way galaxies
-to groups in the iterative process, this method assigns responsibilities,
-equivalents of a probability of belonging to a group, pondered over all groups
-in the sample, using the density contrast definition above as some probability
-to be in the group.
+\cite{DominguezRomero+12} adapted the algorithm of \citet{Yang+07}, based on a
+better Bayesian approach, noting that the grouping method of \citet{Yang+07} is
+simply a learning algorithm called K-means. Instead of hard assignments of
+galaxies to groups in the iterative process, this method assigns
+responsibilities, equivalents of a probability of belonging to a group,
+weighted over all groups in the sample, using the density contrast definition
+above as some probability to be in the group.
 
 First, potential groups are estimated assuming that the most luminous galaxies
 are linked to most massive systems. Then, galaxies are assigned to a group as
-satellites members if they have a density contrast superior to a chosen low
+satellite members if they have a density contrast superior to a chosen low
 threshold to allow a maximum of galaxies to belong to the group, without
-introducing too much interlopers since their responsibilities will be low and
-won't affect group properties. As for \citet{Yang+07}, an iteration over the
+introducing too many interlopers since their responsibilities will be low and
+won't affect group properties. As in \citet{Yang+07}, an iteration over the
 membership and the relation used to compute virial properties is done until
-convergence. Finally, galaxies are hardly assigned to a group, the one for
-which the responsibility is the highest.
+convergence. Finally, galaxies are assigned to the group for which the
+responsibility is the highest.
 
-Inconvenient of this method are essentially inherited from \citet{Yang+07}.
+The drawbacks of this method are essentially inherited from \citet{Yang+07}.
 
 \subsection{\citet{MunozCuartas+12}}
 \label{sub:munozcuartas12}
 
-This method is similar to the FoF algorithm, but applied directly on halos and
-not on galaxies. From an initial set of halos, a maximal circular radius is
-computed from the virial radius in the transverse direction to the
-line-of-sight. A maximal length of search for the redshift dimension is
-estimated from the circular velocity of the halo. Those halos are sorted by
-decreasing masses. For each one, other halos (and their galaxies) are merged
-into the current halo if they belong to the ellipsoid defined by the two
-lengths defined above, centered on the halo.
+\cite{MunozCuartas+12} developed a method similar to the FoF algorithm, but
+applied directly on groups and not on galaxies. From an initial set of groups,
+a maximal circular radius is computed from the virial radius in the transverse
+direction to the line-of-sight. A maximal length of search for the redshift
+dimension is estimated from the circular velocity of the group. Those groups
+are sorted by decreasing masses. For each one, other groups (and their
+galaxies) are merged into the current group if they belong to the ellipsoid
+defined by the two lengths defined above, centered on the group.
 
 Then, group properties are computed from the membership obtained previously.
 The new virial masses are evaluated with an abundance matching between the
 group stellar masses and the halo mass function. The iteration is stopped once
-the number of halos doesn't change.
+the number of groups doesn't change.
 
-This method doesn't have any free parameter and doesn't rely on too much
+This method doesn't have any free parameter and doesn't rely on too many
 assumptions and models. Only the abundance matching can be responsible for a
 bias, since the virial mass is crucial in the merging of halos. As mentioned by
 \citet{Yang+07}, the one-to-one assumption of the abundance matching creates an
@@ -268,20 +264,20 @@ should not affect the galaxy grouping.
 \section{Discussion}
 \label{sec:gga_discussion}
 
-We can extract common principles of the different algorithms we described
-above. There are two approaches for the galaxy grouping: a geometrical one
-based only on the positional informations of galaxies and a Bayesian one using
-priors on group properties and galaxies therein. What emerged is that a large
-majority of these algorithms make a harmonious combination of these approaches
-in order to conserve only their strengths. A typical geometrical algorithm is
-the Friends-of-Friends (see \bartrefchapter{friends_of_friends_algorithm}),
-linking galaxies between them if they are closer than a linking length. This
-method has the default of creating bridges between two different galaxy groups
-if two of their members are closer than the linking length. Adding priors to
-such a scheme, the membership can be improved by breaking the problematic
-bridges. This is a good summary for the method of \citet{Marinoni+02} or
-\citet{MunozCuartas+12}. Moreover, the bias in distance introduced by redshift
-can be reduced with same prescriptions as done in \citet{Liu+08}.
+We can extract common principles of the different algorithms described above.
+There are two approaches for the galaxy grouping: a geometrical one based only
+on the positional informations of galaxies and a Bayesian one using priors on
+group properties and galaxies therein. What emerged is that most of these
+algorithms make a harmonious combination of these approaches. A typical
+geometrical algorithm is the Friends-of-Friends (see also
+\bartrefchapter{friends_of_friends_algorithm}), linking galaxies between them
+if they are closer than a linking length. This method has the default of
+creating bridges between two different galaxy groups if two of their members
+are closer than the linking length. Adding priors to such a scheme, the
+membership can be improved by breaking the problematic bridges. This is a good
+summary for the method of \citet{Marinoni+02} or \citet{MunozCuartas+12}.
+Moreover, the bias in distance introduced by redshift can be reduced with the
+same prescriptions as done in \citet{Liu+08}.
 
 \begin{figure}[htb]
     \centering
@@ -321,9 +317,9 @@ can be reduced with same prescriptions as done in \citet{Liu+08}.
     iterations.\label{fig:convergence}}
 \end{figure}
 
-Iteration seems to be a key in a good grouping algorithm. A convergence in the
-galaxy membership is assured by updating group properties along iterations, and
-using it to constrain the selection. The convergence in various scaling
+Iteration seems to be important for a good grouping algorithm. A convergence in
+the galaxy membership is assured by updating group properties along iterations,
+and using it to constrain the selection. The convergence in various scaling
 relations in groups is also assured by iterations, giving a self-consistency of
 the clustering with the data itself: galaxy group algorithms are special kind
 of machine learning algorithm. For example, we suppose an algorithm using a
@@ -337,27 +333,27 @@ estimation of the virial mass. This process goes until the convergence
 represented by the virial radius $r_\mathrm{vir}$ in
 \bartreffigure{convergence}.
 
-The Bayesian approach used in the described galaxy group algorithms as also its
-counterparts: if the chosen models are bad, the clustering will be affected
-too. For example, \citet{Yang+05} assumes a flat line-of-sight velocity
-dispersion and a flat distribution of interlopers in the computation of density
-contrast, which clearly depends on the projected radius pointed by the
-observer. Another problem is the way to test such algorithms. Previously
-described algorithms were tested on different galaxy mock catalogues, not
-constructed in the same way, without the same physics applied inside them. In
-consequence the comparison is very difficult because not operated in the same
-conditions. And the definition of an optimal extraction, and the statistics
-used to assess their performances differ with galaxy group algorithm
-developers.
+The Bayesian approach used in the described galaxy group algorithms also has
+its pitfalls: if the chosen models are bad, the clustering will be affected
+too. For example, \citet{Yang+07} assume a flat line-of-sight velocity
+dispersion and a flat distribution of distant interlopers in the computation of
+density contrast, which clearly depends on the projected radius pointed by the
+observer. Another problem is the way to test such algorithms. The different
+algorithms were tested on different galaxy mock catalogues, not constructed in
+the same way. In consequence, the comparison is very difficult because not
+operated in the same conditions. Finally, the definition of an optimal
+extraction, and the statistics used to assess their performances differ among
+the different galaxy group algorithm developers.
 
 To go beyond such limitations that will never be completely avoided,
-a probabilistic approach of galaxy groups seems to be a good compromised (see
+a probabilistic approach of galaxy groups seems to be a good compromise (see
 \bartrefchapter{MAGGIE}). Moreover, the tests for algorithms must be well
 defined, with a common galaxy mock catalogue to perform the comparisons and a
 good definition of the statistics to use. How well are recovered galaxy groups?
-How well they are polluted by interlopers? How many selected groups are
-spurious? How virial properties of the parent halo are recovered? How scaling
-relations are recovered? They are the questions to answer in order to
+How well are they polluted by interlopers? How many selected groups are
+spurious? Well are the virial properties of the parent halo recovered? How well
+are the scaling
+relations recovered? These are the questions to answer in order to
 characterize the quality of a grouping algorithm.
 
 % vim: set tw=79 :
