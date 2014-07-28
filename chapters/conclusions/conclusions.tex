@@ -49,7 +49,118 @@ in semi-analytical codes to see if it reduces discrepancies between
 observations and outputs of such codes. It will be a new measure of quenching
 with global and local environments. We also wish to run MAGGIE on the deeper
 GAMA redshift survey to be able to extract the evolution in time of
-environmental effects on galaxies.
+environmental effects on galaxies. We already have some preliminary results on
+this modulation for MAGGIE in \bartreffigure{ssfr_mean} and
+\bartreffigure{ssfr_fraction}, and the group catalogue of~\cite{Tempel+14} in
+\bartreffigure{ssfr_mean_tempel} and \bartreffigure{ssfr_fraction_tempel}.
+We use two complete catalogues to show this modulation: catalogue 3 too have
+sufficient statistics in number of galaxies and catalogue 5 to see the
+behaviour at larger redshifts.
+
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 3]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/sdss.0.mean_ssfr_2}.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 5]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/sdss.0.mean_ssfr_4}.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Mean SSFR for galaxies with
+            $10\leqslant\log_{10}m_*<11$ (left panel) and
+            $11\leqslant\log_{10}m_*<12$ in function of the projected radius
+            in units of virial radius (local environment) and of the virial
+            mass in solar units (global environment), for galaxy groups
+        found with MAGGIE.\label{fig:ssfr_mean}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 3]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/sdss.0.fraction_over_minus_2_2}.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 5]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/sdss.0.fraction_over_minus_2_4}.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Fraction of galaxies classified as star forming
+            galaxies according the criterion of
+            \bartrefsubsection{star_formation_rate} for the same range in
+            stellar masses as in \bartreffigure{ssfr_mean}, with galaxy group
+            from MAGGIE.\label{fig:ssfr_fraction}}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[htb]
+    \centering
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 3]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/tempel.0.mean_ssfr_2}.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 5]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/tempel.0.mean_ssfr_4}.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Same as \bartreffigure{ssfr_mean} but for galaxy
+        groups from~\cite{Tempel+14}.\label{fig:ssfr_mean_tempel}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+        \centering
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 3]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/tempel.0.fraction_over_minus_2_2}.pdf%
+                }
+            }
+        \end{minipage}
+        \begin{minipage}{\linewidth}
+            \centering
+            \subfloat[Catalogue 5]{%
+                \includegraphics[height=0.2\textheight]{%
+                    {figures/maggie_vs_sdss/tempel.0.fraction_over_minus_2_4}.pdf%
+                }
+            }
+        \end{minipage}
+        \captionof{figure}{Same as \bartreffigure{ssfr_fraction} but for
+        galaxy groups
+    from~\cite{Tempel+14}.\label{fig:ssfr_fraction_tempel}}
+    \end{minipage}
+\end{figure}
+%
+The modulation of the SSFR and fraction of young galaxies is very dependent of
+the catalogue of groups used. Since these results between the two algorithms, a
+deeper analysis must be done to understand from where the discrepancies come
+from.
 
 Still for MAGGIE, we plan to improve the galaxy grouping by the use of the
 red-blue segregation of galaxies. We can use some priors for the modulation of
