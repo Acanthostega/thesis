@@ -1,5 +1,5 @@
 \bartchapterimage{heic0910i.jpg}
-\chapter{Generate mock catalogues}
+\chapter{Generating mock catalogues}
 \label{cha:mock}
 \bartthumb{heic0910i.png}
 
@@ -8,16 +8,16 @@
 \section{Introduction}
 
 A mock catalogue is an useful tool to test algorithms involving galaxies in
-order to see if it is operational in a realistic situation. Many of the
-properties of galaxy surveys can be simulated: the spatial clustering of
-galaxies, luminosity function, incompleteness and measures errors are some
-examples of them. There are different methods to obtain such a mock catalogue.
-All of them involves cosmological simulations and their halos of dark matter.
-According to the model of galaxy formation, we can use halo occupation
-distribution (HOD) to populate dark matter haloes with galaxies and putting
-some luminosity functions (for example) as constraints. We can follow galaxies
-in semi-analytical models (SAM) in cosmological simulations outputs in order to
-have statistical properties of galaxies which agree with observational results.
+order to see if it is operational in a realistic situation. These mocks can
+reproduce many properties of galaxies, e.g.\ clustering, luminosity function,
+etc, and add observational effects such as incompleteness and measurement
+errors. There are different methods to obtain such a mock catalogue. All of
+them involve cosmological simulations of dark matter halos. According to the
+model of galaxy formation, we can use the halo occupation distribution (HOD) to
+populate dark matter haloes with galaxies and putting some luminosity functions
+(for example) as constraints. We can, alternatively, follow galaxies in
+semi-analytical models (SAM) in cosmological simulations outputs in order to
+have statistical properties of galaxies that agree with observational results.
 With such realistic galaxies, we can use those simulation boxes to place an
 observer into it, and create a mock survey. But to have a realistic mock
 catalogue, it's necessary to take care of many things which will be described
@@ -35,25 +35,22 @@ distribution of dark matter halos. For example, there is the Millennium-II run
 \citep{BoylanKolchin+09} of $2160^3$ dark matter particles, with a simulation
 box size of 100 $h^{-1} \mathrm{Mpc}$ allowing a relatively high resolution for
 the particles mass ($6.9\;10^6\;h^{-1} M_\odot$) and a precise determination of
-the halo mass function and the history of each individual halos. A lot of
+the halo mass function and the history of each individual halo. Several
 cosmological simulation codes exist to follow the dark matter particle
 distribution along the evolution of the Universe \citep{Springel+01,
-Teyssier+02, Springel+05}. With such codes, we aren't dependent of big
-simulations as the Millennium-II, but at the cost of loss in mass resolution
-(this is not too important if we don't need a precise estimation of the halo
-mass function for light halos).
+Teyssier+02, Springel+05}.
 
 From the outputs of this cosmological simulations, informations on dark matter
 halos are extracted using halo finder codes \citep{KK+09, Tweed+09,
-Planelles+10}. Several methods exist to identify such structures: a simple
+Planelles+10}. Several methods exist to identify such structures: the
 Friend-of-Friends approach \citep{Davis+85} that tends to link between them
 different halos by bridges of linked dark matter particles, and doesn't
-identify sub-halos; spherical over-density measuring the density field and
+identify sub-halos; the spherical over-density measuring the density field and
 searching around density peaks iteratively until the desired density threshold
 is reached \citep{PS+74}; \textsc{Subfind} of~\cite{Springel+01} is similar to
-FoF with peaks searched within the extracted FoF halos\ldots With all
-available informations on halos, they can be populated by galaxies with
-prescriptions of the galaxy formation model.
+FoF with peaks searched within the extracted FoF halos\ldots With all available
+informations on halos, they can be populated by galaxies with prescriptions of
+the galaxy formation model.
 
 \subsection{Halo occupation distribution}
 \label{sub:halo_occupation_distribution}
@@ -64,7 +61,7 @@ that depends on the halo mass, or better, the galaxy luminosities or stellar
 masses are drawn from conditional luminosity (stellar mass) functions that
 depend on halo mass \citep{YMvdB03}. A relation between the galaxy and matter
 distribution is imposed by three constraints: the probability distribution $P
-\left(N|M\right)$ that an halo of mass $M$ contains $N$ galaxies, the spatial
+\left(N|M\right)$ that a halo of mass $M$ contains $N$ galaxies, the spatial
 relation between the galaxy and dark matter, and the same for the velocity
 distribution. The galaxy distribution is assumed to be spherically symmetric,
 and follows that of the dark matter particles in the halos of $\Lambda$CDM
@@ -80,9 +77,9 @@ radial variation of the velocity anisotropy.
 In  Semi-Analytical Models (SAMs, e.g., \citealp{RQPR97,KCDW99}), galaxy
 properties (in particular stellar mass and $r$-band luminosity) are painted on
 the halos and subhalos of cosmological $N$ body simulations across cosmic time,
-following well-defined recipes for star formation and galaxy feedback.  This
-procedure produces galaxies that follow relatively well the observed properties
-and scaling relations.
+following well-defined physical recipes for star formation and galaxy feedback.
+This procedure produces galaxies that follow relatively well the observed
+properties and scaling relations.
 
 We have chosen this second approach, because the recent SAM by~\cite{Guo+11},
 run on the Millennium-II simulation \citep{BoylanKolchin+09} fits well the
@@ -122,12 +119,12 @@ survey.
 The mock catalogue must have the same volume as the galaxy survey we want to
 mimic. For example for the SDSS survey, we can measure redshift to a value of
 0.3 and more. But the problem is that the majority of the simulation boxes have
-a size of around $L_{\mathrm{box}}=100-300 h^{-1}$ Mpc, letting us with a
-maximal redshift in our false survey of around
-${H_0}{L_{\mathrm{box}}}/c\approx 0.025$ in the case of a box of $100 h^{-1}$
-Mpc sized. Bigger simulations exist, and allow us to access higher redshifts,
-but this increasing size reduces the resolution of the simulation in particle
-mass and therefore we can't have low mass halos in the simulations.
+a size of around $L_{\mathrm{box}}=100-300\; h^{-1}$ Mpc, letting us with a
+maximal redshift in our mock survey of around ${H_0}{L_{\mathrm{box}}}/c\approx
+0.025$ in the case of a box of $100\; h^{-1}$ Mpc in size. Bigger simulations
+exist, and allow us to access higher redshifts, but this increasing size
+reduces the resolution of the simulation in particle mass and therefore we
+cannot have low mass halos in the simulations.
 
 The solution is to take a ``little'' simulation box and to replicate it and to
 make some ``Tetris'' cube until we reach the maximal redshift we want. An
@@ -140,12 +137,12 @@ example of the resulting ``mock cube'' is shown on \bartreffigure{cubemock}.
         simulation box chosen to populate dark matter halos. Each cube
         represents a simulation box whose galaxies were randomly rotated and
         translated in positions. Placing an observer at a given position (the
-    black dot), we can access different geometry for the survey and go to
+    black dot), we can access different geometries for the survey and go to
 higher redshift ranges than those possible with an unique simulation
 box.\label{fig:cubemock}}%
 \end{figure}
 
-Now if we take an observer at some position into this big box, we can have
+Now, if we take an observer at some position into this big box, we can have
 different sky coverage for the observer. The simplest is to place the observer
 at a corner, which gives a solid angle of $\pi/2$ steradians. At the centre,
 we have a full sky coverage but we reduce the redshift extension by two. For
@@ -184,30 +181,31 @@ catalogue.
 
 \subsubsection{Celestial coordinates}
 
-The first step to simulate this is to transform Cartesian coordinates in the
-3D space to celestial coordinates ($(\alpha,\delta)$ frame). Getting these
-coordinates is the same as computing spherical coordinates.
+The first step to simulate this is to transform Cartesian coordinates ($X, Y,
+Z$) in the 3D space to celestial coordinates ($(\alpha,\delta)$ frame). In our
+case, the origin of coordinates is the observer. Getting these coordinates is
+the same as computing spherical coordinates.
 %
 \begin{equation}
     \alpha=\left\{ \begin{array}{lcr}
-     \mbox{arctan2} \left(Y, X\right)+2\pi & \mbox{if} & Y>0 \\
-     \mbox{arctan2} \left(Y, X\right) & \mbox{else} & \\
+     \mbox{arctan2} \left(Y, X\right)+2\pi & \mbox{if} & Y\geqslant0 \\
+     \mbox{arctan2} \left(Y, X\right) & \mbox{if} & Y<0\\
     \end{array}\right.\nonumber%
 \end{equation}
 %
 \begin{equation}
-    \delta=\mbox{sign} \left(Z\right)
+    \delta=\mbox{sgn} \left(Z\right)
     \arccos\left(\frac{\sqrt{X^2+Y^2}}{\sqrt{X^2+Y^2+Z^2}}\right)
 \end{equation}
 
 \subsubsection{Redshifts}
 
-In our case, the origin of coordinates is the observer. If we keep the distance
-as calculated previously, the observer can still have precise determination of
-the distance of a galaxy. In reality, we observe it in redshift space so the
-redshift as distance indicator is biased by peculiar velocities. Our initial
-galaxy catalog allows us to get the velocity of a galaxy, so we ompute the line
-of sight (los) velocity of this galaxy relatively to the observer.
+If we keep the distance as calculated previously, the observer can still have
+precise determination of the distance of a galaxy. In reality, we observe it in
+redshift space so the redshift as distance indicator is biased by peculiar
+velocities. Our initial galaxy catalog allows us to get the velocity of a
+galaxy, so we compute the line of sight (los) velocity of this galaxy
+relatively to the observer.
 %
 \begin{equation}
 v_\mathrm{los}=\cfrac{\textbf{OG}.\textbf{v}_\mathrm{pec}}
@@ -234,7 +232,7 @@ redshift is:
     (1+z)=(1+z_{\mathrm{pec}})(1+z_{\cos})
 \end{equation}
 %
-The peculiar redshift is the relativist Doppler effect:
+The peculiar redshift is the relativistic Doppler effect:
 %
 \begin{equation}
     (1+z_{\mathrm{pec}})=\sqrt{\cfrac{1+\beta}{1-\beta}}
@@ -257,8 +255,8 @@ observer relatively to the Cosmological Microwave Background (CMB). Velocities
 in the simulation are relative to an ``absolute'' frame, but our Galaxy has a
 movement in relation to the CMB creating an additional shift in wavelength
 depending on the observed region of the celestial sphere, and we should include
-it in our mock catalogue. But frequently, redshift accessible in galaxy surveys
-are already corrected for the CMB relative motion, or can be easily
+it in our mock catalogue. But frequently, redshifts accessible in galaxy
+surveys are already corrected for the CMB relative motion, or can be easily
 pre-corrected to avoid this component. In consequence, we don't integrate it.
 
 \subsubsection{Survey mask}
@@ -270,7 +268,7 @@ how to decide if a galaxy is inside the mask or not, in the case of the SDSS\@.
 
 \subsubsection{K-corrections}
 
-In reality, an observer study galaxies in a given bandwidth in wavelength and
+In reality, an observer studies galaxies in a given bandwidth in wavelength and
 can't use the bolometric flux of the object. With the expanding Universe, all
 the spectral energy distribution (SED) of galaxy is shifted. All wavelengths
 are shifted by the same value for a given redshift. So, knowing the luminosity
@@ -278,9 +276,9 @@ $L$ of a galaxy in a given band in reality (using the true SED), computing its
 apparent magnitude for an observer aren't as easy as correcting for the
 distance modulus. The observer in a given band sees a different part of the
 rest frame SED\@. The flux observed in the same band as the rest frame flux is
-maybe higher or lower. A correction for this effect is needed in real galaxy
-survey to estimate the distance of an object and must be taken into account in
-our mock catalogue.
+maybe higher or lower. A correction for this effect is needed in the real
+galaxy survey to estimate the distance of an object and must be taken into
+account in our mock catalogue.
 
 As explained before, this correction depends on the SED of galaxies and the
 band used in the survey. The common way of correcting, it when we have a
@@ -288,19 +286,19 @@ multi-band photometry, is to fit the observed SED in those bands with
 theoretical templates of SEDs. Such templates can be obtained with existing
 programs as PEGASE \citep{LeBorgne+04}, giving us galaxy SEDs. But those
 programs are a little time consuming, a problem for mock when we want to run
-several of them. A good solution is provided by \citet{Chilingarian+10}, where
-the K-correction is fitted on templates for SED as given by PEGASE in terms of
-a polynomial of the redshift of the galaxy and its colour. The corresponding
-K-correction is precise for redshifts until 0.3 in different survey bands
-(including $ugriz$ for the SDSS). This work reduces the computation of
-K-corrections to the use of simple polynomial relations and make our task
-easier.
+several of them. A quick alternative solution is provided by
+\citet{Chilingarian+10}, where the K-correction is fitted on templates for SEDs
+as given by PEGASE in terms of a 2D polynomial of the redshift of the galaxy
+and its colour. The corresponding K-correction is precise for redshifts until
+0.3 in different survey bands (including $ugriz$ for the SDSS). This work
+reduces the computation of K-corrections to the use of simple polynomial
+relations and make our task easier.
 
 By definition, the K-correction $K$ for a galaxy of apparent magnitude $m_X$
 in a given band $X$ and absolute magnitude $M_X$ in the same band is:
 %
 \begin{equation}
-    m_X=M_X + 5\log_{10}\left(d_\mathrm{lum}\left[pc\right]\right) - 5 + K
+    m_X=M_X + 5\log_{10}\left(d_\mathrm{lum}\left[\mathrm{pc}\right]\right) - 5 + K
 \end{equation}
 %
 In our case, the K-correction depends on the redshift of the galaxy and its
@@ -309,7 +307,7 @@ colour in apparent magnitude given two bands. So we can rewrite:
 \begin{equation}
     \label{eq:appmag}
     m_X=M_X +
-        5\log_{10}\left(d_\mathrm{lum}\left[pc\right]\right) - 5 +
+        5\log_{10}\left(d_\mathrm{lum}\left[\mathrm{pc}\right]\right) - 5 +
         K\left(z, m_X - m_{X'}\right)
 \end{equation}
 %
@@ -338,31 +336,29 @@ results in apparent magnitudes.
 
 \subsubsection{Flux limit}
 
-We have seen in \bartrefchapter{sdss} that spectroscoped galaxies are just
-defined for galaxies whose apparent magnitude is less than 17.77 in $r$ band.
-So, in all the redshift sample, we miss some galaxies not sufficiently bright.
-To take into account this effect, we remove galaxies not reaching the limit
-apparent magnitude of the survey. An additional selection on surface brightness
-is also done in the SDSS, but estimating them is difficult from virtual galaxy
-catalog and the number of ``lost'' galaxies is sufficiently low to ignore this
-step in the construction of the mock catalog.
+We will see in \bartrefchapter{sdss} that spectroscoped galaxies are defined
+for galaxies whose apparent magnitude is less than 17.77 in the $r$ band. So,
+in all the redshift sub-samples, we will miss galaxies that are not
+sufficiently bright. To take into account this effect, we remove galaxies not
+reaching the limit apparent magnitude of the survey. An additional selection on
+surface brightness is also done in the SDSS, but estimating this is difficult
+from virtual galaxy catalogs and the number of ``lost'' galaxies is
+sufficiently low to ignore this step in the construction of the mock catalog.
 
 \subsubsection{Spectroscopic and photometric redshifts}
 
-Sometimes, we can't access to spectroscopic redshifts, more precise than
-photometric redshifts. In the SDSS, for example, this is due to tiling process.
-Fibers analysing the spectrum of galaxies can't be closer from each other than
-55'', so if for a target galaxy (selected to obtain a spectrum) there is an
-other galaxy closer than those 55'', the tile containing all fibers doesn't
-have the possibility to measure the redshift of this galaxy. This problem is
-more significant for dense regions in the celestial plane. A very good
-algorithm to place tiles in order to limit the number of missed galaxies (i.e.\
-the number of fiber collision) has been applied in the galaxy sample of the
-SDSS \citep{Blanton+03}.
-
-But there is still some galaxies without spectroscoped redshifts. If we remove
-those galaxies from our sample, there will be a spectroscopic incompleteness
-with unknown effects on our results.
+Sometimes, we don't have access to spectroscopic redshifts, but only to less
+precise photometric redshifts. In the SDSS, for example, this is due to tiling
+process. Fibers analysing the spectrum of galaxies cannot be closer from each
+other than $55''$, so if for a target galaxy (selected to obtain a spectrum)
+there is an other galaxy closer than those 55'', the tile containing all fibers
+doesn't have the possibility to measure the redshift of this galaxy. A very
+good algorithm to place tiles in order to limit the number of missed galaxies
+(i.e.\ the number of fiber collision) has been applied to the galaxy sample of
+the SDSS \citep{Blanton+03}. But there is still some galaxies without
+spectroscoped redshifts, especially in dense regions such as the cases of
+groups and clusters. If we remove those galaxies from our sample, there
+will be a spectroscopic incompleteness with unknown effects on our results.
 
 Unfortunately, there is no simple way to simulate this in the mock catalogue
 and we choose to ignore it. Just a small fraction of galaxies are not
@@ -389,48 +385,48 @@ photometry, \dots
 \label{ssub:galaxy_sample_definition}
 
 All previous steps lead to a final galaxy mock catalogue, with or without
-observational errors, flux limited for a given apparent magnitude. But working
-with flux limited samples give the obligation to correct for missing galaxies
-when extracting galaxy group. The only way to avoid errors introduced by the
+observational errors, flux limited at a given apparent magnitude. But working
+with flux limited samples requires correcting for missing galaxies when
+extracting galaxy groups. The only way to avoid errors introduced by the
 different choices of the model is to work with a doubly complete sample of
-galaxies: limited in luminosity and in volume to not miss any galaxy in our
-sub-sample.
+galaxies: limited in luminosity and in volume, thus avoiding completeness
+issues.
 %
 \begin{figure}[htb]
     \centering
     \begin{minipage}{0.49\linewidth}
         \includegraphics[width=\linewidth]{figures/mock/subsamples.pdf}
         \captionof{figure}{An illustration of the doubly complete galaxy
-            samples used. Black dots represents galaxies in the mock catalogue.
+            samples used. Black dots represent galaxies in the mock catalogue.
             Colored rectangles show samples for a threshold absolute magnitude
             in the $r$ band $M_r$ of -19, -20, -21. Their sizes reflects the
         corresponding limits of the minimal luminosity. As we can see, in these
-    regions, no need to correct for missing galaxies. All galaxies above the
-given threshold magnitude are visible.\label{fig:subsamples}}
+    regions, there is no need to correct for missing galaxies. All galaxies
+above the given threshold magnitude are visible.\label{fig:subsamples}}
     \end{minipage}
     \begin{minipage}{0.49\linewidth}
         \includegraphics[width=\linewidth]{figures/mock/counts.pdf}
         \captionof{figure}{Comparison of counts in redshift of galaxies in the
             mock catalog with the theoretical expectation deduced from the
             number density of galaxies. In \emph{red} the theory and in
-            \emph{green} counts directly done on the mock catalog. The little
+            \emph{green} counts directly done on the mock catalog. The small
             discrepancies observed at high redshift are caused by an
             imprecision in the computation of the integrated luminosity
             function, since we use an interpolation of the luminosity function,
-            and only few bright galaxies at high redshift are visible making
-        the integration difficult.\label{fig:counts}}
+        and only few bright galaxies at high redshift are visible making the
+    integration difficult.\label{fig:counts}}
     \end{minipage}
 \end{figure}
 
 We choose a minimal galaxy luminosity for our sample and the maximal redshift
 is computed with the maximal distance at which we can observe a galaxy with
-this minimal luminosity. We note that if K-correction is considered, this
-limit isn't not certain and depends on the considered galaxy. A clean
-definition of the sample in this situation should be done by restricting a
-little more the redshift extent to not loose fainter galaxies. But the galaxy
-loss is low and we didn't consider such a case. In \bartreftable{samples}, we
-show the six galaxy sample we constructed from our flux limited galaxy mock
-catalogue, with statistics on each of them.
+this minimal luminosity. We note that if K-correction is considered, this limit
+depends on the considered galaxy. A clean definition of the sample in this
+situation should be done by restricting a little more the redshift extent to
+not lose fainter galaxies. But the galaxy loss is low and we didn't consider
+such a case. In \bartreftable{samples}, we show the six galaxy samples that we
+constructed from our flux limited galaxy mock catalogue, with statistics on
+each of them.
 %
 \begin{table}[htb]
     \caption{Doubly complete mock galaxy subsamples\label{tab:samples}}
@@ -474,16 +470,17 @@ Inclusion of such groups in statistics leads to biased results of the
 performance of grouping algorithms, and a flag is used to distinguish and
 remove such groups.
 
-Moreover, the limited volume extension of the survey truncates some groups
-close to limits. In the redshift space, these limits are of two kinds: the
-angular mask cutting groups all along the line-of-sight, and the redshift cut
-with a more important effect due to the elongation in redshift coordinates by
-the intrinsic velocity dispersion of the system. Since all the information on
-the group is not accessible by the observer, estimation of group properties is
-less precise. To avoid the degradation of galaxy group performances, we flag
-selected groups (after the application of a grouping algorithm) if they are
-close to edges (see \bartrefchapter{friends_of_friends_algorithm} for a
-detailed definition) and remove them from the statistics in tests.
+Moreover, the limited volume extension of the survey truncates some groups. In
+redshift space, these limits are of two kinds: the angular mask cutting groups
+all along the line-of-sight (i.e.\ survey edges and possibly holes), and the
+redshift cut with a more important effect due to the elongation in redshift
+coordinates by the intrinsic velocity dispersion of the system. Since all the
+information on the group is not accessible by the observer, estimation of group
+properties is less precise. To avoid the degradation of the performances of
+grouping algorithms, we flag selected groups (after the application of a
+grouping algorithm) if they are close to edges of the angular mask or edges in
+depth (see \bartrefchapter{friends_of_friends_algorithm} for a detailed
+definition) and remove them from the statistics in tests.
 
 \section{Validity}
 \label{sec:validity}
@@ -518,9 +515,9 @@ of the comoving volume with redshift (see \citet{Hogg+99}):
 \end{equation}
 %
 where $\dd\Omega$ is the elemental solid angle, $d_{\rm pm}$ the proper motion
-distance (or comoving distance), $D_H$ the Hubble distance $c/H_0$ and
-$E\left(z\right)$ the evolution of the Hubble constant with the redshift. The
-result of the theory and the comparison with the obtained mock catalog is shown
-in \bartreffigure{counts}.
+distance (or comoving distance, see \bartrefappendix{formulas}), $D_H$ the
+Hubble distance $c/H_0$ and $E\left(z\right)$ the evolution of the Hubble
+constant with the redshift. The result of the theoretical prediction and the
+comparison with the obtained mock catalog is shown in \bartreffigure{counts}.
 
 % vim: set tw=79 :
