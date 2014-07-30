@@ -363,19 +363,25 @@ for the coordinate system defined in \bartrefsubsection{general_case} with:
 Putting \bartrefequation{poly} in canonical form and integrating
 \bartrefequation{intfunc} over $v_\phi$ and $v_1$ we get~\cite{Mamon+13}:
 %
-\begin{equation} h\left(v_z\right) = \frac{1}{\sqrt{2\pi}\sigma_z}
-\exp\left(-\undemi{\left(\frac{v_z}{\sigma_z}\right)}^2\right) \end{equation}
+\begin{equation}
+    \label{eq:velocity_distribution}
+    h\left(v_z\right) = \frac{1}{\sqrt{2\pi}\sigma_z}
+    \exp\left(-\undemi{\left(\frac{v_z}{\sigma_z}\right)}^2\right)
+\end{equation}
 %
 since:
 %
-\begin{equation} \sigma_z^2 =
-\sigma_r^2\left(1-\beta{\left(\frac{R}{r}\right)}^2\right) \end{equation}
+\begin{equation}
+    \sigma_z^2 =
+    \sigma_r^2\left(1-\beta{\left(\frac{R}{r}\right)}^2\right)
+\end{equation}
 %
 and $\beta$ is the anisotropy profile $\beta=1-\sigma_\theta^2/\sigma_r^2$.
 
 Finally, the projected density of galaxies in a halo is:
 %
-\begin{equation} g_h \left(R, v_z\right) =\cfrac{M_v}{\rvir^2}
+\begin{equation}
+    g_h \left(R, v_z\right) =\cfrac{M_v}{\rvir^2}
     \cfrac{1}{2\pi}
     \int_{R/\rvir}^1
     \cfrac{x\widehat\rho \left(x\right)}{\sqrt{x^2 -

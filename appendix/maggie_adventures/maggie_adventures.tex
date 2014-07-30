@@ -3,36 +3,36 @@
 \label{cha:MAGGIE_adventures}
 \bartthumb{opo9941a.png}
 
-While developing MAGGIE, we tried a lot of methods with the goal to improve the
-extraction of galaxy groups. A large part of those methods weren't viable
-because of bad performances when applied on the galaxy mock catalogue we
-constructed, or because their implementation were too complex by technical
-imperatives or some physical knowledges not easily accessible. We describe some
-of these methods in the following sections. We describe also what we think are
-possible future improvements of MAGGIE\@.
+While developing MAGGIE, we tried several methods with the goal of improving
+the extraction of galaxy groups. Many of those methods weren't viable because
+of bad performances when applied to the galaxy mock catalogue we constructed,
+or because their implementation were too complex by technical imperatives or
+some physical knowledges not easily accessible. We describe some of these
+methods in the following sections. We describe also what we think are possible
+future improvements of MAGGIE\@.
 
 \section{Flux-limited algorithm}
 
 \subsection{Problem}
 
 For MAGGIE, we tried to create a flux-limited version of the algorithm to apply
-it in a large range of luminosities and redshift.
+it to a large range of luminosities and redshift.
 
-The problem is that we must correct for missing galaxies. One way is to take
-into account the luminosity function of galaxies in the sample, and with that
-assumption, correct for the fraction of missing galaxies expected at a given
-redshift. Assuming that the luminosity function is $\phi\left(L\right)$, this
-fraction can be written:
+The problem is that we must correct for missing low-luminosity galaxies. One
+way is to take into account the luminosity function of galaxies in the sample,
+and with that assumption, one can correct for the fraction of missing galaxies
+expected at a given redshift. Assuming that the luminosity function is
+$\phi\left(L\right)$, this fraction can be written:
 %
 \begin{equation}\label{eq:correc}
     f\left(L_{\lim}\left(z\right)\right)=
     \frac{\int_{L_{\lim}\left(z\right)}^\infty L\phi\left(L\right)\dd L}
-    {\int_{L_\mathrm{thres}}^\infty L\phi\left(L\right)\dd L}
+    {\int_{L_\mathrm{thresh}}^\infty L\phi\left(L\right)\dd L}
 \end{equation}
 %
 where $L_{\lim}\left(z\right)$ is the minimal luminosity that a galaxy should
 have to be observed at the redshift $z$, given the observed magnitude limit
-$m_{\lim}$ of the survey, in the used wavelength range:
+$m_{\lim}$ of the survey:
 %
 \begin{equation}
     L_{\lim}\left(z\right)=
@@ -41,15 +41,16 @@ $m_{\lim}$ of the survey, in the used wavelength range:
 \end{equation}
 %
 with $M_\odot$ the absolute magnitude of the Sun in the same band as the limit
-magnitude $m_{\lim}$ and $d_\mathrm{lum} \left(z\right)$ the luminosity
-distance at the redshift $z$.
+magnitude $m_{\lim}$, $d_\mathrm{lum} \left(z\right)$ the luminosity distance
+at the redshift $z$ and $L_\mathrm{thresh}$ is the minimal luminosity of the
+sample.
 
 We expect the galaxy environment to modulate galaxy properties such as their
 luminosity. Correcting for missing galaxies in all groups in the same way is in
-consequence not ideal. We can modulate the luminosity function with the host
-halo of the galaxy by transforming the luminosity function into a conditional
-luminosity function. Since our estimations of the virial mass $M$ of the host
-halo is good, we can use it as modulation parameter and so:
+consequence not ideal. We can modulate the luminosity function with the group
+total mass by transforming the luminosity function into a conditional
+luminosity function. Since our estimations of the virial mass $M$ of the group
+is good, we can use it as modulation parameter and so:
 %
 \begin{equation}
     \phi\left(L\right)\rightarrow\phi\left(L|M\right)
@@ -59,25 +60,25 @@ In this way, the previous missing fraction correction should be accurate enough
 for the correction. But for this to work, we must be able to determine properly
 this modulation with the halo mass.
 
-\subsection{Environment modulation}
+\subsection{Modulation of the luminosity function with the global environment}
 
-In galaxy groups, we separate galaxies in two classes: centrals and satellites.
-Centrals are expected to be the most massive galaxies in groups, and
-consequently, it's probable that the central is the brighter galaxy. A
+In galaxy groups, we separate galaxies into two classes: centrals and
+satellites. Centrals are expected to be the most massive galaxies in groups,
+and consequently, it's probable that the central is the brighter galaxy. A
 consequence is that if we can't see the central galaxy, we can't see other
 galaxies in the group and the correction is not needed because we don't know
-how to correct for incompleteness. So for the correction, we need just to
+how to correct for incompleteness. So for the correction, we simply need to
 constrain the distribution of luminosities in satellite galaxies. In practice,
 we have to choose a functional for this conditional luminosity function (CLF)
 which can be easily fitted and integrated to determine the correction factor in
 our group luminosities.
 
-There are two kind of luminosity function widely used. The Schechter function
+There are two kinds of luminosity functions widely used. The Schechter function
 can be written as:
 %
 \begin{equation}
     \phi\left(L\right)=\phi^*{\left(\cfrac{L}{L_*}\right)}^\alpha
-    \exp\left(-\left(\cfrac{L}{L_*}\right)\right)
+    \exp\left(-\cfrac{L}{L_*}\right)
 \end{equation}
 %
 where $\alpha$ characterizes the slope in log-space of the function, $L_*$ the
@@ -89,65 +90,67 @@ written:
 %
 \begin{equation}\label{eq:dblsch}
     \phi\left(L\right)=
-    \left(\phi_1^*{\left(\cfrac{L}{L_*}\right)}^{\alpha_1}+
-    \phi_2^*{\left(\cfrac{L}{L_*}\right)}^{\alpha_2}\right)
-    \exp\left(-\left(\cfrac{L}{L_*}\right)\right)
+    \left[\phi1^*{\left(\cfrac{L}{L_*}\right)}^{\alpha_1}+
+    \phi_2^*{\left(\cfrac{L}{L_*}\right)}^{\alpha_2}\right]
+    \exp\left(-\cfrac{L}{L_*}\right)
 \end{equation}
 %
-This model uses the fact that it seems to exist two galaxy population in
-luminosity: a brighter one and a faint one.
+This model allows for two galaxy populations in luminosity with different faint
+end slopes $\alpha_1$ and $\alpha_2$ but same high end luminosity cutoff $L_*$.
 
 Now we assume that the CLF have the same form of \bartrefequation{dblsch}. The
-dependence on the halo mass $M$ is done with the parameters of the double
-Schechter (DS). For example $\alpha_1\rightarrow\alpha_1\left(M|\theta\right)$,
-where the functional form of this dependence is not given explicitly here, and
-$\theta$ is a set of parameters relative to the function used to describe the
-dependence with halo mass. The number of parameters in $\theta$ can vary
-greatly, depending on the function used.
+dependence on the group mass $M$ is done with the parameters of the double
+Schechter (DS). For example
+$\alpha_1\rightarrow\alpha_1\left(M|{\bf\theta}\right)$, where the functional
+form of this dependence is not given explicitly here, and ${\bf\theta}$ is a
+set of parameters relative to the function used to describe the dependence with
+group mass. The number of parameters in ${\bf\theta}$ can vary greatly,
+depending on the function used.
 
-The form of this dependence can't be determine in advance when we want to fit
+The form of this dependence cannot be determined in advance when we want to fit
 the CLF on the data. For example in the SDSS, we have to know in advance the
 properties of the groups in order to choose a dependence for the parameters of
-the DS with the virial mass. For testing the viability of this method, we have
-to select a functional that describes correctly the modulation of the
-parameters with the halo, and samples of galaxies that can give us these
+the DS with virial mass. For testing the viability of this method, we have to
+select a functional that describes correctly the modulation of the parameters
+with the group mass, and samples of galaxies that can give us these
 informations are present in outputs of semi-analytical models (SAM). To
-validate this method of correction for incompleteness, we test it in galaxy
+validate this method of correction for incompleteness, we test it on galaxy
 mock catalogues.
 
-\subsection{Estimating parameters}
+\subsection{Parameter estimation}
 
-When working with distribution function, it is common and better to use the
+When working with distribution functions, it is common and better to use the
 maximum likelihood estimation.
 %
 \remark{%
 We consider a set of independent data $\left\{X\right\}$ drawn from distribution
 following the probability distribution function $p$, dependent of parameters
-$\theta$. If we assume that observations are independent and identically
+$\bf\theta$. If we assume that observations are independent and identically
 distributed, the probability to obtain the given set of observations given
-the parameters $\theta$ is just the joint probability function of the
+the parameters $\bf\theta$ is just the joint probability function of the
 observations. We define it as the likelihood function:
 %
 \begin{equation}
     \label{eq:like}
-    \mathcal{L}\left(\theta|X\right)=\prod_i p_i\left(X_i|\theta\right)
+    \mathcal{L}\left({\boldsymbol\theta}|X\right)=\prod_i
+    p_i\left(X_i|{\boldsymbol\theta}\right)
 \end{equation}
 
 To obtain the most probable parameters allowing the probability function $p$ to
-correctly fit the data, we need to find the given set of parameters $\theta$
+correctly fit the data, we need to find the given set of parameters $\bf\theta$
 maximizing the likelihood function.
 
 If we consider Bayesian statistics, the likelihood is defined as
-$p\left(X|\theta\right)$ and the Bayes's theorem gives that we need to maximize
-for the given set of data:
+$p\left(X|{\boldsymbol\theta}\right)$ and the Bayes's theorem gives that we need to
+maximize for the given set of data:
 %
 \begin{equation}
-    p\left(\theta|X\right)=
-    \cfrac{\prod_i p_i\left({X_i|\theta}\right)p\left(\theta\right)}
+    p\left({\boldsymbol\theta}|X\right)=
+    \cfrac{\prod_i p_i\left({X_i|{\boldsymbol\theta}}\right)p\left({\boldsymbol\theta}\right)}
     {p\left(X\right)}
 \end{equation}
 %
-where $p\left(\theta\right)$ is the prior distribution of the parameters and
+where $p\left({\boldsymbol\theta}\right)$ is the prior distribution of the parameters and
 $p\left(X\right)$ is the probability to obtain the set of data. But we can see
 that \emph{our} likelihood is in reality the posterior distribution which is
 proportional to the likelihood in the definition of Bayesian statistics,
@@ -164,20 +167,20 @@ sign in front of it:
 %
 \begin{equation}
     \label{eq:loglike}
-    -\log\mathcal{L}\left(\theta|X\right)=
-    -\sum_i \log\left(p_i\left(X_i|\theta\right)\right)
+    -\log\mathcal{L}\left({\boldsymbol\theta}|X\right)=
+    -\sum_i \log\left(p_i\left(X_i|{\boldsymbol\theta}\right)\right)
 \end{equation}
 %
 }
 %
-We define $p_i\left(L_i|\theta\right)$ as the probability to get the luminosity
-$L_i$ given the parameters $\theta$, so it is the probability density. To
-determine it, we calculate the number of galaxies in the sample which are
-between $L_i$ and $L_i+\dd L_i$, compared to the total number of points in the
-set:
+We define $p_i\left(L_i|{\boldsymbol\theta}\right)$ as the probability to get the
+luminosity $L_i$ given the parameters ${\boldsymbol\theta}$, so it is a probability
+density function. To determine it, we calculate the number of galaxies in the
+sample which are between $L_i$ and $L_i+\dd L_i$, compared to the total number
+of points in the set:
 %
 \begin{equation}
-    p_i\left(L_i|\theta\right)\dd L_i\dd V =
+    p_i\left(L_i|{\boldsymbol\theta}\right)\dd L_i\dd V =
     \cfrac{\dd^2 N_i}{N_\mathrm{tot}}
 \end{equation}
 
@@ -185,13 +188,13 @@ By definition of the CLF, which is the number of galaxies in the sample between
 $L$ and $L+\dd L$ at a given halo mass $M$, we can write:
 %
 \begin{equation}
-    \dd^2 N=\phi\left(L|M\right)\dd L
+    \dd^2 N=\phi\left(L|M\right)\dd L \dd V
 \end{equation}
 %
 So we can write:
 %
 \begin{equation}
-    p_i\left(L_i|\theta\right)\dd L_i\dd V =
+    p_i\left(L_i|{\boldsymbol\theta}\right)\dd L_i\dd V =
     \cfrac{\phi\left(L_i|M\right)}{N_\mathrm{tot}}\dd L_i\dd V
 \end{equation}
 %
@@ -210,35 +213,36 @@ allow a probability to have luminosities superior to this limit.
 In the case of the simple Schechter, the total number is:
 %
 \begin{equation}
-    N_\mathrm{tot}=\mathcal{V} \Gamma\left(1+\alpha,
-        \cfrac{L_\mathrm{thres}}{L_*}\right)\phi^*
+    N_\mathrm{tot}= \Gamma\left(1+\alpha,
+        \cfrac{L_\mathrm{thres}}{L_*}\right)\phi^*\mathcal{V}
 \end{equation}
 %
 and for the double Schechter:
 %
 \begin{equation}
-    N_\mathrm{tot}=\mathcal{V} \left(\Gamma\left(1+\alpha,
+    N_\mathrm{tot}= \left[\Gamma\left(1+\alpha,
     \cfrac{L_\mathrm{thres}}{L_*}\right) + \cfrac{\phi_2^*}{\phi_1^*}
-    \Gamma\left(1+\alpha, \cfrac{L_\mathrm{thres}}{L_*}\right)\right)
+    \Gamma\left(1+\alpha, \cfrac{L_\mathrm{thres}}{L_*}\right)\right]
+    \mathcal{V}
 \end{equation}
 %
 where $\Gamma\left(a,x\right)=\int_x^\infty \exp \left(-t\right) t^{a-1}\dd t$
 is the incomplete gamma function (see \bartrefappendix{gamma} for its
 computation with negative values of $a$). Then the computation of the density
 function $p$ is easy in each case and we can do the minimization of the
-likelihood to estimate the best fit parameters $\hat{\theta}$.
+likelihood to estimate the best fit parameters $\hat{\boldsymbol\theta}$.
 %
 \remark{%
     There are many ways of doing such a minimization. When the probability
-    density isn't too complex, $\hat{\theta}$ can be determined analytically.
-    But in this case, with the DS, the incomplete gamma function prevents us to
-    do it in this way. So we are constrained to use numerical methods in order
-    to minimize the likelihood. Many algorithms exist to do this job like
-    Powell's method, Newton-Raphson's method, etc\ldots, but they share the
-    same problem: when they find a minimum, we don't know if it is the global
-    minimum or if it is a local minimum. The result depends on the initial
-    starting point of the algorithm in the parameter space. Some other methods
-    try, using Monte-Carlo methods, to do a better exploration of this
+    density isn't too complex, $\hat{\boldsymbol\theta}$ can be determined
+    analytically. But in this case, with the DS, the incomplete gamma function
+    prevents us to do it in this way. So we are constrained to use numerical
+    methods in order to minimize the likelihood. Many algorithms exist to do
+    this job like Powell's method, Newton-Raphson's method, etc\ldots, but they
+    share the same problem: when they find a minimum, we don't know if it is
+    the global minimum or if it is a local minimum. The result depends on the
+    initial starting point of the algorithm in the parameter space. Some other
+    methods use Monte-Carlo methods to do a better exploration of this
     parameter space, allowing some ``jumps'' to other regions in order to see
     if there isn't a better minimum. An example of such an algorithm is the
     simulated annealing method which implement the cooling of a material, where
@@ -250,31 +254,33 @@ likelihood to estimate the best fit parameters $\hat{\theta}$.
     parameters varying the sample which may be expensive in calculation time.
 
     Another way is too estimate the posterior distribution of the parameter
-    $\theta$ by using Markov Chains Monte Carlo method (MCMC). From it we can
-    estimate the errors of choosing $\hat{\theta}$ since we can estimate the
-    distribution of the parameters.
+    ${\boldsymbol\theta}$ by using the Markov Chains Monte Carlo method (MCMC).
+    From it we can estimate the errors of choosing $\hat{\boldsymbol\theta}$
+    since we can estimate the distribution of the parameters.
 
     We tested a large number of such methods for the minimization and it seems
     to be the Nelder-Mead (or simplex) algorithm that gives the better
-    estimation of the best fit parameters $\hat{\theta}$.
+    estimation of the best fit parameters $\hat{\boldsymbol\theta}$.
 }
 
 \subsection{Tests on mock catalogues}
 
-There is two steps in order to determine the dependence on the halo mass of the
-luminosity function. First, we have to determine what is the best functional
-form to fit this dependence which can be done on a complete sample of galaxy.
-Secondly, see if we can recover this parametrization and modulation with a
-flux-limited sample of this galaxies to know if the method works well when
+There are two steps to determine the dependence of the luminosity function on
+the group mass. First, we have to determine what is the best functional form to
+fit this dependency which can be done on a complete sample of galaxies.
+Secondly, we can see if we can recover this parametrization and modulation with
+a flux-limited sample of this galaxies to know if the method works well when
 applied in a real survey.
 
 \subsubsection{Complete sample}
 
-We use a complete sample of galaxies taken from the outputs of the SAM of
-\citet{Guo+11} applied on dark matter halos from the Millennium II run. We
-limit our sample of galaxies from this catalogue to galaxies with a luminosity
-such that the absolute magnitude in the $r$ band is $M_r<-15$. For each galaxy,
-we have the virial mass of the halo containing this galaxy.
+We use a sample of galaxies, complete in luminosity, taken from the outputs of
+the SAM of \citet{Guo+11} applied on dark matter halos from the Millennium II
+run. We limit our sample of galaxies from this catalogue to galaxies with a
+luminosity such that the absolute magnitude in the $r$ band is $M_r<-15$. For
+each galaxy, we have the virial mass of the halo (group) containing this galaxy
+(this is a cheat in comparison with running a group finder, but serves for
+illustrative purposes).
 
 First, we determine what is the best model for the luminosity function. We
 tried to adjust a simple Schechter and a double Schechter. Results are
@@ -292,24 +298,24 @@ shown on \bartreffigure{guo_all}.
 %
 The double Schechter fits better the data than the simple Schechter because we
 can constrain the two populations of galaxies. We see that there is a faint
-population with high slope and a brighter population with a more little slope.
-Differences with data for bright galaxies is due to the fact that the number of
-galaxies with $M_r<-24$ is very low, in some bins there is just one galaxy. As
-expected, a Schechter and double Schechter functionals for the luminosity
-function seem a good choice.
+population with a high faint end slope and a brighter population with a lower
+slope. Differences with data for bright galaxies is due to the fact that the
+number of galaxies with $M_r<-24$ is very low, in some bins there is just one
+galaxy. As expected, both Schechter and double Schechter functionals are
+adequate models for the luminosity function.
 
 We want to see the modulation of the parameters with the halo mass. We take
-galaxies in bins of the certain width in halo mass, and we compute the
+galaxies in bins of logarithmic halo mass, and we compute the
 parameters that fit well the data in each, as previously. This modulation is
 represented in \bartreffigure{modulation}.
 
 \subsubsection{Flux limited sample}
 
 With a flux-limited sample, we just need to rewrite the normalization to take
-into account the total number of galaxies observed for a given redshift $z$. We
-can proof it by rewriting the probability density in term of the cumulative
-distribution. The probability that a galaxy have a magnitude $\mathcal{M}$
-superior to $M$ is given by:
+into account the total number of galaxies observed for a given redshift $z$.
+This can be proven by rewriting the probability density in terms of the
+cumulative distribution. The probability that a galaxy have a magnitude
+$\mathcal{M}$ superior (fainter) than $M$ is given by:
 %
 \begin{equation}
     \label{eq:cumprobfluxlim}
@@ -351,10 +357,8 @@ Finally:
 %
 and this defines the new likelihood in the case of a flux limited sample.
 
-We apply this to the incomplete sample generated with the mock algorithm we
-have created (see \bartrefchapter{mock}). The result of the application of
-the MLE method on the mock catalog catalogue is shown on
-\bartreffigure{modulation}.
+The result of the application of the MLE method on our mock redshift space
+catalogue (see \bartrefchapter{mock}) is shown on \bartreffigure{modulation}.
 %
 \begin{figure}
     \centering
@@ -376,49 +380,48 @@ the MLE method on the mock catalog catalogue is shown on
     \end{minipage}
     \caption{Modulation of the parameters of both Schechter and double
     Schechter luminosity distributions with the halo mass obtained from the
-mock catalog (in red) and from the real space data (in
-green).\label{fig:modulation}}
+redshift space mock catalog (in red) and from the real space mock data (in
+green) from~\cite{Guo+11}.\label{fig:modulation}}
 \end{figure}
 
-The parameters are more or less recovered in flux-limited space. The bright
-population isn't well recovered since its slope is very badly estimated and the
-ratio between the two populations too. But, as the simple Schechter fit shows
-it, the discrepancies with the real space appear for low mass halos. Such
-groups are formed of faint galaxies disappearing at high redshift because of
-the magnitude limit of observation. Thus, there is less galaxies for statistics
-of low mass groups and the fit isn't good. Moreover, the random filtering of
-boxes in the mock creation increases the cosmic variance of the data for low
-mass groups. For the bright populations, the ratio in number between the two
-population is roughly of 5\%, and the statistics are always poor for each bin
-of halo mass.
+The parameters are more or less well recovered in flux-limited space. The
+bright population is poorly recovered since its faint end slope is very badly
+estimated and so is the ratio between the two populations too. In the simple
+Schechter fit, the discrepancies with the real space appear for low mass halos.
+Such groups are formed of faint galaxies disappearing at high redshift because
+of the magnitude limit. Thus, there are fewer galaxies for the statistics of
+low mass groups and the fit is poor. Moreover, the random filtering of boxes in
+the mock creation increases the cosmic variance of the data for low mass
+groups. The ratio in number between the two populations is roughly of 5\%, and
+the statistics are always poor for each bin of halo mass.
 %
 \begin{table}
     \centering
-    \caption{Simple Schechter fit on the real space galaxy catalogue and on the
-    redshift space mock catalogue.}
+    \caption{Simple Schechter fit on the real space and on the redshift space
+    mock catalogue.}
     \begin{tabular}{lcc}
         \toprule
         & $M_*$ & $\alpha$ \\
         \toprule
-        Real space & -22.34 & -1.37 \\
+        Real space & $-22.34$ & $-1.37$ \\
         \midrule
-        Redshift space & -22.40 & -1.31 \\
+        Redshift space & $-22.40$ & $-1.31$ \\
         \bottomrule
     \end{tabular}
 \end{table}
 %
 \begin{table}
     \centering
-    \caption{Double Schechter fit on the real space galaxy catalogue and on the
-    redshift space mock catalogue.}
+    \caption{Double Schechter fit on the real space and on the redshift space
+    mock catalogue.}
     \begin{tabular}{lcccc}
         \toprule
         & $M_*$ & $\alpha_1$ & $\alpha_2$ &
         $\log_{10}\left(\phi_2^*/\phi_1^*\right)$ \\
         \toprule
-        Real space & -21.02 & -1.47 & -0.19 & 0.53 \\
+        Real space & $-21.02$ & $-1.47$ & $-0.19$ & 0.53 \\
         \midrule
-        Redshift space & -21.09 & -1.43 & -0.05 & 0.57 \\
+        Redshift space & $-21.09$ & $-1.43$ & $-0.05$ & 0.57 \\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -469,10 +472,11 @@ the flux limit to galaxies in this region.
             \mygamma{\alpha+1}{X}
     \end{equation}
 
-    Clearly, we can't inverse such cumulative distribution functions
+    Clearly, we cannot invert such cumulative distribution functions
     analytically. By interpolating them in the range of luminosities to
-    generate, we can do an inversion and obtain the precious random variables
-    following the Schechter distributions. This is fast and precise enough.
+    generate, we can do a numerical inversion and obtain the precious random
+    variables following the Schechter distributions. This is fast and precise
+    enough.
 
     The double Schechter can also be generated by two populations of simple
     Schechter functions. If $N_i$ is the number of galaxies following the
@@ -487,37 +491,39 @@ the flux limit to galaxies in this region.
     \end{equation}
     %
     with $N_\mathrm{tot}=N_1+N_2$. But its easier to take the cumulative
-    distribution function of the double Schechter, else we need to shuffle the
-    resulting two populations from the simple Schechter generation.
+    distribution function of the double Schechter, otherwise we need to shuffle the
+    resulting two single Schechter populations.
 }
 %
-We are enable to recover the simple Schechter parameters used to generate the
-distribution in the flux limited sample. Using a double Schechter distribution,
-parameters used for the generation are more difficult to recover. Essentially
-for the bright population whose number is low relatively to the faint one.
+We are able to recover the simple Schechter parameters used to generate the
+distribution in the flux limited sample. Using a double Schechter distribution
+for the generation of galaxy luminosities, its parameters are more difficult to
+recover, essentially for the bright population whose number is low relative to
+the faint one.
 
-Results are also dependent of the initial guess chosen for the minimization.
-This is a problem if we want to iteratively correct for missing galaxies in
-MAGGIE, since we need it to be robust against this choice. Indeed, the group
-population is varying along the iterative process and the modulation of galaxy
-properties with halos will evolve, as our assumptions on the luminosity
-function parameters.
+The results are also dependent of the initial guess chosen for the
+minimization. This is a problem if we want to iteratively correct for missing
+galaxies in MAGGIE, since we need it to be robust against this choice. Indeed,
+the group population is varying in the iterative process and the modulation of
+galaxy properties with groups will evolve, as will our assumptions on the
+luminosity function parameters.
 
 Since it can be very difficult to correct our groups in a flux-limited sample,
-we will just use doubly complete samples, where corrections are not needed.
+we will restrict our analysis to doubly complete samples, where corrections for
+luminosity incompleteness are not required.
 
 \section{Red and blue galaxies}
 
-Galaxies form a bimodal distribution, mainly separated into red and blue ones.
-From previous studies, their repartition inside galaxy groups isn't the same.
-Using this segregation into MAGGIE should improve the group selection and our
-measures of the environment.
+Galaxies form a bimodal distribution, mainly separated into red and blue ones
+(representing low and high SSFR). From previous studies, their distributions
+inside galaxy groups are not the same. Incorporating this segregation into
+MAGGIE should improve the group selection and our measures of the environment.
 
-This integration is done inside the probability of being in a group. We compute
-a different probability if the galaxy is red or blue, by adjusting the models
-according to the galaxy color. Such models are updated in the iterative
-process, in order to get a relative independence of our results to the adopted
-models.
+Incorporating red versus blue galaxies can be done inside the membership
+probability. We compute a different probability if the
+galaxy is red or blue, by adjusting the models according to the galaxy color.
+Such models are updated in the iterative process, in order to get a relative
+independence of our results to the adopted models.
 
 Taking again the computation of the probability, if we know the fraction of
 blue or red galaxies at a given radius to the group center, we can multiply the
@@ -526,8 +532,8 @@ of blue or red galaxies in halos. We have:
 %
 \begin{equation}
     g_\mathrm{halo}^i\left(R, v_z\right)=
-    \int_R^{r_v} f_i\left(r\right) \rho\left(r\right)
-    \cfrac{r}{\sqrt{r^2-R^2}} h\left(v_z|R,r\right) \dd r
+    \int_R^{r_v} f_i\left(r\right) \nu\left(r\right)
+    \cfrac{r}{\sqrt{r^2-R^2}} \,h\left(v_z|R,r\right) \dd r
 \end{equation}
 %
 where $h\left(v_z|R,r\right)$ is the line of sight velocity distribution and
@@ -539,42 +545,47 @@ computation of the integral, and a double integral for the normalization of the
 density since:
 %
 \begin{equation}
-    g_\mathrm{halo}^i\left(R, v_z\right) = \cfrac{\dd^2N}{2\pi R\dd R\dd v_z}
+    g_\mathrm{halo}^i\left(R, v_z\right) = \cfrac{\dd^2N_i}{2\pi R\dd R\dd v_z}
 \end{equation}
 
-Supposing this computation can be easily done, there is still two problems.
+Supposing this computation can be easily done, there are still two problems.
 %
 \begin{itemize}
-    \item The NFW profile is dependent of the concentration. Many studies shows
-        that the concentration of blue and red galaxies inside halos is
-        different. \note{Ask Gary for the articles.}
+    \item The NFW profile is dependent of the concentration. Several studies
+        shows that the concentration of blue and red galaxies inside clusters
+        are different. For example,~\cite{Guo+12} find that around red central
+        SDSS galaxies, the red satellites have a concentration $c=3.2\pm0.4$
+        while the blue satellites have $c=1.7\pm0.2$, which is significantly
+        lower.
     \item The probability needs to be normalized with the projected phase space
         density of interlopers. But we have no idea of their distribution when
         red and blue galaxies are separated. This needs to be extracted from
         mock catalogues, leading to densities not universal and dependent of
         the semi-analytical code used, the chosen cut-off in magnitude for the
-        complete sample used, \ldots
+        complete sample used. In a first approximation, the fraction of
+        interlopers that are, say blue, should be independent of projected
+        radius $R$ and line-of-sight velocity $v_z$.
 \end{itemize}
 
 \section{Abundance matching}
 \label{sec:abundance_matching}
 
-In MAGGIE, the virial mass estimation by abundance matching is done between the
-central stellar mass or luminosity and the halo mass function. But the relation
-between the stellar mass and the halo mass is saturated for high masses, making
-the relation relatively flat, and so the estimation of the halo mass is
-inaccurate given a stellar mass. However, the relation between the total
-stellar mass of the group and the halo mass is less saturated and should be
-more precise. We didn't use this relation since we need to know the membership
-of the group in advance in order to compute the total stellar mass. A possible
-solution would be to conserve among iterations the total stellar mass. But
-while iterating, new groups appear and we don't know their membership and we
-rely in a ``central'' relation to estimate the virial radius. The fact is that
-using this methods, we cannot merge galaxy groups while iterating. The first
-step will cast in stone the groups created, allowing only the apparition of new
-groups, increasing the fragmentation. We tried this implementation of MAGGIE
-but as expected, results were worst than the imprecise ``central abundance
-matching''.
+In MAGGIE, the virial mass estimation by abundance matching is performed
+between the central stellar mass or luminosity and the halo mass function. But
+the relation between the stellar mass and the halo mass is saturated for high
+masses, making the relation relatively flat, and so the estimation of the halo
+mass is inaccurate given a stellar mass. However, the relation between the
+total stellar mass of the group and the halo mass is less saturated and should
+be more precise. We did not use this relation since we need to know the
+membership of the group in advance in order to compute the total stellar mass.
+A possible solution would be to conserve the total stellar mass across the
+iterations. But while iterating, new groups appear and we don't know their
+membership and we rely in a ``central'' relation to estimate the virial radius.
+The fact is that using this method, we cannot merge galaxy groups while
+iterating. The first step will cast in stone the groups, allowing only
+the apparition of new groups, increasing the fragmentation. We tried this
+implementation of MAGGIE but as expected, results were worse than the less
+precise ``central abundance matching''.
 
 \section{Redshift uncertainties}
 \label{sec:redshift_uncertainties}
@@ -586,36 +597,37 @@ and especially when working with photometric redshifts where uncertainties can
 be catastrophic in some cases. It would be nice to take into account these
 dispersion in the probability computation.
 
-Our analysis of the differences between photometric and spectroscopic redshifts
-in the SDSS shows that the distribution is roughly Gaussian. So the expected
-errors are following this distribution too. By weighting the velocity
-distribution with the error distribution, the integration of the velocity
-distribution is similar to a convolution product. In the case of a Gaussian
-velocity distribution, the result is also a Gaussian with a dispersion that is
-the sum of the dispersion of each distribution.
+The expected redshift errors should follow a Gaussian distribution. By
+weighting the velocity distribution with this Gaussian error distribution, the
+integration of the velocity distribution is similar to a convolution product.
+In the case of a Gaussian velocity distribution, the result is also a Gaussian
+with a dispersion that is the sum of the dispersions of each distribution. In
+other words, we would replace in \bartrefequation{velocity_distribution}
+$\sigma_z^2 = \sigma_r^2 \left[1-\beta \left(r\right) R^2/r^2\right]$ by
+$\sigma_z^2+\epsilon_z^2/c^2$ where $\epsilon_z$is the redshift error and $c$
+is the speed of light.
 
 But in the case of photometric redshifts, this dispersion is dependent of the
-spectroscopic redshift and cannot be easily fitted. But in the case of the
-uncertainties of spectroscopic redshifts, it can be done relatively easily.
+spectroscopic redshift and cannot be easily fitted.
 
 \section{Fragmentation}
 \label{sec:fragmentation}
 
-In \bartrefchapter{MAGGIE}, we show a comparison of MAGGIE with the FoF
-algorithm, removing in statistics selected groups defined as fragments. A
-fragment in this section is defined as a selected group whose the central
-galaxy is not the most massive galaxy in the real group associated to it. For
+In \bartrefchapter{MAGGIE}, we compared MAGGIE with the FoF
+algorithm, removing in statistics the selected groups defined as fragments. A
+fragment in this section is defined as a selected group whose central
+galaxy is not the most massive galaxy in the real group associated to it. For a
 reminder, a real group is associated to an estimated group if the central
 galaxy of the selected group is present inside the real group.
 
 But fragments are artefacts of galaxy group algorithms, results of missing
-galaxies in the group selection. So why not to define as a primary group the
-most massive one linked to a given real group. Using this definition to define
-fragmented or primary groups in our galaxy samples, results in
-\bartrefsection{results_on_mock_catalogue} are significantly different as shown
-in \bartreffigure{comp_rel_fbm}, \bartreffigure{comparison_fbm},
-\bartreffigure{bias_disp_fbm}, \bartreffigure{fragments_fbm} and
-\bartreffigure{bias_disp_virial_mass_fbm}.
+galaxies in the group selection. So why not define as a primary group the group
+with the highest virial mass linked to a given real group? Using this
+definition to define fragmented or primary groups in our galaxy samples,
+results in \bartrefsection{results_on_mock_catalogue} are significantly
+different as shown in \bartreffigure{comp_rel_fbm},
+\bartreffigure{comparison_fbm}, \bartreffigure{bias_disp_fbm},
+\bartreffigure{fragments_fbm} and \bartreffigure{bias_disp_virial_mass_fbm}.
 %
 \begin{figure}[t]
     \centering
@@ -724,16 +736,15 @@ figures/maggie/fbm_article_fof_comparison_errors_bias_dispersion_halo_mass.pdf%
     \end{minipage}
 \end{figure}
 
-Conclusions we made in \bartrefchapter{MAGGIE} can also be applied with this
-definition of fragmented groups. In all situations, MAGGIE has a better
-selection of galaxy groups than the optimal FoF. The remark we made about the
-higher fragmentation by using luminosities in MAGGIE doesn't work in this
-situation since the central (which is frequently not the good one for
-luminosities) can't mistake us for the primary group.
+Moreover, conclusions we made in \bartrefchapter{MAGGIE} can also be applied
+with this definition of fragmented groups. In all situations, MAGGIE has a
+better selection of galaxy groups than the optimal FoF. The remark we made
+about the higher fragmentation when using MAGGIE-L instead of MAGGIE-m does not
+work in this situation since the central galaxy (which is frequently not the
+most luminous) does not matter for the primary group definition.
 
 This second definition of the fragmentation should be preferred when
-comparisons of central galaxies between estimated and true groups can't be
+comparisons of central galaxies between estimated and true groups cannot be
 done.
-
 
 % vim: set tw=79 ft=tex:
