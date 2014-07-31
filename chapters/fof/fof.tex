@@ -20,7 +20,7 @@ knowledge on the galaxy formation and evolution processes (as described in the
 catalogs of galaxy groups have been constructed from redshift space
 catalogs,\footnote{\cite{TG76} applied a grouping algorithm in projected space
 that turned out to be a Friends-of-Friends algorithm.} using FoF algorithms
-(\citealp*{HG82,NW87,RGH89,TrasartiBattistoni98,MZ02};
+(\citealp*{Huchra+82,NW87,RGH89,TrasartiBattistoni98,MZ02};
 \citealp{Eke+04,Berlind+06,Tago+10,Robotham+11,Tempel+14}).
 
 Starting with~\cite{NW87},  nearly all FoF group analyses on redshift space
@@ -31,7 +31,7 @@ accuracy of group masses, as well as radii and velocity dispersions, crossing
 times and mass-to-light ratios.~\cite{RGH89} were the first to test the
 recovered group multiplicity function.~\cite{Frederic95a} was the first to
 measure the galaxy reliability of extracted groups (comparing the FoFs of
-\citealp{HG82} and \citealp{NW87}), as later done by~\cite{MZ02}, who also
+\citealp{Huchra+82} and \citealp{NW87}), as later done by~\cite{MZ02}, who also
 measured group completeness (against mergers of true groups) and reliability
 (against fragmentation of true groups). \citet{Eke+04} also tested the true
 group completeness and fragmentation, as well as the accuracy on group sizes
@@ -86,7 +86,7 @@ Tempel et al. 14 ($M_r<-21$)        & SDSS    & 0.066  & 0.67 & 10 & 830 & 1.4
 \end{center}
 \parbox{\hsize}{%
 \footnotesize Notes: The (normalized) linking lengths
-of~\cite{HG82},~\cite{RGH89}, and~\cite{TrasartiBattistoni98} are derived
+of~\cite{Huchra+82},~\cite{RGH89}, and~\cite{TrasartiBattistoni98} are derived
 (using \bartrefequation{bperpdef} and \bartrefequation{bpardef}) from their
 physical linking lengths at the fiducial distance and from the mean density at
 that distance, as derived by integrating the respective luminosity functions
@@ -153,7 +153,7 @@ be of order of 10 times longer for the LOS separations than for the POS ones.
 Moreover, for flux-limited galaxy catalogs, the physical linking lengths are
 scaled with the mean three-dimensional separation between neighboring galaxies,
 $s \simeq n ^{-1/3}$, where $n$ is the mean number density of galaxies in the
-Universe at a given redshift \citep{HG82}. In other words, the FoF algorithm
+Universe at a given redshift \citep{Huchra+82}. In other words, the FoF algorithm
 involves two dimensionless linking lengths (hereafter LLs):
 %
 \begin{eqnarray}
@@ -175,7 +175,7 @@ number) of the groups with
     \label{eq:dnovernfromb}
 \end{equation}
 %
-(from \citealp{HG82}). Hence, if galaxies are unbiased tracers of mass, i.e.
+(from \citealp{Huchra+82}). Hence, if galaxies are unbiased tracers of mass, i.e.
 $\delta n/n = \Delta/\Omega_{\rm m}$, where $\Omega_{\rm m}$ is the
 cosmological density parameter, then \bartrefequation{dnovernfromb} easily
 leads to
@@ -343,7 +343,7 @@ and \bartrefequation{bparfromkappa}, are listed in Table~\ref{tab:groupalgos}.
 One sees that 5 of the 7 previous studies advocate $b_\perp = 0.13$ or 0.14,
 and two (\citealp{Eke+04} and \citealp{Tempel+14} for $M_r < -19$) have pairs
 of LLs close to our predicted values of $(b_\perp,b_\parallel)\approx
-(0.11,1.3)$. The two greatest outliers are~\cite{HG82}, whose transverse
+(0.11,1.3)$. The two greatest outliers are~\cite{Huchra+82}, whose transverse
 linking length appears too large and~\cite{Robotham+11}, both of whose LLs
 appear too small. We will check these conclusions in \bartrefsection{results}
 and \bartrefsection{discussion} using our analysis of mock galaxy and group
@@ -356,8 +356,8 @@ There are two issues that need to be optimally handled when writing an FoF
 algorithm: rapidly extracting the separations in redshift space and properly
 estimating the mean density.
 
-We followed the~\cite{HG82} algorithm, used in most FoF implementations.
-\citeauthor{HG82} write that two galaxies with redshifts $z_i$ and $z_j$ and an
+We followed the~\cite{Huchra+82} algorithm, used in most FoF implementations.
+\citeauthor{Huchra+82} write that two galaxies with redshifts $z_i$ and $z_j$ and an
 angular separation in $\theta_{ij}$ are linked using criteria that amount to
 %
 \begin{eqnarray}\label{eq:crit1}
@@ -389,7 +389,7 @@ b_\parallel\, n^{-1/3} \,.
 \label{eq:deltadmax}
 \end{eqnarray}
 %
-Thus,~\cite{HG82} and~\cite{Berlind+06} neglected cosmological effects. For our
+Thus,~\cite{Huchra+82} and~\cite{Berlind+06} neglected cosmological effects. For our
 deepest mock SDSS catalog, at $z = z_{ \max } = 0.125$ (Catalog 6, see
 Table~\ref{tab:samples} below), $d_{\rm comov}/(cz/H_0) = 0.97$. So, the
 formula $d=c z/H_0$ leads to slightly too large distances, hence to slightly
