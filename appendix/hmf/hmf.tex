@@ -8,13 +8,13 @@
 
 \subsection{Definition}
 
-By definition, the halo mass function by unit of comoving volume is the
-number of halos with mass $M$ between $M$ and $M+\dd{M}$. If $N$ is
-the number of halos, the halo mass function $\phi\left(M\right)$ can be
-written:
+By definition, the halo mass function by unit of comoving volume is the number
+of halos with mass $M$ between $M$ and $M+\dd{M}$. If $N$ is the number of
+halos in comoving volume $V$, the halo mass function $\phi\left(M\right)$ can
+be written:
 %
 \begin{equation}
-    \phi\left(M\right)=\cfrac{\dd N^2}{\dd M\dd V}=\cfrac{\dd n}{\dd M}
+    \phi\left(M\right)=\cfrac{\dd^2 N}{\dd M\dd V}=\cfrac{\dd n}{\dd M}
 \end{equation}
 %
 In this case, $n$ can be the comoving density of halos, or the cumulative
@@ -34,14 +34,26 @@ and so:
 %
 where $\Phi$ is a primitive of $\phi$.
 
+According to~\cite{Press+74}, the halo mass function is:
+
+\begin{equation}
+    \phi \left(M, z\right) = \cfrac{\rho_m \left(z\right)}{M^2}
+    \cfrac{\dd\ln\sigma^{-1}}{\dd\ln M} \nu\exp \left(-\nu^2/2\right)
+\end{equation}
+
+where $\nu=\delta_c \left(z\right) / \sigma \left(M\right)$, $\delta_c$ a
+threshold parameter, $\rho_m$ the mean density of the Universe and $\sigma$ the
+standard deviation of density fluctuations.
+
 \subsection{In practice}
 
 \citet{Jenkins+01} found a general way to fit halo mass functions from
 different cosmological simulations done with different cosmologies, allowing an
-easy comparison between the different results. The halo mass function is
-related to the variance of linear perturbations $\sigma$. A function
-$f\left(\sigma\right)$ has been introduced for that, which is the fraction of
-matter that is inside a halo of mass $M$ by units of $\ln\sigma^{-1}$. So:
+easy comparison between the different redshifts and cosmologies. The halo mass
+function is related to the standard deviation of density fluctuations $\sigma$,
+which is a function of halo mass. A function $f\left(\sigma\right)$ has been
+introduced for that, which is the fraction of matter that is inside a halo of
+mass $M$ by units of $\ln\sigma^{-1}$. So:
 %
 \begin{equation}
     f\left(\sigma\right)=
@@ -54,7 +66,8 @@ and the halo mass function is:
 \begin{equation}
     \phi\left(M,z\right)=\cfrac{\dd\ln\sigma^{-1}}{\dd M}
     \cfrac{\rho_m\left({z}\right)}{M}f\left(\sigma\right)=
-    \cfrac{\rho_m\left(z\right)}{M^2}\left|M\cfrac{\dd\ln\sigma}{\dd M}\right|
+    \cfrac{\rho_m\left(z\right)}{M^2}
+    \left|\cfrac{\dd\ln\sigma}{\dd\ln M}\right|
     f\left(\sigma\right)
 \end{equation}
 %
@@ -83,15 +96,15 @@ halos, summing over all the possible variance gives us the total mass, so:
     \int_{-\infty}^\infty f\left(\sigma\right)\dd\ln\sigma^{-1}=1
 \end{equation}
 %
-The variance follows the evolution of the linear perturbations and must
-growth with them, so we need to multiply it by the growth rate to extend the
-expression to other redshifts.
+The variance of density fluctuations follows the evolution of the linear
+perturbations and must grow with them, so we need to multiply it by the
+growth rate to extend the expression to other redshifts.
 
 \subsection{Window function}
 \label{sub:window_function}
 
 By definition, $\sigma$ is the variance of mass within a sphere of radius
-$R$ containing mass $M$ with the mean density of the Universe. For this a
+$R$ containing mass $M$ with the mean density of the Universe. For this, a
 top-hat filter is used in real space corresponding to the sphere of radius
 $R$. Its expression in the Fourier space is:
 %
@@ -112,12 +125,12 @@ and we can explicitly write the derivative:
 \subsection{Power spectrum}
 \label{sub:power_spectrum}
 
-In the context of the small perturbations theory, over-densities, expressed
+In the context of the theory of small perturbations, over-densities, expressed
 as $\delta \left(\textbf{x}\right) = \left(\rho \left(\textbf{x}\right) -
-\overline\rho\right) / \overline\rho$ growth linearly if they are small
+\overline\rho\right) / \overline\rho$ grow linearly if they are small
 (i.e.\ $\delta\ll1$). The power spectrum is the second moment of the
 probability distribution function of the density perturbation field
-expressed in the Fourier space:
+expressed in Fourier space:
 %
 \begin{equation}
     P \left(k\right) \propto
@@ -130,32 +143,32 @@ Inflation models predicts a power spectrum of the form:
     P \left(k\right) \propto k^n
 \end{equation}
 %
-where $n$ is the spectral index, close to 1. The different kind of matter
-contribute to the power spectrum and in general diverge from this simple
-model. The transfer function $T \left(k\right)$ accounts for this, as a
-correction for the inflation model:
+where $n$ is the spectral index, close to 1. Different kinds of matter
+contribute to the power spectrum and in general diverge from this simple model.
+The transfer function $T \left(k\right)$ accounts for this, as a correction to
+the inflation model:
 %
 \begin{equation}
-    P \left(k\right) \propto k^n T^2 \left(k\right)
+    P \left(k\right) \propto k^n\, T^2 \left(k\right)
 \end{equation}
 %
-The transfer function is sensible to the model of dark matter matter and the
-density of baryons through $\Omega_b$. The transfer function is very difficult
+The transfer function is sensitive to the model of dark matter matter and the
+density of baryons through $\Omega_b$. The transfer function is difficult
 to compute precisely and thus we depend on the CAMB program \citep{Lewis+00}.
 
-The power spectrum has a normalization not predictable by the theory, and must
-be set by confrontation to the observations. For this, the variance of the
+The normalization of the power spectrum is not predictable by the theory, hence
+must be set by confrontation to the observations. For this, the variance of the
 density field of the fluctuations within the smoothing window function of
 radius $R=8 h^{-1}\mathrm{Mpc}$ is used, and by comparison with the value
 obtained from observations with the galaxy distribution or other method, the
 power spectrum is fully determined.
 
-If we want to compute the power spectrum at different epochs, we must apply
-the growth factor to the power spectrum, under the assumptions that
-fluctuations evolution is linear. In this case $\delta \left(\textbf{x},
-a\right) = D \left(a\right) \delta_i \left(\textbf{x}\right)$, where
-$D\left(a\right)$ is the growth factor and $a$ the scale factor. For the
-growing mode of perturbations:
+If we want to compute the power spectrum at different epochs, we must apply the
+growth factor to the power spectrum, under the assumptions of linear evolution
+of fluctuations. In this case $\delta \left(\textbf{x}, a\right) = D
+\left(a\right) \delta_i \left(\textbf{x}\right)$, where $D\left(a\right)$ is
+the growth factor and $a=1/ \left(1+z\right)$ the scale factor. For the growing mode of
+perturbations:
 %
 \begin{equation}
     D \left(z\right) = \cfrac{5\Omega_m}{2}E \left(z\right)
@@ -170,20 +183,19 @@ with:
 \end{equation}
 %
 for a flat Universe (see \citet{Hogg+99, Carroll+92}). The growth factor to
-apply to power spectrum is:
+apply to the power spectrum is:
 %
 \begin{equation}
     d \left(z\right) = \cfrac{D \left(z\right)}{D \left(z=0\right)}
 \end{equation}
 
-The power spectrum and the variance of the perturbations evolve in the
-following way:
+The power spectrum and the variance of the standard deviation of the
+perturbations evolve in the following way:
 %
 \begin{align}
     P \left(k, z\right) &= d^2 \left(z\right) P \left(k, 0\right)
     \nonumber\\
     \sigma \left(M, z\right) &= d \left(z\right) \sigma \left(M,0\right)
-    \nonumber\\
 \end{align}
 
 \section{In practice}
@@ -193,17 +205,17 @@ following way:
 \label{sub:approximation}
 
 As described above, the computation of the density fluctuation variance
-implies to compute a integral that must be done numerically since the power
+involves computing an integral that must be done numerically, since the power
 spectrum doesn't have an analytical form. Hence, the halo mass function
-computation needs to do two integrals numerically, which is time consuming.
-Hopefully, in~\cite{vandenBosch+02}, there is a good approximation for the
-variance of the density field:
+involves evaluating two integrals numerically, which is time consuming.
+Luckily,~\cite{vandenBosch+02} has provided a good approximation for the
+standard deviation of the density field:
 %
 \begin{equation}
     \sigma\left(M\right)=\sigma_8\frac{f\left(u\right)}{f\left(u_8\right)}
 \end{equation}
 %
-with the function $f$:
+where:
 %
 \begin{equation}
     f\left(u\right)=
@@ -211,7 +223,7 @@ with the function $f$:
         0.954 u^{0.5} - 0.185 u^{0.6}\right)}^{-10}
 \end{equation}
 %
-and $u$, $u_8$ which are:
+with:
 %
 \begin{eqnarray}
     u & = & 3.804 10^{-4}\Gamma{\left(\frac{Mh}{\Omega_{m,0}}\right)}^{1/3}
@@ -263,8 +275,8 @@ function, discrepancies are not significant.
 \subsection{Halo mass function models}
 \label{sub:halo_mass_function_models}
 
-We put here a list of some common models for the halo mass function, and
-used in the thesis for various comparisons. A detailed list can be found in
+We put in \bartreftable{hmf} some popular models for the halo mass function,
+and used in the thesis for various comparisons. A detailed list can be found in
 \citet{Murray+13}.
 %
 \begin{table}[htb]
@@ -284,11 +296,14 @@ used in the thesis for various comparisons. A detailed list can be found in
         $c=1.1982$
         \\
         \citet{Courtin+11} &
-        $f\left(\sigma\right)=
-        A{\left(\frac{2a}{\pi}\right)}^\undemi
-        \frac{\delta_c}{\sigma}\left(1+
-        {\left(\frac{\sqrt{a}\delta_c}{\sigma}\right)}^{-2p}\right)$\newline
-        $\times\exp\left(-\frac{\delta_c^2{a}}{2\sigma^2}\right)$ &
+        $\begin{aligned}
+                f\left(\sigma\right)=&
+                A{\left(\frac{2a}{\pi}\right)}^\undemi%
+                \frac{\delta_c}{\sigma}\left(1+
+                {\left(\frac{\sqrt{a}\delta_c}{\sigma}\right)}^{-2p}\right)\nonumber\\
+                &
+                \times\exp\left(-\frac{\delta_c^2{a}}{2\sigma^2}\right)\nonumber%
+        \end{aligned}$ &
         $A=0.348$, \newline
         $a=0.695$, \newline
         $p=0.1$, \newline
@@ -326,18 +341,18 @@ used in the thesis for various comparisons. A detailed list can be found in
 
 We used these models of halo mass function to compare them to the halo mass
 function obtained directly from the data of~\cite{BoylanKolchin+09} extracted
-on the Millennium-II database. A majority of these models are defined for FoF
-halo mass, resulting directly from the sum of the dark matter particle masses
-constituting the halo. But for MAGGIE, we are just interested on the part of
-galaxy groups at equilibrium, and we use the virial mass. As we can see in
-\bartreffigure{hmf}, both definitions are very different.
+on the Millennium-II database. Most of these models are defined using FoF halo
+masses, resulting directly from the sum of the dark matter particle masses
+constituting the halo. But for MAGGIE, we are just interested on the mass
+within radius $r_{200}$. As we can see in \bartreffigure{hmf}, both definitions
+are very different.
 
 For the abundance matching technique in MAGGIE, we need to use the halo mass
 function in black in \bartreffigure{hmf}. The fit done on the data is shown in
 green. Discrepancies are important at high virial masses because of the low
-number of halos at such masses, giving a relation not well constrained. But
-this fit is sufficient and gives relatively good results when using it with
-MAGGIE (see \bartrefchapter{MAGGIE}).
+number of halos at such masses, giving a poorly constrained relation. But this
+fit is sufficient and gives relatively good results when using it with MAGGIE
+(see \bartrefchapter{MAGGIE}).
 %
 \begin{figure}[htb]
     \centering
