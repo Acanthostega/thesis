@@ -4,26 +4,26 @@
 \bartthumb{opo0328a.png}
 \minitoc%
 
-First computations of the probability to belong in a group for MAGGIE where
-not satisfying when compared to the probability estimated directly from the
+Our first computations of the probability of membership for MAGGIE were not
+satisfying when compared to the probability estimated directly from the
 cosmological simulation. Probability contours let us think in a stronger
-truncation in the velocity distribution for high velocities in the
-simulation than that of the assumed Gaussian distribution, creating
-discrepancies between our expectations and data. A natural distribution with
-this property is the $q$-Gaussian or Tsallis distribution, with an
-additional free parameter, which one adjusted, allows to get a stronger
-truncation in the velocity distribution. But the resulting distribution
-function of the particle system becomes quite complex and the analytical
-computations difficult in some cases, resumed in the following sections.
+truncation in the velocity distribution for high velocities in the simulation
+than that of the assumed Gaussian distribution, creating discrepancies between
+our expectations and data. A natural distribution with this property is the
+$q$-Gaussian or Tsallis distribution, which has an additional free parameter,
+measuring the departures from Gaussianity. It can lead to stronger truncation
+in the velocity distribution. But the resulting distribution function of the
+particle system becomes quite complex and the analytical computations difficult
+in some cases, resumed in the following sections.
 
 \section{$q$-Gaussian (or Tsallis) distributions}
 \label{sec:q_gaussian_or_tsallis_distributions}
 
 \citet{Tsallis+88} developed a generalization of the entropy, non extensive,
 in terms of an additional parameter $q$ leading to systems that are not at
-the equilibrium. According to \citet{Hansen+06}, radial and tangential
+the equilibrium. According to \citet{Hansen+06}, the radial and tangential
 velocity distributions of dark matter particles in halos in cosmological
-simulations doesn't exactly follow a Gaussian distribution, but are more
+simulations do not exactly follow a Gaussian distribution, but are more
 accurately adjusted by a Tsallis distribution. A possible explanation is
 that halos are not fully at the equilibrium at our epoch.
 
@@ -44,7 +44,7 @@ coordinates $\textbf{r}$ are of the following forms:
 In the two above equations, integrating over the corresponding velocities
 gives us the number of particles at a given coordinates by unit of volumes,
 in other words the density profile $\nu\left(\textbf{r}\right)$. Integrating
-over the second moment, we have the velocity dispersion, an other constraint
+over the second moment, we have the velocity dispersion, another constraint
 to determine the normalization factor.
 %
 \begin{equation}
@@ -62,7 +62,7 @@ to determine the normalization factor.
 %
 In the case of the tangential velocity $v_t^2=v_\theta^2+v_\phi^2$, the
 dispersion is simply $\sigma_t^2=\sigma_\theta^2+\sigma_\phi^2$. In the
-following sections, we will assume isotropy and so
+following sections, we will assume isotropy and so by symmetry
 $\sigma_\theta=\sigma_\phi$.
 
 For the integration over $v_r$, we need to take into account the two cases
@@ -190,20 +190,20 @@ sense of a strict product of independent variables. We have:
 \begin{equation}
     f\left(\textbf{r},\textbf{v}\right)=
     A\left(\alpha\right)
-    {\left(1-B\left(\alpha\right)\left(
+    {\left[1-B\left(\alpha\right)\left[
                 {\left(\frac{v_r}{\sigma_r}\right)}^2+
                 {\left(\frac{v_{\theta}}{\sigma_{\theta}}\right)}^2+
                 {\left(\frac{v_{\phi}}{\sigma_{\phi}}\right)}^2
-    \right)\right)}^\alpha
+    \right]\right]}^\alpha
 \end{equation}
 %
 
-We find normalizations in the same way as previously. We can doubt in the
-choice of the limit velocity for the integration in the case where
+We find normalizations in the same way as previously. We must worry in the
+choice of the limiting velocity for the integration in the case where
 $B\left(\alpha\right)>0$. But if we choose to impose a limit on one
 velocity, the constraints on the two others becomes the consideration of the
 three velocities as a single one with the good substitution in the
-integration. We just to consider the triplet of velocities following the
+integration. We just consider the triplet of velocities following the
 constraint ${\left(\frac{v_r}{\sigma_r}\right)}^2+
 {\left(\frac{v_\theta}{\sigma_\theta}\right)}^2+
 {\left(\frac{v_\phi}{\sigma_\phi}\right)}^2<1$. In consequence, we find for
@@ -231,8 +231,8 @@ the normalizations:
     B\left(\alpha\right)=\frac{1}{5+2\alpha}
 \end{equation}
 %
-Integrating over $v_t$ we get the radial distribution and the tangential
-distribution if integrating over $v_r$. The definitions of the $q$-Gaussian
+Integrating over $v_t$, we get the radial distribution and the tangential
+distribution when integrating over $v_r$. The definitions of the $q$-Gaussian
 distributions imply $\alpha_r=1+\alpha$ et $\alpha_t=1/2+\alpha$. But
 fitting these distributions to the data of the cosmological simulation gives
 different values of $\alpha$ for the radial and tangential distribution,
@@ -247,7 +247,7 @@ need to find an other expression.
     previous integral definitions.
 }
 
-\subsection{Different $\alpha$ forms}
+\subsection{Separable joint velocity distribution}
 \label{sub:different_alpha_forms}
 
 We treat the case:
@@ -318,9 +318,11 @@ radial $\alpha$. This seems to correspond with what observed in the
 cosmological simulation. The problem is that to obtain the line-of-sight
 velocity distribution, the equation doesn't have an analytical expression,
 and in consequence not useful in the computation of the probability of
-MAGGIE\@. So we choose to abandon this model.
+MAGGIE\@. So we choose to abandon this model. Moreover, in simulations, it
+turns out that $\alpha_r$ depends on $\alpha_t$ hence the joint distribution $f
+\left(\bf r, v\right)$ is not separable.
 
-\section{Generate $q$-Gaussian distributions}
+\section{Generating $q$-Gaussian distributions}
 \label{sec:generate_q_gaussian_distributions}
 
 \subsection{One dimension}
@@ -368,7 +370,7 @@ random variables are sufficient:
 %
 where $i\in \{1,2 \}$.
 
-\subsection{Two dimensions case}
+\subsection{Two dimensional case}
 \label{sub:two_dimensions_case}
 
 In the case of the tangential distribution:
@@ -409,7 +411,7 @@ The cumulative distribution function can be useful in the situation where we
 search parameters fitting an unknown distribution by the Kolmogorov-Smirnov
 method for example.
 
-\subsection{One dimension case}
+\subsection{One dimensional case}
 \label{sub:one_dimension_case}
 
 By definition of the cumulative distribution function:
@@ -432,8 +434,7 @@ $\sigma$ and the bias $\mu$:
 \end{equation}
 %
 where $A_r$ and $B_r$ are the same coefficients found previously,
-$\mathcal{H}{2{\rm{F}}1}$ the hyper-geometric function 2F1 and $f^1$ a
-function such:
+${^2{\rm{F}}_1}$ the Gaussian hypergeometric and $f^1$ a function such:
 %
 \begin{eqnarray}
     f^1\left(\alpha\right)&=&
@@ -443,7 +444,7 @@ function such:
         \;\;\;\alpha>-1\\
 \end{eqnarray}
 
-\subsection{Two dimensions case}
+\subsection{Two dimensional case}
 \label{sub:cdf_two_dimensions_case}
 
 In this case the computation is easier:
@@ -458,3 +459,5 @@ In this case the computation is easier:
 \end{equation}
 %
 with $A_t$ and $B_t$ identical to the coefficients determined previously.
+
+% vim: set tw=79 :
