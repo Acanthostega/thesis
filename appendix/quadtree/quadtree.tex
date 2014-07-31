@@ -2,49 +2,45 @@
 \chapter{QuadTree on celestial sphere}
 \label{cha:quadtree}
 \bartthumb{trees.png}
-%
-\note{Improve the description of the quadtree, its construction etc\ldots}
-%
+
 \section{Introduction}
-%
-The extraction of galaxy groups from the redshift space implies in all kind
-of algorithms to search for galaxies in a given region of the sky. Methods
-as those used in numerical simulations for searching dark matter halos
-should be applied. Such techniques often use a partition of the space to
-make a brute force computation of the distance between particles only on a
-small portion of the three dimensional space. Same partitioning of the
-celestial sphere can be done, but the non-euclidean metric of celestial
-coordinates make the task a little harder.
-%
+
+The extraction of galaxy groups from redshift space involves various algorithms
+to search for galaxies in a given region of the sky. Methods as those used in
+numerical simulations for searching dark matter halos can be applied. Such
+techniques often use a partition of the space to make a brute force computation
+of the distance between particles only on a small portion of the three
+dimensional space. Same partitioning of the celestial sphere can be done, but
+the non-euclidean metric of celestial coordinates make the task a little
+harder.
+
 \section{QuadTree}
-%
+
 The principle of the QuadTree is to make a partition of the space (celestial
 sphere in our case). Each created partition will be partitioned too if the
 number of galaxies in it is superior to a limit we define at the creation of
-the QuadTree. If the number of levels in the refinement is superior to a
-given limit, we stop the refinement.
+the QuadTree. If the number of levels in the refinement is superior to a given
+limit, we stop the refinement.
 
 This is clearly a tree structure, since the partitions, called nodes, are
 subdivided into other nodes. This allow to rapidly search for galaxies in a
-given region since we can easily determine which node intersect a given
-region.
-%
+given region since we can easily determine which node intersect a given region.
+
 \subsection{Construction}
-%
+
 The construction is straightforward with the description above. We start by
-defining the limits in the $(\alpha, \delta)$ plane for the region to
-refine. This region is the root node. Then the following instructions are
-applied recursively.
-%
+defining the limits in the $(\alpha, \delta)$ plane for the region to refine.
+This region is the root node. Then, the following instructions are applied
+recursively.
+
 \begin{itemize}
-    \item We determine in which node each points, in the parent node, are
-        falling inside. We keep an array of the identities of points in the
-        tree to which each node point to. In this array, identities are
-        ordered by nodes into the associated point belongs to. So, at the
-        end of the tree construction, the array of the identities will
-        structured in the same as the tree, allowing optimization of the
-        memory and future search of points.
-    \item If the maximal level of refinement is reached, we stop to subdivide
+    \item We determine in which child node each point is falling inside. We
+        keep an array of the identities of points in the tree to which each
+        node point to. In this array, identities are ordered according to the
+        node of the point. So, at the end of the tree construction, the array
+        of the identities will be structured in the same as the tree, allowing
+        for optimization of the memory and for future searches of points.
+    \item If the maximal level of refinement is reached, we no longer subdivide
         the node.
     \item If the number of points in the child node is superior to the fixed
         limit, we subdivide the node in four other nodes.
@@ -54,7 +50,7 @@ applied recursively.
 For optimization, we keep just nodes that are not empty, linking together
 brother nodes.
 
-During the construction of the node, we also keep informations on their
+During the construction of the node, we also keep the information of their
 spatial geometry such as extremal coordinates in right ascension and
 declination, center position, half width in each axis to avoid useless
 computations when searching points on the celestial sphere.
@@ -69,8 +65,8 @@ block of the SDSS is shown in Figure~\ref{fig:quadtree}.
     \centering
     \includegraphics[width=0.7\linewidth]{figures/appendix/quadtree/quadtree.png}
     \caption{A simple illustration of a QuadTree generated for the SDSS
-        adjoining block of galaxies. The tree is more refined in the dense projected
-    region on the sky.\label{fig:quadtree}}
+    adjoining block of galaxies. The tree is more refined in the regions at
+higher surface density.\label{fig:quadtree}}
 \end{figure}
 %
 \subsection{Searching in a given region}
@@ -81,8 +77,8 @@ is entirely contained by the searching region. If yes, we can directly use
 the pointer to the identities array to include its points, without
 descending more in the tree.
 
-Defining if the region and a node intersect is easy since they are defined
-as two rectangles in a two dimensional space.
+It is easy to determine whether the region and a node intersect is easy, since
+they are defined as two rectangles in a two dimensional space.
 
 The rectangular region is defined in the declination axis simply by taking
 the central declination coordinate and adding it the angular distance for
@@ -105,7 +101,7 @@ nodes of the tree are easy to compute.
 
 The case of the periodic search is complex. If the rectangular region fall
 outside the periodic limits (inferior to 0 or superior to $2\pi$ in right
-ascension on the celestial sphere), we nedd to duplicate the search region
+ascension on the celestial sphere), we need to duplicate the search region
 and make the intersection with nodes for two regions instead of one. This is
 a little time consuming but is the only way to handle correctly the periodic
 case.
