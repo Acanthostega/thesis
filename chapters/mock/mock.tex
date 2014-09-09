@@ -187,16 +187,44 @@ case, the origin of coordinates is the observer. Getting these coordinates is
 the same as computing spherical coordinates.
 %
 \begin{equation}
-    \alpha=\left\{ \begin{array}{lcr}
-     \mbox{arctan2} \left(Y, X\right)+2\pi & \mbox{if} & Y\geqslant0 \\
-     \mbox{arctan2} \left(Y, X\right) & \mbox{if} & Y<0\\
-    \end{array}\right.\nonumber%
+    \alpha=\mbox{arctan2} \left(Y, X\right) \mod 2\pi
+    \nonumber%
 \end{equation}
 %
 \begin{equation}
     \delta=\mbox{sgn} \left(Z\right)
     \arccos\left(\frac{\sqrt{X^2+Y^2}}{\sqrt{X^2+Y^2+Z^2}}\right)
 \end{equation}
+%
+where $\mbox{sgn}$ is the sign function\footnote{For the sign function:
+    \begin{equation}
+        \mbox{sgn}(x)= \begin{cases}
+            1 &\mbox{if} \; x > 1 \\
+            -1 &\mbox{if} \; x < 1 \\
+            0 &\mbox{else}
+        \end{cases}
+    \end{equation}
+%
+and the $\mbox{arctan2}$ function is:
+%
+    \begin{equation}
+        \mbox{arctan2} \left(y, x\right) = \begin{cases}
+            \phi \times\mbox{sgn}(y) & x > 0 \\
+            \cfrac{\pi}{2} \times\mbox{sgn}(y) & x = 0 \\
+            \left(\pi - \phi\right) \times\mbox{sgn}(y) & x < 0
+        \end{cases}
+    \end{equation}
+%
+with $\tan\phi = \left|\cfrac{y}{x}\right|$ particular cases:
+%
+    \begin{equation}
+        \mbox{arctan2} \left(0, x\right) = \begin{cases}
+            0 & x > 0 \\
+            \mbox{not defined} & x = 0 \\
+            \pi & x < 0
+        \end{cases}
+    \end{equation}
+}
 
 \subsubsection{Redshifts}
 
