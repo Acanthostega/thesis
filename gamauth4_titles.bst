@@ -9,7 +9,7 @@
 %% merlin.mbs  (with options: `tail,exlang,ay,nat,nm-rvv,ed-rev,dt-beg,note-yr,atit-u,jtit-x,jttl-rm,vol-bf,vnum-cm,volp-com,jpg-1,jnm-x,pre-pub,edpar,edby,edbyx,blk-com,in-col,french,pp,ed,abr,ord,amper,xand,nfss,{}')
 %% ----------------------------------------
 %% *** These Guillemin P., 1997 ***
-%% 
+%%
  %-------------------------------------------------------------------
  % The original source file contains the following version information:
  % \ProvidesFile{merlin.mbs}[1996/12/16 3.82 (PWD)]
@@ -787,7 +787,7 @@ FUNCTION {first.page}
         { #0 }
         { t #1 #1 substring$ "-" = not }
       if$
-      #0 =                                     
+      #0 =
         { #0 }
         { t #1 #1 substring$ "+"  = not }
       if$                                       %PK ignore + in ADS database
@@ -817,7 +817,7 @@ FUNCTION {format.in.ed.pages}
     { "cannot handle empty pages" cite$ * warning$ }
     { duplicate$ empty$
         { pop$ format.pages }
-        { "" bbl.page space.word * pages first.page * }
+        { " " bbl.page space.word * pages first.page * }
       if$
     }
   if$
@@ -951,7 +951,6 @@ FUNCTION {article}
   crossref missing$
     { journal
       "journal" output.check
-      add.blank
       format.vol.num.pages output
     }
     { format.article.crossref output.nonnull

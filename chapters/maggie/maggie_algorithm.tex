@@ -967,29 +967,22 @@ the choice of halo mass function.
 
 \subsection{Influence of cosmological parameters}
 
-Our problematic is still the same: as an observer, we don't know the real space
-and its properties. So, we assume a given set of cosmological parameters. When
-applying group finders on our mock catalog, we use the cosmology of the
-simulation from which are constructed our mock. But in reality, we know those
-parameters with a given uncertainty and we want to know their effects on the
-group extraction.
+The distances used by MAGGIE depends on the choice of cosmological parameters.
+For example, when computing the projected radius of a galaxy at the redshift of
+the group, we implicitly need to compute the luminosity distance which is
+cosmology dependent. We assume in our case a flat Universe and in this case, it
+is computed using just elliptic integrals \citep{Liu+11,Eisenstein+97}
+Moreover, the different analytical halo mass functions tested in Sect 5.5.2 all
+assumed the same cosmological parameters as in our mock (based on those from
+the Millennium-II simulation). The observer may choose a slightly different set
+of cosmological parameters. We therefore now run MAGGIE on our mock, assuming
+slightly incorrect cosmological parameters, to test how sensitive is its
+performance on the correct choice of cosmological parameters.
 
-To answer this question, we must know where the cosmology is relevant in the
-algorithm. For example, when computing the projected radius of a galaxy at the
-redshift of the group, we implicitly need to compute the luminosity distance
-which is cosmology dependent. We assume in our case a flat Universe and in this
-case, it is computed using just elliptic integrals
-\citep{Liu+11,Eisenstein+97}. So cosmological parameters have an influence on
-this distance, and in consequence, on the membership of galaxy groups.
-Moreover, the halo mass function is dependent of the cosmology assumed by the
-observer for many models and can affect the virial mass estimations. In our
-case, the halo mass function is fitted on the real space data and its influence
-can't be really measured. But we expect it has the same influence as a bad
-choice for the halo mass function. We ran MAGGIE with the true cosmology (from
-Millennium-II simulation) and two false cosmology with respect to our mock
-catalog (Planck and WMAP9) to compare results. As expected, the importance of
-the cosmology is low, of the order of statistical errors, as seen in
-\bartreffigure{cdf_cosmology} and \bartreffigure{bias_disp_cosmology}.
+We ran MAGGIE-m with the ``true'' cosmology (from Millennium-II simulation) and
+two ``false'' cosmologies (Planck and WMAP9) to compare results. As expected,
+the importance of the cosmology is low, of the order of statistical errors, as
+seen in \bartreffigure{cdf_cosmology} and \bartreffigure{bias_disp_cosmology}.
 %
 \begin{figure}[htbp]
     \centering
@@ -1068,45 +1061,58 @@ catalogues is shown on \bartreffigure{comp_rel}, \bartreffigure{comparison},
 \bartreffigure{bias_disp}, \bartreffigure{fragments} and
 \bartreffigure{bias_disp_virial_mass} in red.
 
-The effect of an error on stellar masses is quite catastrophic in the
-completeness, compared to the case where the stellar masses are perfect (in
-green). The percentage of groups with a perfect completeness decreases for
-around 20 points for the catalogue 5 with a large volume, while this effect
-isn't visible in the catalog 2 for high mass halos (since the volume of the
-catalog is smaller, the number of high halo mass we expect to find is small too
-and statistics poorer). The effect on the reliability is less important since
-probabilities reduce the importance of interlopers introduced by the decrease
-in completeness. In contrary, galaxy group properties are not very affected by
-these errors in stellar masses, except for high halo masses. In this case, if
+The effect of a 0.2 dex error on stellar masses (red) is to slightly increase
+group fragmentation, which remains well below the level found for the FoF
+algorithm. The completeness of MAGGIE-m is reduced to a level between that of
+the perfect MAGGIE-m and the optimal FoF. The effect of stellar mass errors on
+the reliability is less important since probabilities reduce the importance of
+interlopers introduced by the decrease in completeness. In fact, the
+reliability is, surprisingly, slightly higher once the stellar mass errors are
+incorporated. Finally, galaxy group properties (luminosity, stellar and halo
+mass) are not very affected by these errors in stellar masses, except for high
+halo masses, where they are biased high and more scattered. In this case, if
 the most massive galaxy has not its mass well estimated, the estimation of the
 halo mass is bad and probabilities can't ``correct'' this effect properly. This
-is visible in \bartreffigure{bias_disp_virial_mass} where the bias in the
-estimation of the halo mass is very important for high halo masses and the
-dispersion is increased in all range of masses. In the other hand, the
-fragmentation is increased for smaller halo masses, since with the decline in
-completeness due to errors, high mass halos decompose into smaller parts at the
-origin of the observed fragments.
+is visible in \bartreffigure{bias_disp_virial_mass} where, for the nearby
+sub-sample, the bias in the estimation of the halo mass is very important for
+high group masses and the dispersion is increased in all group masses.
 
-So, errors in stellar masses are problematic and we should use an other tracer
-for the halo mass as the central luminosity, which is less affected by
-observational errors. Indeed, the principal sources of errors in the
-computation of the absolute magnitude of a galaxy are the photometry, the
-extinction, the K-correction, and the redshift through the distance modulus:
+One may wonder whether it would be better to  use another tracer for the halo
+mass such as the central luminosity, which is less affected by observational
+errors. Despite its very high quality, the SDSS survey is not immune to errors
+on galaxy luminosity or stellar mass. Writing the $r$-band absolute magnitude
+of a galaxy as:
 %
-\begin{equation} \Delta M=\Delta m + \frac{5}{\ln{10}} \frac{\Delta
-d_\mathrm{lum} \left(z\right)}{\Delta z} \frac{1}{d_\mathrm{lum}
-\left(z\right)} + \Delta E + \Delta K\left(z\right) \end{equation}
+\begin{equation}
+    M_r = r - \mu(z) - k_r(z) - A_r
+\end{equation}
 %
-$\Delta m$ for apparent magnitudes is of the order of $10^{-2}$ in the SDSS,
-the second term is between $10^{-4}$ and $10^{-2}$ in the range of redshift
-used for the catalogues. The K-correction $\Delta K$, if we follow the method
-of \citet{Chilingarian+10}, is of the order of $10^{-2}$. There is the problem
-of the extinction $\Delta E$ for which the precision can't be really estimated.
-The Galactic extinction is estimated to 0.075, but the internal extinction of
-galaxies is more imprecise and we provide a rough value of 0.1. Moreover,
-peculiar velocities worst the situation since they contribute to the
-computation of the distance modulus. But for non-nearby galaxies and globally,
-the errors should be small.
+where $\mu$ is the distance modulus, while $r$, $k_r$, and $A_r$ are the
+apparent magnitude, k-correction and extinction, all in the $r$ band. The
+photometric errors are expected to be less than 0.05 mag, i.e.\ less than 0.02
+dex on luminosity.  The error caused by the uncertain distance can be written:
+%
+\begin{equation}
+    \epsilon(\log L_r) = {1\over \ln 10}\,{\left[{\left({\epsilon(v)\over c
+            z}\right)}^2+
+    {\left({\sigma(v_{\rm p})\over cz}\right)}^2\right]}^{1/2} \la 0.056\,\rm dex
+\end{equation}
+%
+for $\epsilon(v)\simeq 30 \, \rm km \, s^{-1}$, $\sigma(v_{\rm p}) \simeq 200
+\, \rm km \, s^{-1}$, and $z>0.01$ (where the assumption of zero difference in
+peculiar velocity between the galaxy and the observer dominates the error).
+Finally, according to Figure 2 of~\cite{Chilingarian+10}, the intrinsic scatter
+in the k-correction is of order 0.015 mag, i.e. 0.006 dex. Admittedly, the
+k-correction of \citeauthor{Chilingarian+10} suffers from some catastrophic
+errors, but since 99.9\% of the galaxies with $z < 0.12$ have k-corrections
+between $-0.15$ and 0.25, it suffices to impose these limits to $k_r$. Finally,
+since SDSS spans high galactic latitudes the uncertainty o the Galactic
+extinction is of order 0.075 mag (the median error of SDSS galaxies), i.e. 0.03
+dex. The uncertainty on internal extinction is more difficult to measure, but
+can be estimated to be 0.1 mag, i.e. 0.04 dex. Combining these 6 errors
+(photometry, redshift, assumption of no peculiar velocity, k-correction,
+Galactic extinction and internal extinction) in quadrature, we deduce that the
+error on luminosity is of order of 0.08 dex.
 
 The inclusion of the luminosity instead of stellar mass in the group extraction
 process of MAGGIE is quite simple. The abundance matching between the virial
@@ -1114,28 +1120,28 @@ mass and the central stellar mass is replaced by an abundance matching between
 the virial mass and the central luminosity. Intrinsically, using luminosities
 instead of stellar masses in the inference of group virial masses is expected
 to be less precise because the relation between the luminosity of the central
-galaxy and the halo mass is more saturated for high mass groups. But the gain
-is in the precision and the robustness relatively to the precision.
+galaxy and the halo mass is more saturated for high mass groups. But the loss
+at high mass should be offset by the 2.5 times greater precision.
 
 Comparing the perfect case of MAGGIE using galaxy luminosity (light green) to
 the perfect case of stellar masses (dark green) shows, as expected, that the
-completeness is worst for luminosities (the reliability is a little better
+completeness is worse for luminosities (the reliability is a little better
 since the completeness has decreased). But group properties are not really
 affected still by the use of probabilities to avoid bad membership. The
-fragmentation is worst too since groups aren't entirely recovered (missing
-galaxies are considered as belonging to fragment groups). For halo mass
+fragmentation is worse too since groups aren't entirely recovered (missing
+galaxies are considered as belonging to fragment groups). For group mass
 estimations, the bias induced by using luminosities is comparable to the
 perfect case of stellar masses. It is only in the dispersion that we observe
-the counterparts, specifically for high halo masses, due to the uncertainties
+the counterparts, specifically for high group masses, due to the uncertainties
 introduced by the saturation in the relation between the central luminosity and
-the virial mass in this range of halo masses. But it is approximately better
+the virial mass in this range of halo masses. But it is somewhat better
 than using stellar masses with errors.
 
 Adding errors following a Gaussian distribution without bias and a dispersion
-of 0.08 dex on luminosities (0.2 magnitudes as we roughly deduced previously),
-we compare it (light orange) to the perfect case of the luminosity. As
-expected, introduced errors doesn't have a real impact, because the behaviour
-of light orange and light green curves are roughly identical.
+of 0.08 dex on luminosities, we compare it (light orange) to the perfect case
+of the luminosity. As expected, introduced errors doesn't have a real impact,
+because the behaviour of light orange and light green curves are roughly
+identical.
 
 The negative point of using luminosities instead of stellar masses is that it
 seems to increase the fragmentation of true groups. But this fragmentation
