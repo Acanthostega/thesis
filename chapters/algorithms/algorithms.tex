@@ -279,59 +279,59 @@ summary for the method of \citet{Marinoni+02} or \citet{MunozCuartas+12}.
 Moreover, the bias in distance introduced by redshift can be reduced with the
 same prescriptions as done in \citet{Liu+08}.
 
-\begin{figure}[htb]
-    \centering
-    \begin{tikzpicture}[line cap=round,line join=round,x=1.0cm,y=1.0cm,scale=0.75]
-        \clip(-1.05,-1.06) rectangle (13.19,6.52);
-        \draw (0,6)-- (0,0);
-        \draw (0,0)-- (10,0);
-        \draw [line width=2pt,color=black,->=triangle 45] (0,0)-- (9.26,5.05);
-        \draw [->] (0,0) -- (10,0);
-        \draw [->] (0,0) -- (0,6);
-        \draw[line width=2pt,color=red, smooth,samples=100,domain=0.00001:10.0,->=triangle 45] plot (\x, {1.1*\x^(0.5)+1}) ;
-        \draw [->,color=blue] (2.99,1.63) -- (2.99,2.9);
-        \draw [->,color=blue] (2.99,2.9) -- (5.31,2.9);
-        \draw [->,color=blue] (5.31,2.9) -- (5.31,3.54);
-        \draw [->,color=blue] (5.31,3.54) -- (6.48,3.54);
-        \draw [line width=0.5pt,color=blue] (6.48,3.54) -- (6.48,3.8);
-        \draw [->,color=blue] (6.48,3.8) -- (6.96,3.8);
-        \draw [line width=0.5pt,color=blue] (6.96,3.8) -- (6.96,3.9);
-        \draw [->,color=blue] (6.96,3.9) -- (7.26,3.96);
-        \draw [dash pattern=on 3pt off 3pt,color=purple] (7.26,3.96)-- (7.26,0);
-        \draw[color=black] (5.62,2.83) node[below] {$M(R)$};
-        \draw[color=black] (5.37,-0.17) node[below] {$R$};
-        \draw[color=red] (0.23,1.85) node[below right, draw=none] {$m(R)$};
-        \fill [color=blue] (2.99,1.63) circle (1.5pt);
-        \fill [color=blue] (2.99,2.9) circle (1.5pt);
-        \fill [color=blue] (5.31,2.9) circle (1.5pt);
-        \fill [color=blue] (5.31,3.54) circle (1.5pt);
-        \fill [color=blue] (6.48,3.54) circle (1.5pt);
-        \fill [color=blue] (6.48,3.8) circle (1.5pt);
-        \fill [color=blue] (6.96,3.8) circle (1.5pt);
-        \fill [color=blue] (6.96,3.9) circle (1.5pt);
-        \fill [color=purple] (7.26,3.96) circle (2.5pt);
-        \fill [color=purple] (7.26,0) circle (2.5pt);
-        \draw[color=purple] (7.51,0.18) node[above right] {$r_{\mathrm{vir}}$};
-    \end{tikzpicture}
-    \caption{Graph illustrating the convergence of the group membership by
-    iterations.\label{fig:convergence}}
-\end{figure}
+% \begin{figure}[htb]
+    % \centering
+    % \begin{tikzpicture}[line cap=round,line join=round,x=1.0cm,y=1.0cm,scale=0.75]
+        % \clip(-1.05,-1.06) rectangle (13.19,6.52);
+        % \draw (0,6)-- (0,0);
+        % \draw (0,0)-- (10,0);
+        % \draw [line width=2pt,color=black,->=triangle 45] (0,0)-- (9.26,5.05);
+        % \draw [->] (0,0) -- (10,0);
+        % \draw [->] (0,0) -- (0,6);
+        % \draw[line width=2pt,color=red, smooth,samples=100,domain=0.00001:10.0,->=triangle 45] plot (\x, {1.1*\x^(0.5)+1}) ;
+        % \draw [->,color=blue] (2.99,1.63) -- (2.99,2.9);
+        % \draw [->,color=blue] (2.99,2.9) -- (5.31,2.9);
+        % \draw [->,color=blue] (5.31,2.9) -- (5.31,3.54);
+        % \draw [->,color=blue] (5.31,3.54) -- (6.48,3.54);
+        % \draw [line width=0.5pt,color=blue] (6.48,3.54) -- (6.48,3.8);
+        % \draw [->,color=blue] (6.48,3.8) -- (6.96,3.8);
+        % \draw [line width=0.5pt,color=blue] (6.96,3.8) -- (6.96,3.9);
+        % \draw [->,color=blue] (6.96,3.9) -- (7.26,3.96);
+        % \draw [dash pattern=on 3pt off 3pt,color=purple] (7.26,3.96)-- (7.26,0);
+        % \draw[color=black] (5.62,2.83) node[below] {$M(R)$};
+        % \draw[color=black] (5.37,-0.17) node[below] {$R$};
+        % \draw[color=red] (0.23,1.85) node[below right, draw=none] {$m(R)$};
+        % \fill [color=blue] (2.99,1.63) circle (1.5pt);
+        % \fill [color=blue] (2.99,2.9) circle (1.5pt);
+        % \fill [color=blue] (5.31,2.9) circle (1.5pt);
+        % \fill [color=blue] (5.31,3.54) circle (1.5pt);
+        % \fill [color=blue] (6.48,3.54) circle (1.5pt);
+        % \fill [color=blue] (6.48,3.8) circle (1.5pt);
+        % \fill [color=blue] (6.96,3.8) circle (1.5pt);
+        % \fill [color=blue] (6.96,3.9) circle (1.5pt);
+        % \fill [color=purple] (7.26,3.96) circle (2.5pt);
+        % \fill [color=purple] (7.26,0) circle (2.5pt);
+        % \draw[color=purple] (7.51,0.18) node[above right] {$r_{\mathrm{vir}}$};
+    % \end{tikzpicture}
+    % \caption{Graph illustrating the convergence of the group membership by
+    % iterations.\label{fig:convergence}}
+% \end{figure}
 
-Iteration seems to be important for a good grouping algorithm. A convergence in
-the galaxy membership is assured by updating group properties along iterations,
-and using it to constrain the selection. The convergence in various scaling
-relations in groups is also assured by iterations, giving a self-consistency of
-the clustering with the data itself: galaxy group algorithms are special kind
-of machine learning algorithm. For example, we suppose an algorithm using a
-relation between the stellar mass of groups and its virial mass (see
-\bartreffigure{convergence}). The stellar mass of the group in red increases
-with the projected radius since the number of galaxies inside it increases.
-There is also a relation between projected radius and virial mass. Starting
-with an initial guess for the virial mass, we can perform a galaxy selection
-and estimate a stellar mass for the group. With the relation, we can make a new
-estimation of the virial mass. This process goes until the convergence
-represented by the virial radius $r_\mathrm{vir}$ in
-\bartreffigure{convergence}.
+% Iteration seems to be important for a good grouping algorithm. A convergence in
+% the galaxy membership is assured by updating group properties along iterations,
+% and using it to constrain the selection. The convergence in various scaling
+% relations in groups is also assured by iterations, giving a self-consistency of
+% the clustering with the data itself: galaxy group algorithms are special kind
+% of machine learning algorithm. For example, we suppose an algorithm using a
+% relation between the stellar mass of groups and its virial mass (see
+% \bartreffigure{convergence}). The stellar mass of the group in red increases
+% with the projected radius since the number of galaxies inside it increases.
+% There is also a relation between projected radius and virial mass. Starting
+% with an initial guess for the virial mass, we can perform a galaxy selection
+% and estimate a stellar mass for the group. With the relation, we can make a new
+% estimation of the virial mass. This process goes until the convergence
+% represented by the virial radius $r_\mathrm{vir}$ in
+% \bartreffigure{convergence}.
 
 The Bayesian approach used in the described galaxy group algorithms also has
 its pitfalls: if the chosen models are bad, the clustering will be affected

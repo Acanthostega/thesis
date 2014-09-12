@@ -40,7 +40,10 @@ virial normalization.
 
 We also define the concentration $c$ as the ratio between the virial radius
 $\rvir$ and the radius $a$, i.e.\ $c=\rvir/a$. We define $\rvir=r_{200}$ for
-simplicity.
+simplicity. We should note that the `slope' normalization and the virial
+normalization can be linked together simply by setting $c=1$ on the definition
+of the virial normalization, in order words the normalization radius that is
+$\rvir$ becomes the slope radius $a$.
 
 \section{Density profiles}
 \label{sec:density_profiles}
@@ -56,11 +59,12 @@ The NFW density profile is:
 with $\nu_0$ a constant density.
 
 We can write by integrating previous relations with $\int_0^1
-x^2\widetilde\nu\dd x=\int_0^1 x^2\widehat\nu\dd x$  and searching for the
+x^2\widetilde\nu\left(x\right)\dd x=\int_0^1 x^2\widehat\nu\left(x\right)\dd x$  and searching for the
 constant $\nu_0$:
 %
 \begin{equation}
-    \widetilde\nu\left(x\right)=\cfrac{1}{\ln2-1/2}
+    \widehat\nu\left(x\right)=
+        \cfrac{1}{\ln2-1/2}
         \quad\cfrac{1}{x{\left(1+x\right)}^2}
 \end{equation}
 %
@@ -245,45 +249,29 @@ dispersion, assuming the NFW density profile, for a useful anisotropy model.
 This model is of the form:
 %
 \begin{equation}
-    \beta \left(r\right) = \undemi\cfrac{r}{r+b}
+    \beta \left(r\right) = \undemi\cfrac{r}{r+\mathfrak{b}}
 \end{equation}
 %
-where $b$ is a characteristic radius of the model. Introducing this expression
-in \bartrefequation{sigma_norm}, we obtain:
+where $\mathfrak{b}$ is a characteristic radius of the model. Introducing this
+expression in \bartrefequation{sigma_norm}, we obtain:
 %
 \begin{align}
-    \widetilde\sigma_r^2(x)=&
-        -\frac{1}{3 x (1+r x)
-        {(-1+\ln\left(4\right))}^2}2
-        \left(-\frac{1}{2}+\ln\left(2\right)\right)\nonumber\\
-    &\left(x \left(3+x \left(\pi ^2 (-3+2 r)
-        {(1+x)}^2-3 (-9+5 r-7 x+4 r x)
-        \right)\right.\vphantom{\ln\left(1+\frac{1}{x}\right)}\right.
-        \nonumber\\
-    &\left.-3 x^3 \ln\left(1+\frac{1}{x}\right)+3 x (1+2 x)
-        \ln\left(x\right)\right)\nonumber\\
-    & -3 (1+2 x (-1-2 x (2+x)+r (1+x) (1+2 x)))
-        \ln\left(1+x\right)+3 (-3+2 r) {\left(x+x^2\right)}^2
-        \ln{\left(1+x\right)}^2\nonumber\\
-    & \left.+6 (-3+2 r) x^2 {(1+x)}^2
-        Li_2\left(-x\right)\vphantom{\ln\left(1+\frac{1}{x}\right)}\right)
-        \nonumber\\
+    \widehat\sigma_r^2(x) &=
+    \cfrac{c/[6\,y(y+b)]}{\ln (c+1)-c/(c+1)} \nonumber \\
+    & \times \left\{
+    6 (3b-2) {(y+1)}^2 y^2 {\rm Li}_2(-y)
+    - 3 by^2{(y+1)}^2 \ln y
+    +3(3b-2)y^2{(y+1)}^2 \ln^2(y+1) \right. \nonumber \\
+    & \quad\quad
+    +3(y+1) \left[b \left(y^3-5 y^2-3 y+1\right)+2 y (2 y+1)\right] \ln (y+1)
+        \nonumber \\
+    & \quad\quad
+    \left. +\pi ^2 (3 b-2) y^4+\left(6 \pi ^2 b-21 b-4 \pi ^2+12\right)
+       y^3+\left[3 \left(\pi ^2-9\right) b-2 \pi ^2+15\right] y^2
+    - 3 by \right\}
 \end{align}
-\begin{align}
-    \widehat\sigma_r^2(x)=&
-        \frac{1}{6 x (1+r x) \left(-1+\frac{1}{1+c}+\ln c\right)}
-        \left(c x \left(-3+x \left(3 c \left(-9+\pi ^2\right)+
-        \left(15-2 \pi ^2\right) r\right.\right.
-        \vphantom{{(1+c x)}^2}\right.\\
-    &\left. -4 c \left(-3+\pi ^2\right) r x+
-        3 c^3 \pi ^2 x^2+c^2 x \left(-21+\pi ^2 (6-2 r x)\right)\right)\\
-    & \left.+6 c^3 x^3 {\rm arccoth} \left(1+2 c x\right)-
-        3 c x (1+2 c x) \ln\left(c x\right)\right)\\
-    &+3(1+2 x (r+c (-1+x (-4 c+3 r+2 c (-c+r) x))))
-        \ln\left(1+c x\right)\\
-    &\left.+3c(3 c-2 r) x^2 {(1+c x)}^2 {\left(\ln\left(1+c x\right)\right)}^2+
-    6 c (3 c-2 r) x^2 {(1+c x)}^2 \mathrm{Li_2}\left(-c x\right)\right)\\
-\end{align}
+%
+with $b=c\mathfrak{b}/\rvir$, $x=r/\rvir$ and $y=cx$.
 
 \section{Line of sight velocity variance}
 
