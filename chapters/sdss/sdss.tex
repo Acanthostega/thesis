@@ -185,7 +185,7 @@ edges.\label{fig:sdss}}
 \subsubsection{Flags in the SDSS}
 
 Galaxy photometry can have some troubles in the SDSS\@. In the general case,
-those objects are flagged with the \texttt{clean} property which indicates by 1
+those objects are flagged with \texttt{clean} property which indicates by 1
 that the photometry is OK and by 0 when there is a problem. Details of the
 problems are in the bit flag. But for groups, we need to select all galaxies,
 even if they are not clean, or our groups will suffer incompleteness in their
@@ -193,14 +193,14 @@ membership and their physical properties such as luminosity, stellar mass\ldots
 will be biased.
 
 However, we have to take into account the error on the redshift estimation
-using the \texttt{zErr}. For photometric redshift, if the \texttt{zErr} is too
-high, we can use the \texttt{nnAvgZ} which is the average redshift of galaxies
-in the neighbourhood of the considered galaxy. It can be better too if the
-photometric redshift is too different from it.
+using \texttt{zErr}. For photometric redshifts, if \texttt{zErr} is too high,
+we can use \texttt{nnAvgZ}, which is the average redshift of galaxies in the
+neighbourhood of the considered galaxy. It can be better if the photometric
+redshift is strongly different from its value.
 
-The \texttt{SpecObjAll} contains duplicates and bad datas. But the
-\texttt{SpecObj} contains just clean spectras. The field \texttt{zWarning} can
-be used to decide if we keep a redshift or not.
+\texttt{SpecObjAll} contains duplicates and bad data. But \texttt{SpecObj}
+contains just clean spectra. The field \texttt{zWarning} can be used to decide
+if we keep a redshift or not.
 
 \subsection{Fibre collision estimation}
 
@@ -246,10 +246,10 @@ the fraction of fibre collisions. In the mock catalogue, we compute the same
 density field and we apply the spectroscopic completeness relation estimated in
 the SDSS sample to the mock. We have to remove galaxies that are close to
 survey edges, because otherwise, there are missing galaxies and the
-spectroscopic completeness will be affected. The way of selecting those
-galaxies is to compute a circle of 1.5° around a galaxy, and if a generated
-point is out of the survey, the galaxy is defined as to be closer to the
-limits.
+spectroscopic completeness will be affected. Edge galaxies are those lying
+closer than 1.5 deg from the survey edges, which we measure in practice by
+generating XXX random points within a circle of 1.5 deg radius around each
+galaxy.
 
 \remark{%
     We can generate samples of points at an angular distance $d$ to a point at
@@ -318,8 +318,8 @@ distribution of differences between spectroscoped and photometric redshifts in
 the SDSS\@. \bartreffigure{redshift_difference} shows that while the dispersion
 remains roughly constant, the bias increases with the spectroscoped redshift.
 So some effects are not still under control when computing photometric
-redshifts, and we should avoid their utilization in galaxy group algorithms
-when possible. In the case of surveys where spectroscopic redshifts are not
+redshifts, and we should avoid their use in galaxy group algorithms when
+possible. In the case of surveys where spectroscopic redshifts are not
 available, the photometric redshifts should be as clean as possible.
 
 \begin{figure}[hp]
@@ -343,9 +343,9 @@ available, the photometric redshifts should be as clean as possible.
 
 \section{Coverage of the SDSS}
 
-For many computations in this thesis, we need to determine the surface covered
-on the sky by the galaxy sample used. In the SDSS, the mask we constructed
-allows us to do it easily by a Monte Carlo process.
+For many computations in this thesis, we need to determine the solid angle
+covered by our galaxy sample. In the SDSS, the mask we constructed allows us to
+do it easily by a Monte Carlo process.
 
 First, we generate a number $N$ of points around a point of coordinates
 $(\alpha_0, \delta_0)$ with a maximal angular separation $\theta_{\max}$ which
@@ -380,22 +380,27 @@ required five simulations with $10^8$ points.
 
 \section{Galaxy stellar masses}
 
-Galaxy stellar masses available in the SDSS database are not really an
-information from the survey. Indeed, contrary to coordinates, magnitudes or
-redshifts, the stellar mass is not a direct observable. Its estimation is based
-on the application of various stellar population models on the galaxy
-spectrum observed by the SDSS\@. Several models exist, but they do not provide
-the same estimation for a given galaxy. In \bartreffigure{stellar_mass_models},
-we compare eight models to have an order of the inaccuracy of the stellar mass:
-FSPSGranWideDust, FSPSGranWideNoDust, FSPSGranEarlyDust and FSPSGranEarlyNoDust
-from~\cite{Conroy+09}, PassivePort and StarFormingPort from~\cite{Maraston+09},
-PCAWiscM11 and PCAWiscBC03 from~\cite{Chen+12} and MPA-JHU~\cite{Brinchmann+04,
-Kauffmann+03, Tremonti+04}.
+In SDSS, contrary to coordinates, magnitudes or redshifts, stellar masses are
+not measured by the SDSS pipelines. Instead, several teams have applied stellar
+population models to the spectra and corrected their stellar masses from the
+area subtended by the spectroscopic fiber to the entire galaxy, using the
+apparent magnitudes within the fiber (fiberMag) and that extrapolated to the
+entire galaxy (petroMag or modelMag). Indeed, contrary to coordinates,
+magnitudes or redshifts, the stellar mass is not a direct observable. Its
+estimation is based on the application of various stellar population models on
+the galaxy spectrum observed by the SDSS\@. Several models exist, but they do
+not provide the same estimation for a given galaxy. In
+\bartreffigure{stellar_mass_models}, we compare eight models to have an order
+of the inaccuracy of the stellar mass: FSPSGranWideDust, FSPSGranWideNoDust,
+FSPSGranEarlyDust and FSPSGranEarlyNoDust from~\cite{Conroy+09}, PassivePort
+and StarFormingPort from~\cite{Maraston+09}, PCAWiscM11 and PCAWiscBC03
+from~\cite{Chen+12} and MPA-JHU from~\cite{Brinchmann+04, Kauffmann+03,
+Tremonti+04}.
 
 The principal discrepancies between the models come essentially from the
 various stellar population synthesis (SPS) models involved in the fit of the
 galaxy spectrum, necessary for the stellar mass estimation. But each model has
-also some internal variations. For example,~\cite{Conroy+09} assumes an early
+also some internal variations. For example,~\cite{Conroy+09} assume an early
 star formation in galaxies for its FSPSGranEarlyNoDust (without dust extinction
 correction) and FSPSGranEarlyDust (with dust extinction correction), while
 FSPSGranWideDust and FSPSGranWideNoDust assume an extended star formation
@@ -426,12 +431,12 @@ Tremonti+04}.\label{fig:stellar_mass_models}}
 \label{sec:final_galaxy_sample}
 
 All previous sections are showing something important in the SDSS data:
-observational errors are important, and the automatic processing of this data
-sometimes leads to false detections, artefacts\ldots, making analysis and
+observational errors can be important, and the automatic processing of this
+data sometimes leads to false detections, artefacts\ldots, making analysis and
 corrections complex.
 
-Fortunately, recently~\cite{Tempel+14} in their FoF analysis of galaxy groups
-in the SDSS-DR10, had to deal too with such problems and the contamination they
+Fortunately, recently in their FoF analysis of galaxy groups in the SDSS-DR10,
+\cite{Tempel+14} had to deal too with such problems and the contamination they
 introduce. Major problems are stars classified as galaxies, nearby large
 galaxies fragmented into several galaxies or poor photometry of some galaxies
 due to bright stars or bad sky level estimation in the neighbourhood. They
@@ -441,8 +446,8 @@ checked the following:
 %
 \begin{itemize}
     \item $10000$ apparently brightest galaxies (in $r$ band). For galaxies
-        brighter than $m_r < 13.5$ about 10\% of the objects were spurious. For
-        galaxies $13.5 < M_r < 14.5$, about 1\% were spurious entries; this
+        brighter than $m_r < 13.5$, about 10\% of the objects were spurious.
+        For galaxies $13.5 < M_r < 14.5$, about 1\% were spurious entries; this
         fraction decreases with luminosity;
     \item $5000$ intrinsically brightest galaxies in the sample (< 1\% were
         spurious);
@@ -464,7 +469,7 @@ checked the following:
         extreme values.
 \end{itemize}
 
-Finally,~\cite{Tempel+14} removed around $600$ galaxies while $1400$ other
+Finally,~\cite{Tempel+14} removed around $600$ galaxies, while $1400$ other
 galaxies were flagged as having a bad photometry. We decided to use their
 galaxy sample, since it covers exactly the same area we use and their
 conscientious clean up of the SDSS-DR10 is difficult to surpass.
@@ -482,15 +487,15 @@ mass for all models. But sometimes, we don't have access to the stellar mass of
 a galaxy and removing it from the sample will create supplementary
 incompleteness. In such situations, we provide by default the
 photometrically-based stellar mass estimation  of~\cite{Bell+03}. Those fitting
-formulas allows to get the stellar mass of a galaxy with only informations
-about its colour and luminosity. Several colors are available to make the
-computation. We show in \bartreffigure{bell_comparison} the stellar mass
-distribution for several colors used on the formula of~\cite{Bell+03}. The
-$r-z$ color creates lower outliers in stellar masses than other bands. A
-possible explanation is that the magnitude bands involved in the computation
-are less sensitive to dust extinction and thus provide a more accurate
-estimation of stellar mass. So, we use only the stellar mass from $r-z$ color
-for those galaxies without spectral mass estimates in the SDSS database.
+formulas allow to get the stellar mass of a galaxy directly from its color and
+luminosity. Several colors are available to make the computation. We show in
+\bartreffigure{bell_comparison} the stellar mass distribution for several
+colors used on the formula of~\cite{Bell+03}. The $r-z$ color creates fewer
+outliers in stellar masses than other bands. A possible explanation is that the
+magnitude bands involved in the computation are less sensitive to dust
+extinction and thus provide a more accurate estimation of stellar mass. So, we
+adopt the stellar mass from $r-z$ color for those galaxies without spectral
+mass estimates in the SDSS database.
 
 \begin{figure}[htb]
     \centering
@@ -499,14 +504,14 @@ for those galaxies without spectral mass estimates in the SDSS database.
         \includegraphics[width=\linewidth]{%
             figures/maggie_vs_sdss/bell_stellar_masses.pdf%
         }
-        \captionof{figure}{The distribution of stellar masses
-            for galaxies on the SDSS with the median of models described in
+        \captionof{figure}{The distribution of stellar masses for galaxies on
+            the SDSS with the median of models described in
             \bartreffigure{stellar_mass_models} and the default value for
-            galaxies without stellar mass estimations from~\cite{Bell+03}
-            for different magnitude colors. The number of non-physical
-        values for stellar masses is reduced by using the $r-z$ color, less
-    affected by dust extinction and so more
-accurate.\label{fig:bell_comparison}}
+            galaxies without stellar mass estimations from~\cite{Bell+03} for
+            different magnitude colors. The number of non-physical values for
+            stellar masses is reduced by using the $r-z$ color, less affected
+            by dust extinction and hence more
+        accurate.\label{fig:bell_comparison}}
     \end{minipage}
     \begin{minipage}{0.49\linewidth}
         \centering
@@ -515,18 +520,18 @@ accurate.\label{fig:bell_comparison}}
         }
         \captionof{figure}{The distribution of stellar masses in solar units
             for our SDSS galaxy sample once chosen the $r-z$ color magnitude as
-            default estimation. There is no high mass galaxies, but some
-            stellar masses are still with bad low values. We keep them to avoid
-        introducing supplementary incompleteness in the galaxy
-    sample.\label{fig:stellar_mass_distribution}}
+            default estimation. There are no high mass galaxies, but some
+            stellar masses have unphysically low stellar masses. We keep them
+            to avoid introducing supplementary incompleteness in the galaxy
+        sample.\label{fig:stellar_mass_distribution}}
     \end{minipage}
 \end{figure}
 
 The resulting stellar mass distribution from our galaxy sample is shown in
 \bartreffigure{stellar_mass_distribution}. No galaxies have too high stellar
 masses, but a lot of them are very low and seems to not be physical. But we
-can't remove them without introducing an incompleteness so we keep them as
-it in the sample.
+can't remove them without introducing an incompleteness hence we keep them in
+the sample.
 
 \begin{figure}[htp]
     \centering
@@ -551,24 +556,24 @@ probed.\label{fig:sfr_comparison}}
 \subsection{Star formation rate}
 \label{sub:star_formation_rate}
 
-Measures of the star formation rate suffer the same problems as stellar
-masses: too many models that do not necessarily agree on the estimation. The
-same analysis of comparison of the SFR measures is shown on
-\bartreffigure{sfr_comparison}. Some models disappeared such as PCAWiscM11
-and PCAWiscBC03 not providing SFR estimation for galaxies, PassivePort and
-StarFormingPort having too many galaxies with null SFR\@. MPA-JHU has
-several estimations of the SFR\@: one based only on informations acquired by
-the fiber pointing to the galaxy to get its spectrum (suffixed by
-\emph{fib}) and the other where an extrapolation of the informations is done
-outside the aperture (suffixed by \emph{tot}).
+Measures of the star formation rate suffer the same problems as stellar masses:
+the different models (from the same teams) do not necessarily agree with one
+another. The comparison of the SFR measures (shown as the specific star
+formation rate, SSFR = SFR divided by stellar mass) is shown on
+\bartreffigure{sfr_comparison}. Some models disappeared: PCAWiscM11 and
+PCAWiscBC03 do not provide SFR estimates for galaxies, while PassivePort and
+StarFormingPort produce null SFR values for too many galaxies. MPA-JHU has
+several estimates of the SFR\@: one based only on informations acquired by
+the fiber pointing to the galaxy to get its spectrum (suffixed by \emph{fib})
+and the other where an extrapolation of the informations is done outside the
+aperture (suffixed by \emph{tot}).
 
-As we can see, FSPS are not coherent between them and since it will
-introduce too many galaxies with a bad estimation of the SSFR, we don't use
-them in our analysis. Bias and scatter between both models of MPA-JHU are
-small, making them model a good choice for a measure of the star formation
-on galaxies. Our preference goes to the \emph{total} model, since when the
-entire stellar population of the galaxy can't be accessed by the fiber, the
-extrapolation allows a better estimation of the stellar mass and SFR\@.
+\bartreffigure{sfr_comparison} shows that the SSFR values from the different
+FSPS models are not consistent with one another, hence we did not use them in
+our analysis. The bias and scatter between both models of MPA-JHU are small,
+making them good measure of the SSFR of galaxies. Our preference goes to the
+\emph{total} model, since the extrapolation used by the authors (at roughly
+constant SSFR) must be better than none.
 
 \begin{figure}[htb]
     \centering
