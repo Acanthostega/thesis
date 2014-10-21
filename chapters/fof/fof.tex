@@ -149,12 +149,13 @@ richness.
 \label{sec:fofpred}
 
 Because of the redshift distortions, the physical linking lengths are chosen to
-be of order of 10 times longer for the LOS separations than for the POS ones.
-Moreover, for flux-limited galaxy catalogs, the physical linking lengths are
-scaled with the mean three-dimensional separation between neighboring galaxies,
-$s \simeq n ^{-1/3}$, where $n$ is the mean number density of galaxies in the
-Universe at a given redshift \citep{Huchra+82}. In other words, the FoF algorithm
-involves two dimensionless linking lengths (hereafter LLs):
+be of order of 10 times longer for the line-of-sight (LOS) separations than for
+the plane-of-sky (POS) ones. Moreover, for flux-limited galaxy catalogs, the
+physical linking lengths are scaled with the mean three-dimensional separation
+between neighboring galaxies, $s \simeq n ^{-1/3}$, where $n$ is the mean
+number density of galaxies in the Universe at a given redshift
+\citep{Huchra+82}. In other words, the FoF algorithm involves two dimensionless
+linking lengths (hereafter LLs):
 %
 \begin{eqnarray}
     b_\perp &=& {{\rm Max} (S_\perp)\over s} \ ,
@@ -199,10 +200,10 @@ One can also estimate the ratio of LOS to transverse LLs, as the ratio of LOS
 to POS group sizes caused by redshift distortions: if the LOS velocities span
 $\pm \kappa$ group velocity dispersions, the inferred LOS spread of distances
 in redshift space will be $\pm \eta \kappa\, v_{200} / H_0 = \pm \eta \kappa
-\sqrt{\Delta/2}\,r_{200}$ (see \citealp{MBM+10}), where  $\eta = \sigma_v/v_{\rm
-v} \simeq 0.65$ for an NFW model with realistic concentration and velocity
-anisotropy \citep{MBB13}, and where we used \bartrefequation{dnovernfromb}.
-Therefore,
+\sqrt{\Delta/2}\,r_{200}$ (see \citealp{MBM+10}), where  $\eta =
+\sigma_v/v_{\rm v} \simeq 0.65$ for an NFW model with realistic concentration
+and velocity anisotropy \citep{Mamon+13}, and where we used
+\bartrefequation{dnovernfromb}. Therefore,
 %
 \begin{eqnarray}
     {b_\parallel\over b_\perp} &=&
@@ -425,12 +426,12 @@ of galaxies.
 
 We tested the FoF algorithm by running it on our mock redshift-space, doubly
 complete subsamples of galaxies, for a set of $16\times16$ geometrically-spaced
-pairs of LLs. By directly comparing the properties of our EGs extracted in
-redshift space with their ``parent'' TGs in  real space, we could assess the
-performance of the FoF in recovering the real space information from the
-projected phase space observations. Note that TGs can have as little as one
-single member galaxy. Also, galaxies in redshift space with no linked galaxies
-can be considered as EGs with one single galaxy.
+pairs of LLs. By directly comparing the properties of our \emph{extracted
+groups} (EGs) in redshift space with their ``parent'' \emph{true groups} (TGs)
+in real space, we could assess the performance of the FoF in recovering the
+real space information from the projected phase space observations. Note that
+TGs can have as little as one single member galaxy. Also, galaxies in redshift
+space with no linked galaxies can be considered as EGs with one single galaxy.
 
 \subsection{Linking real space and projected redshift space}
 
@@ -442,9 +443,9 @@ definition for linking, we could easily associate FoF groups to real groups.
 \begin{figure}
     \centering
     \includegraphics[width=0.3\linewidth]{figures/fof/bijection.pdf}%
-    \caption{Schematic links between true groups (\emph{green circles}) and
-    FoF-extracted groups, (\emph{red circles}), each with their respective
-    most massive galaxy (\emph{black dots}).
+    \caption{Schematic links between true groups (TGs, \emph{green circles})
+        and FoF-extracted groups, (EGs, \emph{red circles}), each with their
+        respective most massive galaxy (\emph{black dots}).
     The \emph{solid circles } represent primary true and FoF groups, while the
     \emph{dashed circles} respectively correspond to secondary true groups and
     FoF fragments.
@@ -886,7 +887,7 @@ extraction pipelines (e.g., \citealp{DePropris+07}).
 Group merging is low at low estimated mass, but increases drastically to reach
 40--90\% (for popular linking lengths) at high estimated mass. Galaxy
 completeness is high, typically $>80\%$. Galaxy reliability is typically 75 to
-90\% depending on group mass..
+90\% depending on group mass.
 
 Our analytical prediction of 95\% completeness for $b_\perp\simeq 0.10$ is only
 met for groups of high true masses (\bartreffigure{test_true_small} and

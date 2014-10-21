@@ -84,7 +84,7 @@ deduced from it. An illustration of each set of points is given in
 
 The first step is to search for potential groups by using the Voronoi
 partition. Voronoi cells have the property that their volume is inversely
-proportional to the density of points around each point. In case of galaxies,
+proportional to the local density around each point. In case of galaxies,
 this allows to access to local density around them. The detected high densities
 in the three dimensional space are used as potential group centers. Galaxies
 are sorted by increasing volume of their Voronoi cell, i.e.\ decreasing
@@ -108,7 +108,7 @@ This implies that the group sample isn't affected by some incompleteness, such
 as luminosity incompleteness. From a constructed complete sub-sample, the
 relation between the richness and the characteristics sizes of the cylinder are
 deduced and modeled. Then, the second step is reapplied, the cylindrical region
-inferred from the previous relations with the richness of the group.
+inferred from the previous relations with help of the richness of the group.
 
 \subsubsection{Advantages and weaknesses}
 \label{ssub:advantages}
@@ -158,7 +158,7 @@ cosmological simulations. In particular, they assume that the galaxy density
 profile inside groups follows the \citet{NFW+97} model that reproduces well the
 density profiles of halos in cosmological dark matter only simulations. A
 density contrast parameter is defined as the ratio between the projected
-density of galaxies inside an halo and the density of field galaxies (which are
+density of galaxies inside a halo and the density of field galaxies (which are
 the interlopers). The higher is this ratio, the more likely the galaxy belongs
 to the group. The density of galaxies in the halo is simply the integration of
 the distribution function along the line-of-sight, and for interlopers, it is
@@ -201,7 +201,7 @@ Once the convergence is reached, the relation between the virial mass and the
 luminosities of groups is recomputed by abundance matching (see
 \bartrefchapter{MAGGIE}) between the distribution of group luminosities
 obtained from the sample and the expected distribution of virial masses
-assuming an halo mass function. Then the previous iterative process is done
+assuming a halo mass function. Then the previous iterative process is done
 again, and this goes until a convergence is reached for the relation.
 
 The algorithm have some drawbacks that should be technically and physically
@@ -221,7 +221,7 @@ and should be taken into account in the grouping process.
 better Bayesian approach, noting that the grouping method of \citet{Yang+07} is
 simply a learning algorithm called K-means. Instead of hard assignments of
 galaxies to groups in the iterative process, this method assigns
-responsibilities, equivalents of a probability of belonging to a group,
+``responsibilities'', equivalents of a probability of belonging to a group,
 weighted over all groups in the sample, using the density contrast definition
 above as some probability to be in the group.
 
@@ -235,7 +235,8 @@ membership and the relation used to compute virial properties is done until
 convergence. Finally, galaxies are assigned to the group for which the
 responsibility is the highest.
 
-The drawbacks of this method are essentially inherited from \citet{Yang+07}.
+The drawbacks of this method are essentially inherited from \citet{Yang+07},
+since it is an improvement of the \citeauthor{Yang+07} algorithm.
 
 \subsection{\citet{MunozCuartas+12}}
 \label{sub:munozcuartas12}
@@ -345,15 +346,14 @@ operated in the same conditions. Finally, the definition of an optimal
 extraction, and the statistics used to assess their performances differ among
 the different galaxy group algorithm developers.
 
-To go beyond such limitations that will never be completely avoided,
-a probabilistic approach of galaxy groups seems to be a good compromise (see
+To go beyond such limitations that will never be completely avoided, a
+probabilistic approach of galaxy groups seems to be a good compromise (see
 \bartrefchapter{MAGGIE}). Moreover, the tests for algorithms must be well
 defined, with a common galaxy mock catalogue to perform the comparisons and a
 good definition of the statistics to use. How well are recovered galaxy groups?
 How well are they polluted by interlopers? How many selected groups are
-spurious? Well are the virial properties of the parent halo recovered? How well
-are the scaling
-relations recovered? These are the questions to answer in order to
-characterize the quality of a grouping algorithm.
+spurious? How well are the virial properties of the parent halo recovered? How
+well are the scaling relations recovered? These are the questions to answer in
+order to characterize the quality of a grouping algorithm.
 
 % vim: set tw=79 :

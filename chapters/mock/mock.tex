@@ -7,21 +7,20 @@
 
 \section{Introduction}
 
-A mock catalogue is an useful tool to test algorithms involving galaxies in
-order to see if it is operational in a realistic situation. These mocks can
-reproduce many properties of galaxies, e.g.\ clustering, luminosity function,
-etc, and add observational effects such as incompleteness and measurement
-errors. There are different methods to obtain such a mock catalogue. All of
-them involve cosmological simulations of dark matter halos. According to the
-model of galaxy formation, we can use the halo occupation distribution (HOD) to
-populate dark matter haloes with galaxies and putting some luminosity functions
-(for example) as constraints. We can, alternatively, follow galaxies in
-semi-analytical models (SAM) in cosmological simulations outputs in order to
-have statistical properties of galaxies that agree with observational results.
-With such realistic galaxies, we can use those simulation boxes to place an
-observer into it, and create a mock survey. But to have a realistic mock
-catalogue, it's necessary to take care of many things which will be described
-in the next section.
+A mock catalogue is a useful tool to test galaxy group algorithms. These mocks
+can reproduce many properties of galaxies, e.g.\ clustering, luminosity
+function, etc, and add observational effects such as incompleteness and
+measurement errors. There are different methods to obtain such a mock
+catalogue. All of them involve cosmological simulations of dark matter halos.
+According to the model of galaxy formation, we can use the halo occupation
+distribution (HOD) to populate dark matter haloes with galaxies and putting
+some luminosity functions (for example) as constraints. We can, alternatively,
+follow galaxies in semi-analytical models (SAM) in cosmological simulations
+outputs in order to have statistical properties of galaxies that agree with
+observational results. With such realistic galaxies, we can use those
+simulation boxes to place an observer into it, and create a mock survey. But to
+have a realistic mock catalogue, it's necessary to take care of many things
+which will be described in the next section.
 
 \section{Populating dark matter halos}
 \label{sec:populating_dark_matter_halos}
@@ -56,20 +55,20 @@ the galaxy formation model.
 \label{sub:halo_occupation_distribution}
 
 In the Halo Occupation Distribution method \citep{MS02,BW02,Zehavi+11}, the
-number of galaxies per halo is drawn from a probability distribution function
-that depends on the halo mass, or better, the galaxy luminosities or stellar
-masses are drawn from conditional luminosity (stellar mass) functions that
-depend on halo mass \citep{YMvdB03}. A relation between the galaxy and matter
-distribution is imposed by three constraints: the probability distribution $P
-\left(N|M\right)$ that a halo of mass $M$ contains $N$ galaxies, the spatial
-relation between the galaxy and dark matter, and the same for the velocity
-distribution. The galaxy distribution is assumed to be spherically symmetric,
-and follows that of the dark matter particles in the halos of $\Lambda$CDM
-cosmological simulations (e.g., NFW), the velocities are drawn from Maxwellian
-distributions (see \citealp{Beraldo+14} for the limitations of this
-assumption), with radial and tangential velocity dispersions derived from the
-Jeans equation of local dynamical equilibrium, assuming some form for the
-radial variation of the velocity anisotropy.
+galaxy richness in groups is deduced on a probability distribution function
+depending on the halo mass, and their physical properties such as luminosity
+from conditional luminosity functions depending on the dynamical mass too
+\citep{YMvdB03}. A relation between the galaxy and matter distribution is
+imposed by three constraints: the probability distribution $P \left(N|M\right)$
+that a halo of mass $M$ contains $N$ galaxies, the spatial relation between the
+galaxy and dark matter, and the same for the velocity distribution. The galaxy
+distribution is assumed to be spherically symmetric, and follows that of the
+dark matter particles in the halos of $\Lambda$CDM cosmological simulations
+(e.g., NFW), the velocities are drawn from Maxwellian distributions (see
+\citealp{Beraldo+14} for the limitations of this assumption), with radial and
+tangential velocity dispersions derived from the Jeans equation of local
+dynamical equilibrium, assuming some form for the radial variation of the
+velocity anisotropy.
 
 \subsection{Semi-analytical models}
 \label{sub:semi_analytical_models}
@@ -79,7 +78,7 @@ properties (in particular stellar mass and $r$-band luminosity) are painted on
 the halos and subhalos of cosmological $N$ body simulations across cosmic time,
 following well-defined physical recipes for star formation and galaxy feedback.
 This procedure produces galaxies that follow relatively well the observed
-properties and scaling relations.
+luminosity, stellar mass functions and scaling relations.
 
 We have chosen this second approach, because the recent SAM by~\cite{Guo+11},
 run on the Millennium-II simulation \citep{BoylanKolchin+09} fits well the
@@ -152,22 +151,22 @@ volume.
 
 If we want to care about redshift evolution of galaxies for the observer, we
 need to use other snapshots at different redshifts, simply joining cubes in
-comoving coordinates. Indeed, the cosmological redshift of the galaxy, only
-consequence of the Hubble flow, is deduced from the relation between the
-redshift and the comoving distance, equals to the comoving transverse distance
-(or proper motion distance) in the case of a flat Universe ($\Omega_k=0$).
-Moreover, the comoving separation $R_c$ between two points with angular
-separation $\theta$ on the sky, at comoving distance $D_c$ from the observer,
-are simply related by a geometrical relation $R_c=\theta D_c$. This separation
-$\theta$ deduced from comoving coordinates should be the same as those of the
-observer working with physical coordinates. The observer wants to know the
-physical separation $R_p$ between the two galaxies, so $R_p=\theta
-d_\mathrm{ang}$ giving $R_p \left(1+z\right)= R_p/a\left(z\right)=R_c=\theta
-D_c$ (where $a \left(z\right)$ is the scale factor with $a \left(0\right)=1$).
+comoving coordinates. Indeed, the cosmological redshift of the galaxy is
+deduced from the relation between the redshift and its comoving distance,
+equals to the comoving transverse distance (or proper motion distance) in the
+case of a flat Universe $\Omega_k=0$ \citep{Hogg+99}. Moreover, the comoving
+separation $R_c$ between two points with angular separation $\theta$ on the
+sky, at comoving distance $D_c$ from the observer, are simply related by a
+geometrical relation $R_c=\theta D_c$. This separation $\theta$ deduced from
+comoving coordinates should be the same as those of the observer working with
+physical coordinates. The observer wants to know the physical separation $R_p$
+between the two galaxies, so $R_p=\theta d_\mathrm{ang}$ giving $R_p
+\left(1+z\right)= R_p/a\left(z\right)=R_c=\theta D_c$ (where $a \left(z\right)$
+is the scale factor with $a \left(0\right)=1$).
 
 Placing boxes as described previously creates a perspective effect from the
 point of view of an observer \citep{Blaizot+05}, and the consequences aren't
-predictable in a statistical sense. To avoid this, we apply some
+predictable in a statistical sense. To avoid this, we apply some coordinate
 transformations on galaxies in the initial cube like inversions, rotations and
 periodic translations. Rotations are multiples of $\pi/2$ around the three
 principal coordinates axes, because if other rotations are allowed, this create
@@ -276,7 +275,8 @@ solution of $D=d_\mathrm{pm} \left(z_{\cos}\right)$ with $d_\mathrm{pm}
 Applying this method to mock catalogue, we can have galaxies whose ``distance''
 is biased by peculiar velocities in redshift space. With such a treatment, the
 velocity dispersion of galaxies in groups leads to the apparition of ``fingers
-of God'' as seen in observations in redshift space.
+of God'', an elongation of galaxy groups along the line-of-sight, as in
+redshift space observations.
 
 We don't have to add the wavelength shift due to the translation of the
 observer relatively to the Cosmological Microwave Background (CMB). Velocities
@@ -285,7 +285,8 @@ movement in relation to the CMB creating an additional shift in wavelength
 depending on the observed region of the celestial sphere, and we should include
 it in our mock catalogue. But frequently, redshifts accessible in galaxy
 surveys are already corrected for the CMB relative motion, or can be easily
-pre-corrected to avoid this component. In consequence, we don't integrate it.
+pre-corrected to avoid this component. In consequence, we don't integrate it in
+our mock catalogue.
 
 \subsubsection{Survey mask}
 
@@ -396,15 +397,15 @@ group algorithms on a real galaxy survey.
 \subsubsection{Observational errors}
 
 The way we organized the construction of the mock catalogue is useful for the
-introduction of observational errors. For example, we treat the case were we
+introduction of observational errors. For example, we treat the case where we
 want to add errors on the absolute magnitude of galaxies in the final mock
 catalog. If we have a model for introducing such errors according to some
-physical galaxy properties in the virtual galaxy catalogue, we can just add them
-inside this virtual catalogue and magnitude errors will be reported on the mock galaxy
-catalogue. If errors depend on properties computed in the mock catalogue, we
-can simply add magnitude errors while constructing the mock catalogue. Any
-kind of errors can be added such as redshift measurement errors, astrometry,
-photometry, etc.
+physical galaxy properties in the virtual galaxy catalogue, we can just add
+them inside this virtual catalogue and magnitude errors will be reported on the
+mock galaxy catalogue. If errors depend on properties computed in the mock
+catalogue, we can simply add magnitude errors while constructing the mock
+catalogue. Any kind of errors can be added such as redshift measurement errors,
+astrometry, photometry, etc.
 
 \subsection{Galaxy samples}
 \label{sub:galaxy_samples}
