@@ -327,8 +327,10 @@
 % Box at right position
 \newlength\thebartrboxinnerx
 \newlength\thebartrboxinnery
+\newlength\thebartrboxgapx
 \setlength\thebartrboxinnerx{10pt}
 \setlength\thebartrboxinnery{20pt}
+\setlength\thebartrboxgapx{0.8cm}
 \newcommand{\thebartrboxfont}{\bfseries}
 \newcommand{\bartrboxfont}[1]{\renewcommand*{\thebartrboxfont}{#1}}
 \tikzstyle{bartrbox} = [draw=black!50, fill=black!90, thick,
@@ -337,7 +339,7 @@ text=orange, opacity=0.5, font=\relsize{4}, text opacity=1]
 \newcommand\bartrbox[4]{
     \begin{tikzpicture}[overlay, remember picture]
         \node[bartrbox, #4](box) at ($ (current page.north east) +
-        (-0.5 #2, -#3) + (-\thebartrboxinnerx, 0) $){
+        (-0.5 #2 -\thebartrboxgapx, -#3) + (-\thebartrboxinnerx, 0) $){
             \begin{minipage}{#2}
                 \thebartrboxfont\nohyphens{#1}
             \end{minipage}
@@ -348,8 +350,10 @@ text=orange, opacity=0.5, font=\relsize{4}, text opacity=1]
 % Box at left position
 \newlength\thebartlboxinnerx
 \newlength\thebartlboxinnery
+\newlength\thebartlboxgapx
 \setlength\thebartlboxinnerx{10pt}
 \setlength\thebartlboxinnery{20pt}
+\setlength\thebartlboxgapx{1.5cm}
 \newcommand{\thebartlboxfont}{}
 \newcommand{\bartlboxfont}[1]{\renewcommand*{\thebartlboxfont}{#1}}
 \tikzstyle{bartlbox} = [draw=black!50, fill=black!90, thick,
@@ -358,7 +362,7 @@ text=orange, opacity=0.5, text opacity=1]
 \newcommand\bartlbox[4]{
     \begin{tikzpicture}[overlay, remember picture]
         \node[bartlbox, #4](box) at ($ (current page.north west) +
-        (0.5 #2, -#3) + (\thebartlboxinnerx, 0) $){
+        (0.5 #2 + \thebartlboxgapx, -#3) + (\thebartlboxinnerx, 0) $){
             \begin{minipage}{#2}
                 \thebartlboxfont\nohyphens{#1}
             \end{minipage}
